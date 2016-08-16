@@ -30,6 +30,9 @@ build/Release
 node_modules
 jspm_packages
 
+# Debug log from npm
+npm-debug.log
+
 # Optional npm cache directory
 .npm
 

@@ -1,0 +1,40 @@
+{
+  "name": "polemois",
+  "version": "0.0.1",
+  "description": "Multi User Dungeon game",
+  "author": "Michael Standen <standen.michael@gmail.com> (http://michael.standen.link/)",
+  "contributors": [
+    "Jared Standen"
+  ],
+  "private": true,
+  "main": "test.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScreamingHawk/polemois.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ScreamingHawk/polemois/issues"
+  },
+  "keywords": [
+    "game",
+    "multiplater",
+    "website"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "mysql": "^2.11.1",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/ScreamingHawk/polemois#readme"
+}
