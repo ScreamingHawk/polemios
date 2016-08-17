@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('polemois:server');
+var debug = require('debug')('polemios:server');
 var http = require('http');
 var mysql = require('mysql')
 
@@ -13,7 +13,7 @@ var mysql = require('mysql')
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.POLEMOIS_PORT || '3000');
+var port = normalizePort(process.env.POLEMIOS_PORT || '3000');
 app.set('port', port);
 
 /**
@@ -34,11 +34,11 @@ server.on('listening', onListening);
  * Database connections
  */
 var pool = mysql.createPool({
-	host: process.env.POLEMOIS_DB_HOST,
-	user: process.env.POLEMOIS_DB_USER,
-	password: process.env.POLEMOIS_DB_SECRET,
-	database: process.env.POLEMOIS_DB_SCHEMA,
-	connectionLimit: process.env.POLEMOIS_DB_MAX_CONNECTIONS,
+	host: process.env.POLEMIOS_DB_HOST,
+	user: process.env.POLEMIOS_DB_USER,
+	password: process.env.POLEMIOS_DB_SECRET,
+	database: process.env.POLEMIOS_DB_SCHEMA,
+	connectionLimit: process.env.POLEMIOS_DB_MAX_CONNECTIONS,
 	debug: false
 });
 

@@ -1,5 +1,5 @@
 {
-  "name": "polemois",
+  "name": "polemios",
   "version": "0.0.1",
   "description": "Multi User Dungeon game",
   "author": "Michael Standen <standen.michael@gmail.com> (http://michael.standen.link/)",
@@ -14,10 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ScreamingHawk/polemois.git"
+    "url": "git+https://github.com/ScreamingHawk/polemios.git"
   },
   "bugs": {
-    "url": "https://github.com/ScreamingHawk/polemois/issues"
+    "url": "https://github.com/ScreamingHawk/polemios/issues"
   },
   "keywords": [
     "game",
@@ -36,5 +36,5 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {},
-  "homepage": "https://github.com/ScreamingHawk/polemois#readme"
+  "homepage": "https://github.com/ScreamingHawk/polemios#readme"
 }
