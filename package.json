@@ -35,6 +35,8 @@
     "mysql": "^2.11.1",
     "serve-favicon": "~2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.10.0"
+  },
   "homepage": "https://github.com/ScreamingHawk/polemios#readme"
 }
