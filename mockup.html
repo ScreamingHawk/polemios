@@ -1,0 +1,82 @@
+<?php
+$username = $_POST["username"];
+$password = $_POST["password"];
+$remember = $_POST["remember"];
+if (!isset ($_POST["submit"]))
+?>
+<html>
+<head>
+	<title>Polemios</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+<h1 align=middle>Polemios</h1>
+<div align=middle>
+	<table>
+		<tr>
+			<td width="500">
+				<p align=middle>The realm of Polemios is at war, great empires moving their pieces across the board. Will you, wayward mercenary, fight for tradition, or alongside the industrial war machine, or simply in search of riches and glory?</p>
+				<p align=middle>Begin your journey, but be weary, mere men are not the only ones with eyes for Polemios...</p><br />
+			</td>
+		</tr>
+	</table>
+<div align=middle>
+<table>
+	<tr valign=top>
+		<td width="90" rowspan="2">
+		</td>
+		<td rowspan="2" class="menu">
+			<a href="http://www.polemios.xyz/home">Home</a><br />
+			<a href="http://www.polemios.xyz/register">Register</a><br />
+			<a href="http://www.polemios.xyz/forum">Forum</a><br />
+			<a href="http://www.polemios.xyz/maps">World Maps</a><br />
+			<a href="https://github.com/ScreamingHawk/polemios">GitHub</a><br />
+			<a href="http://www.wikipedia.org">Wiki</a><br />
+		</td>
+		<td rowspan="2" width="90">
+		</td>
+		<td width="400" class="main">
+			<h2>Announcements</h2>
+			<p><b>Title of announcement</b></p>
+			<p><i>Date/Month/Year</i></p>
+			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><br />
+			<br />
+			<p><b>Older Announcement</b></p>
+			<p><i>Older Date/Month/Year</i></p>
+			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><br />
+			<br />
+		</td>
+		<td class="login">
+			<form name="login" action="loginscript.php" method="post">
+				<table>
+						<tr>
+							<td>Username:</td>
+							<td><input name="username" id="username" type="text" /></td>
+						</tr>
+						<tr>
+							<td>Password:</td>
+							<td><input name="password" id="password" type="password" /></td>
+						</tr>
+				</table>
+				<table width="253">
+					<tr>
+						<td><input name="remember" id="remember" type="checkbox" checked="yes"/> Remember me </td>
+						<td align=right><input type="submit" value="Log In" name="submit"/></td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
+<?
+} else {
+	echo "Username: ".$username." ";
+	echo "Password: ".$password." ";
+	foreach ($remember as "details saved lol actually they're not");
+}
+?>
