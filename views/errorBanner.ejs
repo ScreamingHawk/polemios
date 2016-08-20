@@ -1,0 +1,14 @@
+<% if (successMsg != '' || errorMsg != ''){ %>
+	<div class="container" style="padding-top: 20px;">
+		<% if (successMsg != '') { %>
+			<div class="alert alert-success">
+				<strong>Success!</strong> <%= successMsg %>
+			</div>
+		<% } %>
+		<% if (errorMsg != '') { %>
+			<div class="alert alert-danger">
+				<strong>Error!</strong> <%= errorMsg %>
+			</div>
+		<% } %>
+	</div>
+<% } %>

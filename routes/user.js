@@ -14,6 +14,7 @@ router.get('/signup', function(req, res, next) {
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
+	pageData.javascriptFiles.push('vendor/sha512.min.js');
 	res.render('signup', pageData);
 });
 
@@ -22,6 +23,7 @@ router.post('/signup', function(req, res, next) {
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
+	pageData.javascriptFiles.push('vendor/sha512.min.js');
 
 	var postUser = req.body;
 	if (postUser.username == null || postUser.p == null || postUser.p.length != 128 || postUser.email == null){
@@ -61,12 +63,12 @@ router.post('/signup', function(req, res, next) {
 });
 
 
-
 /* GET sign in page. */
 router.get('/signin', function(req, res, next) {
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
+	pageData.javascriptFiles.push('vendor/sha512.min.js');
 	res.render('signin', pageData);
 });
 
@@ -76,6 +78,7 @@ router.post('/signin', function(req, res, next) {
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
+	pageData.javascriptFiles.push('vendor/sha512.min.js');
 	
 	// Get redirect location
 	var redirect_loc = req.get('Referrer');
@@ -124,4 +127,14 @@ router.post('/signin', function(req, res, next) {
 	}
 });
 
+
+/* GET sign out page. */
+router.get('/signout', function(req, res, next) {
+	req.session.destory();
+	var pageData = commonRoute.initPageData(req.session);
+	// Add additional javascript files
+	pageData.javascriptFiles.push('signup.js');
+	pageData.javascriptFiles.push('vendor/sha512.min.js');
+	res.render('signin', pageData);
+});
 module.exports = router;
