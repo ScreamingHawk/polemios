@@ -6,28 +6,27 @@ if (!isset ($_POST["submit"]))
 ?>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="public\css\standard.css" />
+		<!-- Create graphic for banner to replace use of h1. Use h2 for titles of content boxes (say updates), h4 for titles within boxes (say update posts), h5 for dates of posts -->
 	<title>Polemios</title>
-	<style type="text/css">
-		
-	</style>
 </head>
 <body>
-<h1 align=middle>Polemios</h1>
+	<h1 align=middle>Polemios<br /></h1> <!--Placeholder until graphic complete-->
 <div align=middle>
-	<table>
+	<table cellpadding="10">
 		<tr>
-			<td width="500">
+			<td class="shaded" width="500">
 				<p align=middle>The realm of Polemios is at war, great empires moving their pieces across the board. Will you, wayward mercenary, fight for tradition, or alongside the industrial war machine, or simply in search of riches and glory?</p>
-				<p align=middle>Begin your journey, but be weary, mere men are not the only ones with eyes for Polemios...</p><br />
+				<p align=middle>Begin your journey, but be weary, mere men are not the only ones with eyes for Polemios...</p>
 			</td>
 		</tr>
 	</table>
 <div align=middle>
-<table>
+<table cellpadding="10">
 	<tr valign=top>
 		<td width="90" rowspan="2">
 		</td>
-		<td rowspan="2" class="menu">
+		<td class="shaded">
 			<a href="http://www.polemios.xyz/home">Home</a><br />
 			<a href="http://www.polemios.xyz/register">Register</a><br />
 			<a href="http://www.polemios.xyz/forum">Forum</a><br />
@@ -35,42 +34,51 @@ if (!isset ($_POST["submit"]))
 			<a href="https://github.com/ScreamingHawk/polemios">GitHub</a><br />
 			<a href="http://www.wikipedia.org">Wiki</a><br />
 		</td>
-		<td rowspan="2" width="90">
+		<td width="10" rowspan="2">
 		</td>
-		<td width="400" class="main">
+		<td width="400" rowspan="2" class="shaded">
 			<h2>Announcements</h2>
-			<p><b>Title of announcement</b></p>
-			<p><i>Date/Month/Year</i></p>
+			<h4><b>Title of announcement</b></h4>
+			<h5>Date/Month/Year</h5>
 			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><br />
 			<br />
-			<p><b>Older Announcement</b></p>
-			<p><i>Older Date/Month/Year</i></p>
+			<h4><b>Older Announcement</b></h4>
+			<h5>Older Date/Month/Year</h5>
 			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><br />
 			<br />
 		</td>
-		<td class="login">
+		<td width="10" rowspan="2">
+		</td>
+		<td class="shaded" height="100">
 			<form name="login" action="loginscript.php" method="post">
 				<table>
 						<tr>
-							<td>Username:</td>
+							<td><p>Username:</p></td>
 							<td><input name="username" id="username" type="text" /></td>
 						</tr>
 						<tr>
-							<td>Password:</td>
+							<td><p>Password:</p></td>
 							<td><input name="password" id="password" type="password" /></td>
 						</tr>
 				</table>
 				<table width="253">
 					<tr>
-						<td><input name="remember" id="remember" type="checkbox" checked="yes"/> Remember me </td>
+						<td><input name="remember" id="remember" type="checkbox" checked="yes"/><p class="FUCK">  Remember me</p></td>
 						<td align=right><input type="submit" value="Log In" name="submit"/></td>
 					</tr>
 				</table>
 			</form>
 		</td>
 	</tr>
+	<tr>
+		<td>
+		</td>
+		<td>
+		</td>
+	</tr>
 </table>
 </div>
+<p align=middle> 2016 Standen Bros. | Contact | Copyright | Privacy Policy</p>
 </body>
 </html>
 <?

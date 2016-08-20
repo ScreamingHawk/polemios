@@ -1,0 +1,44 @@
+body{
+	background-image: url(../img/mapj.jpg); 
+	background-attachment: fixed;
+	background-position: top center;
+}
+a:link{
+	color: white;
+	text-decoration: none;
+}
+a:visited{
+	color: white;
+	text-decoration: none;
+}
+a:hover{
+	color: #990000;
+	text-decoration: none;
+}
+h1{ 
+	font-size: 48;
+	color: white;
+	background-image: url(../img/gradient.png); 
+	
+}
+h2{
+	color: white;
+}
+h4{
+	color: white;
+	font-style: bold; 
+	text-decoration: underline;
+}
+h5{ 
+	color: white;
+	font-style: italic; 
+}
+p{
+	color: white;
+}
+p.FUCK{
+	display: inline;
+}
+td.shaded{
+	background-image: url(../img/gradient.png)
+}
