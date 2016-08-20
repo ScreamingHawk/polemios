@@ -1,35 +1,73 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var userRoutes = require('./routes/user');
 
 var app = express();
+
+// configure logging
+var log = require('winston');
+
+log.remove(log.transports.Console);
+log.add(log.transports.Console, {'timestamp':true, level: process.env.POLEMIOS_LOG_LEVEL});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
+// set up static and configure app
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+if (app.get('env') === 'development') {
+	app.use(morgan('dev'));
+}
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// configure session
+var sess = {
+	secret: process.env.POLEMIOS_SESSION_SECRET,
+	cookie: {
+		maxAge: 600000 // Expire session after 10 min of inactivity
+	},
+	saveUninitialized: true,
+	resave: true
+}
+if (app.get('env') === 'production') {
+	app.set('trust proxy', 1);
+	sess.cookie.secure = true;
+}
+app.use(session(sess))
+
+// set up routes
 app.use('/', routes);
-app.use('/users', users);
+app.use('/user', userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-	var err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+	res.status(404);
+
+	// respond with html page
+	if (req.accepts('html')) {
+		res.render('404', {url: req.url});
+		return;
+	}
+
+	// respond with json
+	if (req.accepts('json')) {
+		res.send({error: 'Not found'});
+		return;
+	}
+
+	// default to plain-text
+	res.type('txt').send('Not found');
 });
 
 // error handlers
