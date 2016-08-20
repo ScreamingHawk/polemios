@@ -1,11 +1,11 @@
-<% include header %>
-<% include banner %>
-<% include errorBanner %>
+<% include ../templates/header %>
+<% include ../templates/banner %>
+<% include ../templates/errorBanner %>
 
 <div class="container">
 	<div class="row" style="margin-bottom: 20px;">
 		<div class="col-md-6">
-			<h1>Sign In</h1>
+			<h1>Sign Up</h1>
 		</div>
 	</div>
 
@@ -16,14 +16,22 @@
 					<form role="form" method="POST">
 						<div class="form-group">
 							<label for="username">Username</label>
-							<input class="form-control" placeholder="Username" type="text" name="username" id="username" required="required" />
+							<input class="form-control" placeholder="Enter username" type="text" name="username" id="username" required="required" />
+						</div>
+						<div class="form-group">
+							<label for="email">Email Address</label>
+							<input class="form-control" placeholder="Enter email" type="email" name="email" id="email" required="required" />
 						</div>
 						<div class="form-group">
 							<label for="password">Password</label>
 							<input class="form-control" placeholder="Password" type="password" name="password" id="password" required="required" />
 						</div>
+						<div class="form-group">
+							<label for="confpassword">Confirm Password</label>
+							<input class="form-control" placeholder="Confirm password" type="password" name="confpassword" id="confpassword" required="required" />
+						</div>
 						
-						<button type="button" class="btn btn-success" onclick="return formhash(this.form, this.form.password);">Log in</button>
+						<button type="button" class="btn btn-success" onclick="return regformhash(this.form, this.form.username, this.form.email, this.form.password, this.form.confpassword);">Register</button>
 					</form>
 				</div>
 				<div class="panel-footer">
@@ -56,4 +64,4 @@
 	<p>Return to the <a href="/">home page</a>.</p>
 </div>
 
-<% include footer %>
+<% include ../templates/footer %>

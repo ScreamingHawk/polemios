@@ -15,7 +15,7 @@ router.get('/signup', function(req, res, next) {
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
 	pageData.javascriptFiles.push('vendor/sha512.min.js');
-	res.render('signup', pageData);
+	res.render('user/signup', pageData);
 });
 
 /* POST sign up page. */
@@ -28,14 +28,14 @@ router.post('/signup', function(req, res, next) {
 	var postUser = req.body;
 	if (postUser.username == null || postUser.p == null || postUser.p.length != 128 || postUser.email == null){
 		pageData.errorMsg += "Invalid registration details. ";
-		res.render('signup', pageData);
+		res.render('user/signup', pageData);
 	} else {
 		// Check for duplicate username
 		db.runSqlSingleResult('SELECT username FROM polemios_users WHERE username = ?', [postUser.username], function(dbUser){
 			if (dbUser != null){
 				// Username already exists
 				pageData.errorMsg += "Username already taken! ";
-				res.render('signup', pageData);
+				res.render('user/signup', pageData);
 			} else {
 				// Secure password
 				var salt = crypto.randomBytes(64).toString('hex');
@@ -54,7 +54,7 @@ router.post('/signup', function(req, res, next) {
 							pageData.successMsg += postUser.username + " created successfully! ";
 							pageData.user = dbUser;
 						}
-						res.render('signup', pageData);
+						res.render('user/signup', pageData);
 					});
 				});
 			}
@@ -69,7 +69,7 @@ router.get('/signin', function(req, res, next) {
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
 	pageData.javascriptFiles.push('vendor/sha512.min.js');
-	res.render('signin', pageData);
+	res.render('user/signin', pageData);
 });
 
 
@@ -95,14 +95,14 @@ router.post('/signin', function(req, res, next) {
 	var postUser = req.body;
 	if (postUser.username == null || postUser.p == null || postUser.p.length != 128){
 		pageData.errorMsg += "Invalid login details. ";
-		res.render('signin', pageData);
+		res.render('user/signin', pageData);
 	} else {
 		db.runSqlSingleResult('SELECT username, salt FROM polemios_users WHERE username = ?', [postUser.username], function(dbUser){
 			if (dbUser == null){
 				// Invalid username
 				pageData.errorMsg += "Invalid username. ";
 				//FIXME Prevent username enumeration
-				res.render('signin', pageData);
+				res.render('user/signin', pageData);
 			} else {
 				var hash = crypto.createHmac('sha512', dbUser.salt);
 				hash.update(postUser.p);
@@ -113,13 +113,13 @@ router.post('/signin', function(req, res, next) {
 						// Password test failed
 						pageData.errorMsg += "Invalid password. ";
 						//FIXME Prevent password enumeration
-						res.render('signin', pageData);
+						res.render('user/signin', pageData);
 					} else {
 						req.session.user = dbUser;
 						pageData.user = dbUser;
 						pageData.successMsg += "Welcome "+dbUser.username+"!";
 						//TODO Use redirect_loc
-						res.render('signin', pageData);
+						res.render('user/signin', pageData);
 					}
 				});
 			}
@@ -135,6 +135,6 @@ router.get('/signout', function(req, res, next) {
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
 	pageData.javascriptFiles.push('vendor/sha512.min.js');
-	res.render('signin', pageData);
+	res.render('user/signin', pageData);
 });
 module.exports = router;
