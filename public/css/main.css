@@ -6,3 +6,54 @@ body {
 a {
 	color: #00B7FF;
 }
+
+align-top {
+	vertical-align: top;
+}
+
+body{
+	background-image: url(../img/mapj.jpg); 
+	background-attachment: fixed;
+	background-position: top center;
+}
+a:link{
+	color: white;
+	text-decoration: none;
+}
+a:visited{
+	color: white;
+	text-decoration: none;
+}
+a:hover{
+	color: #990000;
+	text-decoration: none;
+}
+h1{ 
+	font-size: 48;
+	color: white;
+	
+}
+h2{
+	color: white;
+}
+h4{
+	color: white;
+	font-style: bold; 
+	text-decoration: underline;
+}
+h5{ 
+	color: white;
+	font-style: italic; 
+}
+p{
+	color: white;
+}
+
+.shaded {
+	background: rgb(30, 30, 30);	
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.padded {
+	padding: 10px;
+}
