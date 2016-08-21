@@ -6,6 +6,7 @@ module.exports.initPageData = function(session){
 		user: session.user,
 		errorMsg: '',
 		successMsg: '',
+		bodyClass: '',
 		javascriptFiles: []
 	};
 	return pageData;

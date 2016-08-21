@@ -11,41 +11,41 @@ align-top {
 	vertical-align: top;
 }
 
-body{
+body.map{
 	background-image: url(../img/mapj.jpg); 
 	background-attachment: fixed;
 	background-position: top center;
 }
-a:link{
+body.map a:link {
 	color: white;
 	text-decoration: none;
 }
-a:visited{
+body.map a:visited {
 	color: white;
 	text-decoration: none;
 }
-a:hover{
+body.map a:hover {
 	color: #990000;
 	text-decoration: none;
 }
-h1{ 
+body.map h1 { 
 	font-size: 48;
 	color: white;
 	
 }
-h2{
+body.map h2 {
 	color: white;
 }
-h4{
+body.map h4 {
 	color: white;
 	font-style: bold; 
 	text-decoration: underline;
 }
-h5{ 
+body.map h5 { 
 	color: white;
 	font-style: italic; 
 }
-p{
+body.map p {
 	color: white;
 }
 
