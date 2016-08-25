@@ -1,0 +1,31 @@
+<%include templates/header %>
+<%include templates/errorBanner %>
+
+<h1 class="text-center shaded padded">Polemios<br /></h1>
+<div class="container text-center">
+	<p><%= outputText %></p>
+	<% if (created){ %>
+		<p>Success! Character created!</p>
+	<%}%>
+</div>
+
+<form method="POST">
+	<input type="text" name="Name" required="required" />
+	<input type="select" name="Race" required="required">
+		<option value="human" >Human</option>
+		<option value="kobold" >Kobold</option>
+		<option value="ethereal" >Ethereal</option>
+		<option value="slime" >Slime</option>
+		<option value="orc" >Orc</option>
+		<option value="golem" >Golem</option>
+	</select>
+	<input type="select" name="Gear" required="required">
+		<option value="guns" >Industrial</option>
+		<option value="common" >Contemporary</option>
+		<option value="magic" >Traditional</option>
+	</select>
+	<button type="submit" class=btn btn-success">Submit</button>
+</form>
+
+<% include templates/footer %>
+
