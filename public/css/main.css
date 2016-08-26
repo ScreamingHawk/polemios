@@ -57,3 +57,32 @@ body.map p {
 .padded {
 	padding: 10px;
 }
+
+.chatbox {
+	background: white;
+	border-radius: 4px;
+	height: 100px;
+	margin-bottom: 5px;
+	padding: 5px;
+	overflow-y: scroll;
+}
+
+.chatbox ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.chatbox .user {
+	font-weight: bold;
+	text-decoration: underline;
+	color: black;
+}
+
+.chatbox .text {
+	color: #333;
+}
+
+.chatbox .connect,
+.chatbox .disconnect {
+	font-style: italic;
+}

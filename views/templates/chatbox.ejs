@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<h4>Chatbox</h4>
+			<div id="chatbox_text" class="col-xs-12 chatbox">
+				<ul id="chatbox_messages">
+				</ul>
+			</div>
+			<% if (user){ %>
+				<form id="chatbox_form" class="form-inline">
+					<div class="form-group">
+						<input text="text" id="chatbox_input" autocomplete="off" placeholder="Message Here" class="form-control">
+						<button id="chatbox_send" class="btn btn-success" type="submit">Send</button>
+					</div>
+				</form>
+			<% } %>
+		</div>
+	</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<% javascriptFiles.push('chatbox.js'); %>

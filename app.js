@@ -35,8 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 var sess = {
 	secret: process.env.POLEMIOS_SESSION_SECRET,
 	cookie: {
+		httpOnly: true,
 		maxAge: 600000 // Expire session after 10 min of inactivity
 	},
+	rolling: true,
 	saveUninitialized: true,
 	resave: true
 }
@@ -44,7 +46,8 @@ if (app.get('env') === 'production') {
 	app.set('trust proxy', 1);
 	sess.cookie.secure = true;
 }
-app.use(session(sess))
+app.session = session(sess);
+app.use(app.session);
 
 // set up routes
 app.use('/', routes);

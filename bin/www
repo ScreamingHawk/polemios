@@ -5,9 +5,11 @@
  */
 
 var app = require('../app');
+var io = require('socket.io');
 var debug = require('debug')('polemios:server');
 var http = require('http');
-var mysql = require('mysql')
+var mysql = require('mysql');
+var sharedSession = require("express-socket.io-session");
 
 /**
  * Get port from environment and store in Express.
@@ -21,6 +23,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+/**
+ * Create chat listener.
+ */
+
+var chat = require('../chat')(server);
+chat.use(sharedSession(app.session, {autoSave: true}));
 
 /**
  * Listen on provided port, on all network interfaces.
