@@ -1,3 +1,5 @@
+call npm install
+
 set POLEMIOS_PORT=3000
 
 set POLEMIOS_LOG_LEVEL=debug
