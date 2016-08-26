@@ -130,7 +130,7 @@ router.post('/signin', function(req, res, next) {
 
 /* GET sign out page. */
 router.get('/signout', function(req, res, next) {
-	req.session.destory();
+	req.session.destroy();
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
