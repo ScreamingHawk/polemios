@@ -128,13 +128,9 @@ router.post('/signin', function(req, res, next) {
 });
 
 
-/* GET sign out page. */
+/* GET sign out. */
 router.get('/signout', function(req, res, next) {
 	req.session.destroy();
-	var pageData = commonRoute.initPageData(req.session);
-	// Add additional javascript files
-	pageData.javascriptFiles.push('signup.js');
-	pageData.javascriptFiles.push('vendor/sha512.min.js');
-	res.render('user/signin', pageData);
+	res.redirect('/user/signin');
 });
 module.exports = router;
