@@ -51,8 +51,9 @@ router.post('/signup', function(req, res, next) {
 							pageData.errorMsg += "Error creating user. Please contact Polemios Support. ";
 						} else {
 							// Success
-							pageData.successMsg += postUser.username + " created successfully! ";
+							req.session.user = dbUser;
 							pageData.user = dbUser;
+							pageData.successMsg += postUser.username + " created successfully! ";
 						}
 						res.render('user/signup', pageData);
 					});
