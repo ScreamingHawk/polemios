@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS location (
 -- Create player table
 CREATE TABLE IF NOT EXISTS player (
 	playerId INTEGER AUTO_INCREMENT,
-    userId INTEGER,
+    userId INTEGER NOT NULL,
     name varchar(30) UNIQUE NOT NULL,
     raceId INTEGER NOT NULL,
     health INTEGER DEFAULT 0,

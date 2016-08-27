@@ -39,8 +39,8 @@ INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 3, 100); -
 -- Add maps and location data
 -- TODO Better descriptions
 -- TODO Remove test locations
-INSERT INTO map (name, height, width, description) VALUES ('Test Town', 5, 5, 'A test map with one of each location type');
-INSERT INTO map (name, height, width, description) VALUES ('Glow Cavern', 5, 5, 'The home of new glow users');
-INSERT INTO map (name, height, width, description) VALUES ('Flame Volcano', 5, 5, 'The home of new flame users');
-INSERT INTO map (name, height, width, description) VALUES ('Electric Boogaloo', 5, 5, 'The home of new electric users');
-INSERT INTO map (name, height, width, description) VALUES ('Wilderness', 2, 5, 'A long zone for joining maps');
+INSERT INTO map (name, height, width, pvp, description) VALUES ('Test Town', 5, 5, true, 'A test map with one of each location type');
+INSERT INTO map (name, height, width, pvp, description) VALUES ('Glow Cavern', 5, 5, false, 'The home of new glow users');
+INSERT INTO map (name, height, width, pvp, description) VALUES ('Flame Volcano', 5, 5, false, 'The home of new flame users');
+INSERT INTO map (name, height, width, pvp, description) VALUES ('Electric Boogaloo', 5, 5, false, 'The home of new electric users');
+INSERT INTO map (name, height, width, pvp, description) VALUES ('Wilderness', 2, 5, true, 'A long zone for joining maps');
