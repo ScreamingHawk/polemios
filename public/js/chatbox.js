@@ -20,7 +20,7 @@ socket.on('user connected', function(msg){
 	chatbox_messages.scrollTop(chatbox_messages[0].scrollHeight);
 });
 
-socket.on('user disccounted', function(msg){
+socket.on('user disconnected', function(msg){
 	chatbox_messages.append('<li><span class="text disconnect"><span class="user">' + msg.username + '</span> disconnected</span></li>');
 	chatbox_messages.scrollTop(chatbox_messages[0].scrollHeight);
 });

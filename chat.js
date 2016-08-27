@@ -4,6 +4,7 @@ module.exports = function(http){
 	var io = require('socket.io')(http);
 	
 	var clients = {};
+	var disconnecting = [];
 	
 	io.on('connection', function(socket){
 		if (socket.handshake.session && socket.handshake.session.user){
@@ -12,17 +13,33 @@ module.exports = function(http){
 			if (username){
 				
 				if (!clients[username]){
-					clients[username] = socket;
 					msg = {username: username};
 					// Alert others of user connection
-					io.emit('user connected', msg);
+					var index = disconnecting.indexOf(username);
+					if (index > -1){
+						// Page change
+						disconnecting.splice(index, 1);
+					} else {
+						// New user
+						io.emit('user connected', msg);
+					}
 				}
+				clients[username] = socket;
 			
 				socket.on('disconnect', function(){
 					clients[username] = null;
+					disconnecting.push(username);
 					msg = {username: username};
 					// Alert others of user disconnection
-					io.emit('user disconnected', msg);
+					setTimeout(function(){
+						// Check the disconnection wasn't just a page change
+						var index = disconnecting.indexOf(username);
+						if (index > -1){
+							disconnecting.splice(index, 1);
+							// Alert other of user disconnection
+							io.emit('user disconnected', msg);
+						}
+					}, 5000);
 				});
 				
 				socket.on('chat', function(msg){
