@@ -1,5 +1,14 @@
 USE polemiosDB;
 
+-- Add maps and location data
+-- TODO Better descriptions
+-- TODO Remove test locations
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'Test Town', 5, 5, true, 'A test map with one of each location type');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (2, 'Glow Cavern', 5, 5, false, 'The home of new glow users');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (3, 'Flicker Volcano', 5, 5, false, 'The home of new flicker users');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (4, 'Electric Boogaloo', 5, 5, false, 'The home of new bright users');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (5, 'Wilderness', 2, 5, true, 'A long zone for joining maps');
+
 -- Add race data
 -- TODO Better description
 INSERT INTO race (raceId, name, description) VALUES (1, 'Human', 'Humans');
@@ -11,9 +20,9 @@ INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Golems');
 
 -- Add faction data
 -- TODO Better description
-INSERT INTO faction (factionId, name, description) VALUES (1, 'Glow', 'The magic faction');
-INSERT INTO faction (factionId, name, description) VALUES (2, 'Flicker', 'The steam faction');
-INSERT INTO faction (factionId, name, description) VALUES (3, 'Bright', 'The electricity faction');
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (1, 'Glow', 'The magic faction', 2);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (2, 'Flicker', 'The steam faction', 3);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (3, 'Bright', 'The electricity faction', 4);
 
 -- Add race faction default data
 -- TODO Fix fame scale
@@ -36,11 +45,3 @@ INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 1, 25); --
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 2, 25); -- Golem Flicker
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 3, 100); -- Golem Bright
 
--- Add maps and location data
--- TODO Better descriptions
--- TODO Remove test locations
-INSERT INTO map (name, height, width, pvp, description) VALUES ('Test Town', 5, 5, true, 'A test map with one of each location type');
-INSERT INTO map (name, height, width, pvp, description) VALUES ('Glow Cavern', 5, 5, false, 'The home of new glow users');
-INSERT INTO map (name, height, width, pvp, description) VALUES ('Flicker Volcano', 5, 5, false, 'The home of new flicker users');
-INSERT INTO map (name, height, width, pvp, description) VALUES ('Electric Boogaloo', 5, 5, false, 'The home of new bright users');
-INSERT INTO map (name, height, width, pvp, description) VALUES ('Wilderness', 2, 5, true, 'A long zone for joining maps');

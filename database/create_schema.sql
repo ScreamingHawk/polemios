@@ -14,41 +14,11 @@ CREATE TABLE IF NOT EXISTS polemios_user (
 )engine=innodb;
 
 
--- --------Race/Factions
-
--- Create race lookup table
-CREATE TABLE IF NOT EXISTS race (
-	raceId INTEGER NOT NULL, 
-    name varchar(30) NOT NULL,
-	description varchar(200) NOT NULL,
-	PRIMARY KEY (raceId)
-)engine=innodb;
-
--- Create faction lookup table
-CREATE TABLE IF NOT EXISTS faction (
-	factionId INTEGER NOT NULL, 
-    name varchar(30) NOT NULL,
-	description varchar(200) NOT NULL,
-	PRIMARY KEY (factionId)
-)engine=innodb;
-
--- Create race faction default fame table
-CREATE TABLE IF NOT EXISTS race_faction_default (
-	raceFactionDefaultId INTEGER AUTO_INCREMENT, 
-    raceId INTEGER NOT NULL,
-    factionId INTEGER NOT NULL,
-	fame INTEGER NOT NULL,
-	PRIMARY KEY (raceFactionDefaultId),
-	FOREIGN KEY (raceId) REFERENCES race (raceId),
-	FOREIGN KEY (factionId) REFERENCES faction (factionId)
-)engine=innodb;
-
-
 -- --------Map/Locations
 
 -- Create map table
 CREATE TABLE IF NOT EXISTS map (
-	mapId INTEGER AUTO_INCREMENT,
+	mapId INTEGER NOT NULL,
     name varchar(30) UNIQUE NOT NULL,
     description varchar(200),
     height INTEGER NOT NULL,
@@ -69,6 +39,38 @@ CREATE TABLE IF NOT EXISTS location (
 )engine=innodb;
 
 
+-- --------Race/Factions
+
+-- Create race lookup table
+CREATE TABLE IF NOT EXISTS race (
+	raceId INTEGER NOT NULL, 
+    name varchar(30) NOT NULL,
+	description varchar(200) NOT NULL,
+	PRIMARY KEY (raceId)
+)engine=innodb;
+
+-- Create faction lookup table
+CREATE TABLE IF NOT EXISTS faction (
+	factionId INTEGER NOT NULL, 
+    name varchar(30) NOT NULL,
+	description varchar(200) NOT NULL,
+	startingMapId INTEGER, 
+	PRIMARY KEY (factionId),
+	FOREIGN KEY (startingMapId) REFERENCES map (mapId)
+)engine=innodb;
+
+-- Create race faction default fame table
+CREATE TABLE IF NOT EXISTS race_faction_default (
+	raceFactionDefaultId INTEGER AUTO_INCREMENT, 
+    raceId INTEGER NOT NULL,
+    factionId INTEGER NOT NULL,
+	fame INTEGER NOT NULL,
+	PRIMARY KEY (raceFactionDefaultId),
+	FOREIGN KEY (raceId) REFERENCES race (raceId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
+
 -- --------Player
 
 -- Create player table
@@ -79,8 +81,8 @@ CREATE TABLE IF NOT EXISTS player (
     raceId INTEGER NOT NULL,
     health INTEGER DEFAULT 0,
 	mapId INTEGER,
-	locationX INTEGER,
-	locationY INTEGER,
+	locationX INTEGER DEFAULT 0,
+	locationY INTEGER DEFAULT 0,
 	lastAction DATETIME DEFAULT NOW(),
 	PRIMARY KEY (playerId),
 	FOREIGN KEY (userId) REFERENCES polemios_user (userId),
