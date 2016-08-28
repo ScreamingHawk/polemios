@@ -1,14 +1,24 @@
 var mysql = require('mysql');
 var log = require('winston');
 
-module.exports.pool = mysql.createPool({
-	connectionLimit: process.env.POLEMIOS_DB_MAX_CONNECTIONS,
-	host: process.env.POLEMIOS_DB_HOST,
-	user: process.env.POLEMIOS_DB_USER,
-	password: process.env.POLEMIOS_DB_SECRET,
-	database: process.env.POLEMIOS_DB_SCHEMA,
-	debug: process.env.POLEMIOS_DB_DEBUG
-});
+if (process.env.POLEMIOS_DB_DEBUG == 'true'){
+	module.exports.pool = mysql.createPool({
+		connectionLimit: process.env.POLEMIOS_DB_MAX_CONNECTIONS,
+		host: process.env.POLEMIOS_DB_HOST,
+		user: process.env.POLEMIOS_DB_USER,
+		password: process.env.POLEMIOS_DB_SECRET,
+		database: process.env.POLEMIOS_DB_SCHEMA,
+		debug: ['ComQueryPacket', 'RowDataPacket']
+	});
+} else {
+	module.exports.pool = mysql.createPool({
+		connectionLimit: process.env.POLEMIOS_DB_MAX_CONNECTIONS,
+		host: process.env.POLEMIOS_DB_HOST,
+		user: process.env.POLEMIOS_DB_USER,
+		password: process.env.POLEMIOS_DB_SECRET,
+		database: process.env.POLEMIOS_DB_SCHEMA
+	});
+}
 
 // Return a single result from a query
 module.exports.runSqlSingleResult = function(sql, params, next){
