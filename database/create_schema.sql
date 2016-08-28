@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS player (
 	mapId INTEGER,
 	locationX INTEGER,
 	locationY INTEGER,
+	lastAction DATETIME DEFAULT NOW(),
 	PRIMARY KEY (playerId),
 	FOREIGN KEY (userId) REFERENCES polemios_user (userId),
 	FOREIGN KEY (raceId) REFERENCES race (raceId),
