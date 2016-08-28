@@ -31,7 +31,7 @@ router.post('/signup', function(req, res, next) {
 		res.render('user/signup', pageData);
 	} else {
 		// Check for duplicate username
-		db.runSqlSingleResult('SELECT username FROM polemios_users WHERE username = ?', [postUser.username], function(dbUser){
+		db.runSqlSingleResult('SELECT username FROM polemios_user WHERE username = ?', [postUser.username], function(dbUser){
 			if (dbUser != null){
 				// Username already exists
 				pageData.errorMsg += "Username already taken! ";
@@ -43,9 +43,9 @@ router.post('/signup', function(req, res, next) {
 				hash.update(postUser.p);
 				var pass = hash.digest('hex');
 				// Insert new user
-				db.runSql('INSERT INTO polemios_users (username, email, password, salt) values (?, ?, ?, ?)', [postUser.username, postUser.email, pass, salt], function(result){
+				db.runSql('INSERT INTO polemios_user (username, email, password, salt) values (?, ?, ?, ?)', [postUser.username, postUser.email, pass, salt], function(result){
 					// Check DB
-					db.runSqlSingleResult('SELECT username FROM polemios_users WHERE username = ?', [postUser.username], function(dbUser){
+					db.runSqlSingleResult('SELECT username FROM polemios_user WHERE username = ?', [postUser.username], function(dbUser){
 						if (dbUser == null){
 							// Failed. No user
 							pageData.errorMsg += "Error creating user. Please contact Polemios Support. ";
@@ -66,10 +66,17 @@ router.post('/signup', function(req, res, next) {
 
 /* GET sign in page. */
 router.get('/signin', function(req, res, next) {
+	req.session.destroy();
 	var pageData = commonRoute.initPageData(req.session);
 	// Add additional javascript files
 	pageData.javascriptFiles.push('signup.js');
 	pageData.javascriptFiles.push('vendor/sha512.min.js');
+	// Add error messages
+	if (req.query.reason == 'logout_successful'){
+		pageData.successMsg += "Logout Successful! ";
+	} else if (req.query.reason == 'access_denied'){
+		pageData.errorMsg += 'Access Denied! Please sign in to continue. ';
+	}
 	res.render('user/signin', pageData);
 });
 
@@ -98,7 +105,7 @@ router.post('/signin', function(req, res, next) {
 		pageData.errorMsg += "Invalid login details. ";
 		res.render('user/signin', pageData);
 	} else {
-		db.runSqlSingleResult('SELECT username, salt FROM polemios_users WHERE username = ?', [postUser.username], function(dbUser){
+		db.runSqlSingleResult('SELECT username, salt FROM polemios_user WHERE username = ?', [postUser.username], function(dbUser){
 			if (dbUser == null){
 				// Invalid username
 				pageData.errorMsg += "Invalid username. ";
@@ -109,7 +116,7 @@ router.post('/signin', function(req, res, next) {
 				hash.update(postUser.p);
 				var pass = hash.digest('hex');
 				// Test user
-				db.runSqlSingleResult('SELECT username FROM polemios_users WHERE username = ? AND password = ?', [postUser.username, pass], function(dbUser){
+				db.runSqlSingleResult('SELECT username FROM polemios_user WHERE username = ? AND password = ?', [postUser.username, pass], function(dbUser){
 					if (dbUser == null){
 						// Password test failed
 						pageData.errorMsg += "Invalid password. ";
@@ -132,6 +139,6 @@ router.post('/signin', function(req, res, next) {
 /* GET sign out. */
 router.get('/signout', function(req, res, next) {
 	req.session.destroy();
-	res.redirect('/user/signin');
+	res.redirect('/user/signin?reason=logout_successful');
 });
 module.exports = router;
