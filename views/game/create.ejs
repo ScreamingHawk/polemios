@@ -1,31 +1,44 @@
-<%include templates/header %>
-<%include templates/errorBanner %>
+<%include ../templates/header %>
+<%include ../templates/banner %>
+<%include ../templates/errorBanner %>
 
-<h1 class="text-center shaded padded">Polemios<br /></h1>
-<div class="container text-center">
-	<p><%= outputText %></p>
-	<% if (created){ %>
-		<p>Success! Character created!</p>
-	<%}%>
-</div>
-<div class="container text-left">
-	<form method="POST">
-		<input type="text" name="Name" required="required" />
-		<input type="select" name="Race" required="required">
-			<option value="human" >Human</option>
-			<option value="kobold" >Kobold</option>
-			<option value="ethereal" >Ethereal</option>
-			<option value="slime" >Slime</option>
-			<option value="orc" >Orc</option>
-			<option value="golem" >Golem</option>
-		</select>
-		<input type="select" name="Gear" required="required">
-			<option value="guns" >Industrial</option>
-			<option value="common" >Contemporary</option>
-			<option value="magic" >Traditional</option>
-		</select>
-		<button type="submit" class=btn btn-success">Submit</button>
+<div class="container">
+	<h2>Create Character</h2>
+	<form method="POST" class="form-horizontal">
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-10">
+				<input type="text" id="name" name="name" class="form-control" placeholder="Character Name" required="required" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">Race</label>
+			<div class="col-sm-10">
+				<select name="race" id="race" class="form-control" required="required">
+					<option value=""></option>
+					<% game.races.forEach(function(race){ %>
+						<option value="<%= race.raceId %>"><%= race.name %></option>
+					<% }); %>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="gear" class="col-sm-2 control-label">Starting Gear</label>
+			<div class="col-sm-10">
+				<select name="gear" id="gear" class="form-control" required="required">
+					<option value=""></option>
+					<% game.factions.forEach(function(faction){ %>
+						<option value="<%= faction.factionId %>"><%= faction.name %></option>
+					<% }); %>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-success">Submit</button>
+			</div>
+		</div>
 	</form>
 </div>
 
-<% include templates/footer %>
+<% include ../templates/footer %>

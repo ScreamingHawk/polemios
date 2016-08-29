@@ -3,8 +3,6 @@ var router = express.Router();
 var log = require('winston');
 var commonRoute = require('./common');
 
-var session = require('express-session');
-
 var db = require('../db');
 
 var crypto = require('crypto');
@@ -116,7 +114,7 @@ router.post('/signin', function(req, res, next) {
 				hash.update(postUser.p);
 				var pass = hash.digest('hex');
 				// Test user
-				db.runSqlSingleResult('SELECT username FROM polemios_user WHERE username = ? AND password = ?', [postUser.username, pass], function(dbUser){
+				db.runSqlSingleResult('SELECT userId, username FROM polemios_user WHERE username = ? AND password = ?', [postUser.username, pass], function(dbUser){
 					if (dbUser == null){
 						// Password test failed
 						pageData.errorMsg += "Invalid password. ";
