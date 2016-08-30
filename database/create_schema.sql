@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS player (
     name varchar(30) UNIQUE NOT NULL,
     raceId INTEGER NOT NULL,
     health INTEGER DEFAULT 0,
+    mint INTEGER DEFAULT 0,
 	mapId INTEGER,
 	locationX INTEGER DEFAULT 0,
 	locationY INTEGER DEFAULT 0,
