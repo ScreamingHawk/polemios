@@ -3,11 +3,7 @@ USE polemiosDB;
 -- Add maps and location data
 -- TODO Better descriptions
 -- TODO Remove test locations
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'Test Town', 5, 5, true, 'A test map with one of each location type');
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (2, 'Glow Cavern', 5, 5, false, 'The home of new glow users');
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (3, 'Flicker Volcano', 5, 5, false, 'The home of new flicker users');
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (4, 'Electric Boogaloo', 5, 5, false, 'The home of new bright users');
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (5, 'Wilderness', 2, 5, true, 'A long zone for joining maps');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Docks', 5, 5, true, 'The first stop for new adventurers. ');
 
 -- Add race data
 -- TODO Better description
@@ -20,9 +16,9 @@ INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Golems');
 
 -- Add faction data
 -- TODO Better description
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (1, 'Glow', 'The magic faction', 2);
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (2, 'Flicker', 'The steam faction', 3);
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (3, 'Bright', 'The electricity faction', 4);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (1, 'Glow', 'The magic faction', 1);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (2, 'Flicker', 'The steam faction', 1);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (3, 'Bright', 'The electricity faction', 1);
 
 -- Add race faction default data
 -- TODO Fix fame scale
