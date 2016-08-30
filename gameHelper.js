@@ -81,7 +81,7 @@ module.exports.movePlayerDB = function(playerId, mapId, locationX, locationY, ne
 
 /* Get map from player */
 module.exports.getMapFromPlayer = function(player){
-	return gameData.maps[player.mapId];
+	return gameData.maps[player.mapId - 1];
 }
 
 module.exports.getPlayersAt = function(mapId, locationX, locationY, next){
