@@ -43,7 +43,7 @@ router.post('/signup', function(req, res, next) {
 				// Insert new user
 				db.runSql('INSERT INTO polemios_user (username, email, password, salt) values (?, ?, ?, ?)', [postUser.username, postUser.email, pass, salt], function(result){
 					// Check DB
-					db.runSqlSingleResult('SELECT username FROM polemios_user WHERE username = ?', [postUser.username], function(dbUser){
+					db.runSqlSingleResult('SELECT userId, username FROM polemios_user WHERE username = ?', [postUser.username], function(dbUser){
 						if (dbUser == null){
 							// Failed. No user
 							pageData.errorMsg += "Error creating user. Please contact Polemios Support. ";
@@ -124,6 +124,7 @@ router.post('/signin', function(req, res, next) {
 						req.session.user = dbUser;
 						pageData.user = dbUser;
 						pageData.successMsg += "Welcome "+dbUser.username+"!";
+						// Load the users player
 						//TODO Use redirect_loc
 						res.render('user/signin', pageData);
 					}

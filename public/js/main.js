@@ -3,3 +3,11 @@ submitFormWithAction = function(form, action, value){
 	form.submit();
 	return false;
 };
+
+getLocationSansQuery = function(){
+	var url = window.location.href; 
+	if (url.indexOf("?") != -1){
+		return url.split("?")[0];
+	}
+	return url;
+};

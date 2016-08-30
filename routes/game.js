@@ -28,7 +28,7 @@ gameRouteInitNoCharacter = function(req, res){
 
 gameRouteInit = function(req, res, next){
 	testLogin(req, res);
-	testCharacter(req, function(){
+	testCharacter(req, res, function(){
 		var pageData = commonRoute.initPageData(req.session);
 		pageData.javascriptFiles.push('play.js');
 		pageData.game = {
@@ -60,7 +60,7 @@ hasCharacter = function(req, next){
 }
 
 /* Redirects to create character if user has no character. */
-testCharacter = function(req, next){
+testCharacter = function(req, res, next){
 	hasCharacter(req, function(hasChar){
 		if (!hasChar){
 			res.redirect('/game/create?no_character=true');
@@ -102,14 +102,8 @@ router.post('/create', function (req, res, next) {
 			} else if (postedForm.race <= 0 || postedForm.race > gameData.races.length){
 				pageData.errorMsg += "Invalid race selected. ";
 			}
-			if (!postedForm.gear){
-				pageData.errorMsg += "No starting gear selected. ";
-			} else if (postedForm.gear <= 0 || postedForm.gear > gameData.factions.length){
-				pageData.errorMsg += "Invalid gear selected. ";
-			}
 			if (pageData.errorMsg == ''){
 				var raceId = postedForm.race;
-				var factionId = postedForm.gear;
 				db.runSqlSingleResult('SELECT name FROM player WHERE name = ?', [postedForm.name], function(dbPlayer){
 					if (dbPlayer != null){
 						// Character name already taken
@@ -117,7 +111,7 @@ router.post('/create', function (req, res, next) {
 						res.render('game/create', pageData);
 					} else {
 						// Insert player
-						db.runSql('INSERT INTO player (userId, name, raceId, mapId) values (?, ?, ?, ?)', [req.session.user.userId, postedForm.name, raceId, 1, function(result){
+						db.runSql('INSERT INTO player (userId, name, raceId, mapId) values (?, ?, ?, ?)', [req.session.user.userId, postedForm.name, raceId, 1], function(result){
 							if (result.insertId){
 								db.runSql('INSERT INTO player_faction (playerId, factionId, fame) SELECT ?, factionId, fame FROM race_faction_default WHERE raceId = ?', [result.insertId, raceId], function(result2){
 									if (result2.insertId){
@@ -143,11 +137,21 @@ router.post('/create', function (req, res, next) {
 	});
 });
 
-viewPlay = function(req, res, pageData){
-	// Get players at current location
-	helper.getPlayersAtPlayer(pageData.player, function(players){
-		pageData.locationPlayers = players;
-		res.render('game/play', pageData);
+viewPlay = function(req, res, pageData, full){
+	// Get enemies at current map
+	helper.getEnemiesAtMap(pageData.map.mapId, function(enemies){
+		pageData.locationEnemies = enemies;
+		
+		// Get players at current location
+		helper.getPlayersAtPlayer(pageData.player, function(players){
+			pageData.locationPlayers = players;
+			// Display the full page or just the template
+			if (full){
+				res.render('game/play', pageData);
+			} else {
+				res.render('templates/play', pageData);
+			}
+		});
 	});
 }
 
@@ -161,7 +165,7 @@ router.get('/play', function (req, res, next){
 			pageData.successMsg += 'Welcome to Polemios, '+pageData.player.name +"! ";
 		}
 		
-		viewPlay(req, res, pageData);
+		viewPlay(req, res, pageData, true);
 	});
 });
 

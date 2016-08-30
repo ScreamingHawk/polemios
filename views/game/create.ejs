@@ -23,17 +23,6 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="gear" class="col-sm-2 control-label">Starting Gear</label>
-			<div class="col-sm-10">
-				<select name="gear" id="gear" class="form-control" required="required">
-					<option value=""></option>
-					<% game.factions.forEach(function(faction){ %>
-						<option value="<%= faction.factionId %>"><%= faction.name %></option>
-					<% }); %>
-				</select>
-			</div>
-		</div>
-		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-success">Submit</button>
 			</div>

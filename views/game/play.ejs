@@ -1,55 +1,9 @@
-<%include ../templates/header %>
-<%include ../templates/banner %>
-<%include ../templates/errorBanner %>
+<% include ../templates/header %>
+<% include ../templates/banner %>
+<% include ../templates/errorBanner %>
 
-<div class="container">
-	<h2>Welcome to Polemios, <%= player.name %>!</h2>
-	<h3>You are at <%= player.locationX %>, <%= player.locationY %> in <a href="/maps/<%= map.name %>" title="<%= map.description%>"><%= map.name %></a></h3>
-	
-	<dl>
-		<dt>Name:</dt>
-		<dd><%= player.name %></dd>
-		<dt>Race:</dt>
-		<dd><%= player.race.name %></dd>
-		<dt>Health:</dt>
-		<dd><%= player.health %></dd>
-	</dl>
-	
-	<form id="gameForm" method="POST" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-xs-offset-8 col-sm-offset-10 col-xs-2 col-sm-1">
-				<a id="move-never" href="" class="btn btn-primary">North</a>
-			</div>
-			<div class="col-xs-offset-6 col-sm-offset-9 col-xs-2 col-sm-1">
-				<a id="move-weetbix" href="" class="btn btn-primary">West</a>
-			</div>
-			<div class="col-xs-2 col-sm-1">
-				<a id="move-soggy" href="" class="btn btn-primary">South</a>
-			</div>
-			<div class="col-xs-2 col-sm-1">
-				<a id="move-eat" href="" class="btn btn-primary">East</a>
-			</div>
-		</div>
-		
-		<% if (locationPlayers.length != 0){ %>
-			<div class="form-group">
-				<label for="attackPlayer" class="col-sm-2 control-label">Attack Player: </label>
-				<div class="col-sm-6 col-md-4">
-					<select name="attackPlayer" id="attackPlayer" class="form-control">
-						<option value=""></option>
-						<% locationPlayers.forEach(function(player){ %>
-							<option value="<%= player.playerId %>"><%= player.name %></option>
-						<% }); %>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-danger">Attack!</button>
-				</div>
-			</div>
-		<% } %>
-	</form>
+<div id="gameContainer" class="container">
+	<% include ../templates/play %>
 </div>
 
 <% include ../templates/chatbox %>

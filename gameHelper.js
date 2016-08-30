@@ -88,7 +88,6 @@ module.exports.getMapFromPlayer = function(player){
 }
 
 module.exports.getPlayersAt = function(mapId, locationX, locationY, next){
-	//TODO check lastAction for inactivity safety
 	db.runSql('SELECT playerId, name FROM player WHERE mapId = ? AND locationX = ? AND locationY = ? AND lastAction > ADDDATE(NOW(), INTERVAL -1 HOUR)', [mapId, locationX, locationY], next);
 };
 
@@ -103,4 +102,9 @@ module.exports.getPlayersAtPlayer = function(player, next){
 		}
 		next(dbPlayers);
 	});
-}
+};
+
+module.exports.getEnemiesAtMap = function(mapId, next){
+	//TODO This
+	next([{name: 'Fake Enemy', enemyId: '1'}, {name: 'Fake Enemy 2', enemyId: '2'}]);
+};
