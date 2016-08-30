@@ -13,7 +13,7 @@ module.exports.updateRaces = function(next){
 module.exports.updateRaces();
 
 module.exports.updateFactions = function(next){
-	db.runSql('SELECT factionId, name, description, startingMapId FROM faction', [], function(dbFactions){
+	db.runSql('SELECT factionId, name, description FROM faction', [], function(dbFactions){
 		module.exports.factions = dbFactions;
 		console.log("Factions: " + JSON.stringify(dbFactions, null, 2));
 		if (next){

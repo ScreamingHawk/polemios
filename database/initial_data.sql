@@ -3,7 +3,8 @@ USE polemiosDB;
 -- Add maps and location data
 -- TODO Better descriptions
 -- TODO Remove test locations
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Docks', 5, 5, true, 'The first stop for new adventurers. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Docks', 3, 5, true, 'The first stop for new adventurers. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Wilderness', 5, 5, true, 'The last stop for unprepared adventurers. ');
 
 -- Add race data
 -- TODO Better description
@@ -16,9 +17,9 @@ INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Golems');
 
 -- Add faction data
 -- TODO Better description
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (1, 'Glow', 'The magic faction', 1);
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (2, 'Flicker', 'The steam faction', 1);
-INSERT INTO faction (factionId, name, description, startingMapId) VALUES (3, 'Bright', 'The electricity faction', 1);
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (1, 'Glow', 'The magic faction');
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (2, 'Flicker', 'The steam faction');
+INSERT INTO faction (factionId, name, description, startingMapId) VALUES (3, 'Bright', 'The electricity faction');
 
 -- Add race faction default data
 -- TODO Fix fame scale

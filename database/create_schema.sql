@@ -54,9 +54,7 @@ CREATE TABLE IF NOT EXISTS faction (
 	factionId INTEGER NOT NULL, 
     name varchar(30) NOT NULL,
 	description varchar(200) NOT NULL,
-	startingMapId INTEGER, 
-	PRIMARY KEY (factionId),
-	FOREIGN KEY (startingMapId) REFERENCES map (mapId)
+	PRIMARY KEY (factionId)
 )engine=innodb;
 
 -- Create race faction default fame table
