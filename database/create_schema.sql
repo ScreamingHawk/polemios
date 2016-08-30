@@ -72,6 +72,23 @@ CREATE TABLE IF NOT EXISTS store (
 	FOREIGN KEY (factionId) REFERENCES faction (factionId)
 )engine=innodb;
 
+-- Create map change table
+CREATE TABLE IF NOT EXISTS map_change (
+	mapChangeId INTEGER AUTO_INCREMENT,
+    mapId INTEGER NOT NULL,
+    locationX INTEGER NOT NULL,
+    locationY INTEGER NOT NULL,
+    map2Id INTEGER NOT NULL,
+    location2X INTEGER NOT NULL,
+    location2Y INTEGER NOT NULL,
+    factionId INTEGER,
+	fame INTEGER,
+	PRIMARY KEY (mapChangeId),
+	FOREIGN KEY (mapId) REFERENCES map (mapId),
+	FOREIGN KEY (map2Id) REFERENCES map (mapId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
 
 -- --------Items
 
