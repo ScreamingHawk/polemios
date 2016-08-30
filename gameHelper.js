@@ -5,6 +5,9 @@ var gameData = require('./gameData');
 /* Returns the player for the given user */
 module.exports.getPlayer = function(userId, next){
 	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mapId, locationX, locationY, lastAction FROM player WHERE userId = ?', [userId], function(dbPlayer){
+		if (dbPlayer != null){
+			dbPlayer.race = gameData.races[dbPlayer.raceId -1];	
+		}
 		console.log("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
 		if (next){
 			next(dbPlayer);

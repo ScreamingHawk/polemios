@@ -108,8 +108,8 @@ router.post('/create', function (req, res, next) {
 				pageData.errorMsg += "Invalid gear selected. ";
 			}
 			if (pageData.errorMsg == ''){
-				var raceId = postedForm.race - 1;
-				var factionId = postedForm.gear - 1;
+				var raceId = postedForm.race;
+				var factionId = postedForm.gear;
 				db.runSqlSingleResult('SELECT name FROM player WHERE name = ?', [postedForm.name], function(dbPlayer){
 					if (dbPlayer != null){
 						// Character name already taken
@@ -117,7 +117,7 @@ router.post('/create', function (req, res, next) {
 						res.render('game/create', pageData);
 					} else {
 						// Insert player
-						db.runSql('INSERT INTO player (userId, name, raceId, mapId) values (?, ?, ?, ?)', [req.session.user.userId, postedForm.name, raceId, gameData.factions[factionId].startingMapId], function(result){
+						db.runSql('INSERT INTO player (userId, name, raceId, mapId) values (?, ?, ?, ?)', [req.session.user.userId, postedForm.name, raceId, gameData.factions[factionId - 1].startingMapId], function(result){
 							if (result.insertId){
 								db.runSql('INSERT INTO player_faction (playerId, factionId, fame) SELECT ?, factionId, fame FROM race_faction_default WHERE raceId = ?', [result.insertId, raceId], function(result2){
 									if (result2.insertId){
