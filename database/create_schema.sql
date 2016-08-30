@@ -72,6 +72,31 @@ CREATE TABLE IF NOT EXISTS store (
 )engine=innodb;
 
 
+-- --------Items
+
+-- Create weapon table
+CREATE TABLE IF NOT EXISTS weapon (
+	weaponId INTEGER AUTO_INCREMENT, 
+    name varchar(30) UNIQUE NOT NULL,
+    factionId INTEGER NOT NULL,
+	damage INTEGER NOT NULL,
+	mint INTEGER NOT NULL,
+	PRIMARY KEY (weaponId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
+-- Create armour table
+CREATE TABLE IF NOT EXISTS armour (
+	armourId INTEGER AUTO_INCREMENT, 
+    name varchar(30) UNIQUE NOT NULL,
+    factionId INTEGER NOT NULL,
+	blocks INTEGER NOT NULL,
+	mint INTEGER NOT NULL,
+	PRIMARY KEY (armourId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
+
 -- --------Enemy
 
 -- Create enemy table
@@ -119,7 +144,6 @@ CREATE TABLE IF NOT EXISTS player_stats (
 	FOREIGN KEY (playerId) REFERENCES player (playerId)
 )engine=innodb;
 
-
 -- Create player faction table
 CREATE TABLE IF NOT EXISTS player_faction (
 	playerFactionId INTEGER AUTO_INCREMENT, 
@@ -129,4 +153,49 @@ CREATE TABLE IF NOT EXISTS player_faction (
 	PRIMARY KEY (playerFactionId),
 	FOREIGN KEY (playerId) REFERENCES player (playerId),
 	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
+-- Create player weapon table
+CREATE TABLE IF NOT EXISTS player_weapon (
+	playerWeaponId INTEGER AUTO_INCREMENT, 
+    playerId INTEGER NOT NULL,
+    weaponId INTEGER NOT NULL,
+	equipLeft BOOLEAN NOT NULL DEFAULT FALSE,
+	equipRight BOOLEAN NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (playerWeaponId),
+	FOREIGN KEY (playerId) REFERENCES player (playerId),
+	FOREIGN KEY (weaponId) REFERENCES weapon (weaponId)
+)engine=innodb;
+
+-- Create player armour table
+CREATE TABLE IF NOT EXISTS player_armour (
+	playerArmourId INTEGER AUTO_INCREMENT, 
+    playerId INTEGER NOT NULL,
+    armourId INTEGER NOT NULL,
+	equip BOOLEAN NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (playerArmourId),
+	FOREIGN KEY (playerId) REFERENCES player (playerId),
+	FOREIGN KEY (armourId) REFERENCES armour (armourId)
+)engine=innodb;
+
+-- Create player weapon skill table
+CREATE TABLE IF NOT EXISTS player_weapon_skill (
+	playerWeaponSkillId INTEGER AUTO_INCREMENT, 
+    playerId INTEGER NOT NULL,
+    weaponId INTEGER NOT NULL,
+	skill INTEGER NOT NULL,
+	PRIMARY KEY (playerWeaponSkillId),
+	FOREIGN KEY (playerId) REFERENCES player (playerId),
+	FOREIGN KEY (weaponId) REFERENCES weapon (weaponId)
+)engine=innodb;
+
+-- Create player armour skill table
+CREATE TABLE IF NOT EXISTS player_armour_skill (
+	playerArmourSkillId INTEGER AUTO_INCREMENT, 
+    playerId INTEGER NOT NULL,
+    weaponId INTEGER NOT NULL,
+	skill INTEGER NOT NULL,
+	PRIMARY KEY (playerArmourSkillId),
+	FOREIGN KEY (playerId) REFERENCES player (playerId),
+	FOREIGN KEY (weaponId) REFERENCES weapon (weaponId)
 )engine=innodb;
