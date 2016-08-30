@@ -35,15 +35,16 @@ module.exports.updateMaps = function(next){
 module.exports.updateMaps();
 
 module.exports.updateMapLocations = function(mapId, next){
-	db.runSql('SELECT locationId, x, y, locationType FROM location WHERE mapId = ?', [mapId], function(dbLocations){
+	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour FROM store WHERE mapId = ?', [mapId], function(dbStores){
 		module.exports.maps.forEach(function(map){
 			if (map.mapId == mapId){
-				map.locations = dbLocations;
+				map.stores = dbStores;
 			}
 		});
-		console.log("Locations for map("+mapId+"): " + JSON.stringify(dbLocations, null, 2));
+		console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
+		//TODO More locations
 		if (next){
-			next(dbLocations);
+			next(dbStores);
 		}
 	});
 };
