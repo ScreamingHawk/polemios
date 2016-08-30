@@ -69,6 +69,23 @@ CREATE TABLE IF NOT EXISTS race_faction_default (
 )engine=innodb;
 
 
+-- --------Enemy
+
+-- Create enemy table
+CREATE TABLE IF NOT EXISTS enemy (
+	enemyId INTEGER AUTO_INCREMENT, 
+    name varchar(30) UNIQUE NOT NULL,
+    factionId INTEGER,
+	damage INTEGER NOT NULL,
+	health INTEGER NOT NULL,
+	mint INTEGER NOT NULL,
+	mapId INTEGER NOT NULL,
+	PRIMARY KEY (enemyId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId),
+	FOREIGN KEY (mapId) REFERENCES map (mapId)
+)engine=innodb;
+
+
 -- --------Player
 
 -- Create player table
