@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS store (
     factionId INTEGER,
 	sellsWeapons BOOLEAN NOT NULL,
 	sellsArmour BOOLEAN NOT NULL,
+	maxMint INTEGER NOT NULL,
 	PRIMARY KEY (storeId),
 	FOREIGN KEY (mapId) REFERENCES map (mapId),
 	FOREIGN KEY (factionId) REFERENCES faction (factionId)
