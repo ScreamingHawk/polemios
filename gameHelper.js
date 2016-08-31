@@ -105,6 +105,14 @@ module.exports.getPlayersAtPlayer = function(player, next){
 };
 
 module.exports.getEnemiesAtMap = function(mapId, next){
-	//TODO This
-	next([{name: 'Fake Enemy', enemyId: '1'}, {name: 'Fake Enemy 2', enemyId: '2'}]);
+	var map = gameData.maps[mapId - 1];
+	if (map.enemies){
+		// Map has enemies loaded, use them
+		next(map.enemies);
+	} else {
+		// Load maps enemies then use them
+		gameData.updateMap(mapId, function(map){
+			next(map.enemies);
+		});
+	}
 };

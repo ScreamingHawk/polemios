@@ -42,3 +42,30 @@ INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 1, 25); --
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 2, 25); -- Golem Flicker
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 3, 100); -- Golem Bright
 
+-- Add enemy data
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bilge Rats', null, 10, 100, 10, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck Squabbler', null, 20, 200, 20, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 50, 500, 50, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 100, 1000, 100, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 1000, 10000, 1000, 1);
+
+
+
+
+
+
+
+
+-- Create enemy table
+CREATE TABLE IF NOT EXISTS enemy (
+	enemyId INTEGER AUTO_INCREMENT, 
+    name varchar(30) UNIQUE NOT NULL,
+    factionId INTEGER,
+	damage INTEGER NOT NULL,
+	health INTEGER NOT NULL,
+	mint INTEGER NOT NULL,
+	mapId INTEGER NOT NULL,
+	PRIMARY KEY (enemyId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId),
+	FOREIGN KEY (mapId) REFERENCES map (mapId)
+)engine=innodb;

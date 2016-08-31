@@ -34,23 +34,36 @@ module.exports.updateMaps = function(next){
 };
 module.exports.updateMaps();
 
-module.exports.updateMapLocations = function(mapId, next){
-	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour FROM store WHERE mapId = ?', [mapId], function(dbStores){
-		module.exports.maps.forEach(function(map){
-			if (map.mapId == mapId){
-				map.stores = dbStores;
-			}
-		});
-		console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
-		//TODO More locations
-		if (next){
-			next(dbStores);
+module.exports.updateMap = function(mapId, next){
+	var map = null;
+	module.exports.maps.forEach(function(loopMap){
+		if (loopMap.mapId == mapId){
+			map = loopMap;
 		}
+	});
+	// Get stores
+	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour FROM store WHERE mapId = ?', [mapId], function(dbStores){
+		map.stores = dbStores;
+		console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
+		// Get entrances
+		db.runSql('SELECT entranceId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame FROM entrance WHERE mapId = ?', [mapId], function(dbEntrances){
+			map.entrances = dbEntrances;
+			console.log("Entrances for map("+mapId+"): " + JSON.stringify(dbEntrances, null, 2));
+			// Get enemies
+			db.runSql('SELECT enemyId, name FROM enemy WHERE mapId = ?', [mapId], function(dbEnemies){
+				map.enemies = dbEnemies;
+				console.log("Enemies for map("+mapId+"): " + JSON.stringify(dbEnemies, null, 2));
+				//TODO More locations
+				if (next){
+					next(map);
+				}
+			});
+		});
 	});
 };
 
 module.exports.updateRaceFactionDefaults = function(next){
-	db.runSql('SELECT raceFactionDefaultId, raceId, factionId, fame FROM raceFactionDefault', [], function(dbRaceFactionDefaults){
+	db.runSql('SELECT raceFactionDefaultId, raceId, factionId, fame FROM race_faction_default', [], function(dbRaceFactionDefaults){
 		module.exports.raceFactionDefaults = dbRaceFactionDefaults;
 		console.log("Race Faction Defaults: " + JSON.stringify(dbRaceFactionDefaults, null, 2));
 		if (next){
@@ -58,3 +71,4 @@ module.exports.updateRaceFactionDefaults = function(next){
 		}
 	});
 };
+module.exports.updateRaceFactionDefaults();
