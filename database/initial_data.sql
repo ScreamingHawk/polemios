@@ -49,23 +49,17 @@ INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaw
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 100, 1000, 100, 1);
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 1000, 10000, 1000, 1);
 
+-- Add store data
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Weapons', 1, 1, 1, null, true, false, 1000);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Armour', 1, 1, 2, null, false, true, 1000);
 
+-- Add weapon data
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Knife', 2, 100, 100);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Pistol', 3, 100, 100);
 
+-- Add armour data
+INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Glowing Cotton Robe', 1, 100, 100);
+INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Flickering Bronze Curiass', 2, 100, 100);
+INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Bright Leather Gambeson', 3, 100, 100);
 
-
-
-
-
--- Create enemy table
-CREATE TABLE IF NOT EXISTS enemy (
-	enemyId INTEGER AUTO_INCREMENT, 
-    name varchar(30) UNIQUE NOT NULL,
-    factionId INTEGER,
-	damage INTEGER NOT NULL,
-	health INTEGER NOT NULL,
-	mint INTEGER NOT NULL,
-	mapId INTEGER NOT NULL,
-	PRIMARY KEY (enemyId),
-	FOREIGN KEY (factionId) REFERENCES faction (factionId),
-	FOREIGN KEY (mapId) REFERENCES map (mapId)
-)engine=innodb;
