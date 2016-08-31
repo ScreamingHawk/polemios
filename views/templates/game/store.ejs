@@ -1,0 +1,46 @@
+<h4>Welcome to <b><%= location.name %></b>!</h4>
+
+<div class="form-horizontal">
+	<div class="form-group">
+		<% if (location.sellsWeapons){ %>
+			<label for="buyWeapon" class="col-sm-2 control-label">Weapons: </label>
+			<div class="col-sm-4">
+				<select name="buyWeapon" id="buyWeapon" class="form-control">
+					<option value=""></option>
+					<% game.weapons.forEach(function(weapon){ %>
+						<% if (location.maxMint >= weapon.mint && (location.factionId == null || location.factionId == weapon.factionId)){ %>
+							<option value="<%= weapon.weaponId %>"><%= weapon.name %> (<%= weapon.mint %>)</option>
+						<% } %>
+					<% }); %>
+				</select>
+			</div>
+		<% } %>
+		<% if (location.sellsArmour){ %>
+			<label for="buyArmour" class="col-sm-2 control-label">Armour: </label>
+			<div class="col-sm-4">
+				<select name="buyArmour" id="buyArmour" class="form-control">
+					<option value=""></option>
+					<% game.armours.forEach(function(armour){ %>
+						<% if (location.maxMint >= armour.mint && (location.factionId == null || location.factionId == armour.factionId)){ %>
+							<option value="<%= armour.armourId %>"><%= armour.name %> (<%= armour.mint %>)</option>
+						<% } %>
+					<% }); %>
+				</select>
+			</div>
+		<% } %>
+	</div>
+	<% if (location.sellsWeapons){ %>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-4">
+				<button id="buyWeaponButton" type="submit" class="btn btn-success">Buy Weapon!</button>
+			</div>
+		</div>
+	<% } %>
+	<% if (location.sellsArmour){ %>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-4">
+				<button id="buyItemButton" type="submit" class="btn btn-success">Buy Armour!</button>
+			</div>
+		</div>
+	<% } %>
+</div>

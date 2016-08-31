@@ -42,7 +42,7 @@ module.exports.updateMap = function(mapId, next){
 		}
 	});
 	// Get stores
-	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour FROM store WHERE mapId = ?', [mapId], function(dbStores){
+	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour, maxMint FROM store WHERE mapId = ?', [mapId], function(dbStores){
 		map.stores = dbStores;
 		console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
 		// Get entrances

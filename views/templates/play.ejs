@@ -30,9 +30,7 @@
 
 	<% if (locationType == 'store'){ %>
 		<div class="col-sm-12">
-			<h4>Welcome to <b><%= location.name %></b>!</h4>
-			
-			//TODO Implementation Pending!
+			<% include ./game/store %>
 		</div>
 	<% } else if (locationType == 'entrance'){ %>
 		<div class="col-sm-12">

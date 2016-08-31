@@ -33,7 +33,7 @@ module.exports.getPlayerMaxHealth = function(player, next){
 		maxHealth += player.armour.blocks * player.armour.skill / 100;
 	}
 	next(maxHealth);
-}
+};
 
 module.exports.movePlayer = function(player, move, next){
 	var map = module.exports.getMapFromPlayer(player);
@@ -91,12 +91,12 @@ module.exports.movePlayerDB = function(playerId, mapId, locationX, locationY, ne
 			next();
 		}
 	});
-}
+};
 
 /* Get map from player */
 module.exports.getMapFromPlayer = function(player){
 	return gameData.maps[player.mapId - 1];
-}
+};
 
 module.exports.getPlayersAt = function(mapId, locationX, locationY, next){
 	db.runSql('SELECT playerId, name FROM player WHERE mapId = ? AND locationX = ? AND locationY = ? AND lastAction > ADDDATE(NOW(), INTERVAL -1 HOUR)', [mapId, locationX, locationY], next);
@@ -137,7 +137,7 @@ module.exports.getLocationAtPlayer = function(player, next){
 			findLocation(map, player.locationX, player.locationY, next);
 		});
 	}
-}
+};
 
 findLocation = function(map, locationX, locationY, next){
 	// Check for store
@@ -146,6 +146,7 @@ findLocation = function(map, locationX, locationY, next){
 			var store = map.stores[i];
 			if (store.locationX == locationX && store.locationY == locationY){
 				next(store, 'store');
+				return;
 			}
 		}
 	}
@@ -155,8 +156,10 @@ findLocation = function(map, locationX, locationY, next){
 			var entrance = map.entrances[i];
 			if (entrance.locationX == locationX && entrance.locationY == locationY){
 				next(entrance, 'entrance');
+				return;
 			}
 		}
 	}
+	// Nothing found
 	next(null, null);
 };

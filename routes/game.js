@@ -16,25 +16,27 @@ testLogin = function(req, res){
 	return false;
 };
 
-gameRouteInitNoCharacter = function(req, res){
-	testLogin(req, res);
-	var pageData = commonRoute.initPageData(req.session);
+createBasePageData = function(req){
+	var pageData = commonRoute.initPageData(req.session)
 	pageData.game = {
 		races: gameData.races,
-		factions: gameData.factions
+		factions: gameData.factions, 
+		weapons: gameData.weapons,
+		armours: gameData.armours
 	};
 	return pageData;
+}
+
+gameRouteInitNoCharacter = function(req, res){
+	testLogin(req, res);
+	return createBasePageData(req);
 }
 
 gameRouteInit = function(req, res, next){
 	testLogin(req, res);
 	testCharacter(req, res, function(){
-		var pageData = commonRoute.initPageData(req.session);
+		var pageData = createBasePageData(req);
 		pageData.javascriptFiles.push('play.js');
-		pageData.game = {
-			races: gameData.races,
-			factions: gameData.factions
-		};
 		pageData.player = req.session.player;
 		if (pageData.player && pageData.player.mapId){
 			pageData.map = helper.getMapFromPlayer(pageData.player);
