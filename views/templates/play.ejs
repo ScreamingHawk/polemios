@@ -27,52 +27,67 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-6">
-		<div class="form-horizontal">
-			<div class="form-group">
-				<label for="findEnemy" class="col-sm-2 control-label">Find Enemy: </label>
-				<div class="col-sm-6 col-md-4">
-					<select name="findEnemy" id="findEnemy" class="form-control">
-						<option value=""></option>
-						<% locationEnemies.forEach(function(enemy){ %>
-							<option value="<%= enemy.enemyId %>"><%= enemy.name %></option>
-						<% }); %>
-					</select>
+
+	<% if (locationType == 'store'){ %>
+		<div class="col-sm-12">
+			<h4>Welcome to <b><%= location.name %></b>!</h4>
+			
+			//TODO Implementation Pending!
+		</div>
+	<% } else if (locationType == 'entrance'){ %>
+		<div class="col-sm-12">
+			<h4>This is the entrance to another map!</h4>
+			
+			//TODO Implementation Pending!
+		</div>
+	<% } else { %>
+		<div class="col-sm-6">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label for="findEnemy" class="col-sm-2 control-label">Find Enemy: </label>
+					<div class="col-sm-6 col-md-4">
+						<select name="findEnemy" id="findEnemy" class="form-control">
+							<option value=""></option>
+							<% locationEnemies.forEach(function(enemy){ %>
+								<option value="<%= enemy.enemyId %>"><%= enemy.name %></option>
+							<% }); %>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button id="findEnemyButton" type="submit" class="btn btn-warning">Find Enemy!</button>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button id="findEnemyButton" type="submit" class="btn btn-warning">Find Enemy!</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-6">
-		<% if (map.pvp){ %>
-			<% if (locationPlayers.length != 0){ %>
-				<div class="form-horizontal">
-					<div class="form-group">
-						<label for="attackPlayer" class="col-sm-2 control-label">Attack Player: </label>
-						<div class="col-sm-6 col-md-4">
-							<select name="attackPlayer" id="attackPlayer" class="form-control">
-								<option value=""></option>
-								<% locationPlayers.forEach(function(player){ %>
-									<option value="<%= player.playerId %>"><%= player.name %></option>
-								<% }); %>
-							</select>
+		<div class="col-sm-6">
+			<% if (map.pvp){ %>
+				<% if (locationPlayers.length != 0){ %>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label for="attackPlayer" class="col-sm-2 control-label">Attack Player: </label>
+							<div class="col-sm-6 col-md-4">
+								<select name="attackPlayer" id="attackPlayer" class="form-control">
+									<option value=""></option>
+									<% locationPlayers.forEach(function(player){ %>
+										<option value="<%= player.playerId %>"><%= player.name %></option>
+									<% }); %>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button id="attackPlayerButton" type="submit" class="btn btn-danger">Attack Player!</button>
+							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button id="attackPlayerButton" type="submit" class="btn btn-danger">Attack Player!</button>
-						</div>
-					</div>
-				</div>
+				<% } %>
+			<% } else { %>
+				<span>Player killing is forbidden in <%= map.name %>.</span>
 			<% } %>
-		<% } else { %>
-			<span>Player killing is forbidden in <%= map.name %>.</span>
-		<% } %>
-	</div>
+		</div>
+	<% } %>
 </div>
 
 <% include ./errorBanner %>

@@ -54,6 +54,7 @@ module.exports.updateMap = function(mapId, next){
 				map.enemies = dbEnemies;
 				console.log("Enemies for map("+mapId+"): " + JSON.stringify(dbEnemies, null, 2));
 				//TODO More locations
+				map.loaded = true;
 				if (next){
 					next(map);
 				}

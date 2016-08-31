@@ -116,3 +116,36 @@ module.exports.getEnemiesAtMap = function(mapId, next){
 		});
 	}
 };
+
+module.exports.getLocationAtPlayer = function(player, next){
+	var map = module.exports.getMapFromPlayer(player);
+	if (map.loaded){
+		findLocation(map, player.locationX, player.locationY, next);
+	} else {
+		gameData.updateMap(map.mapId, function(map){
+			findLocation(map, player.locationX, player.locationY, next);
+		});
+	}
+}
+
+findLocation = function(map, locationX, locationY, next){
+	// Check for store
+	if (map.stores){
+		for (var i = 0; i < map.stores.length; i++){
+			var store = map.stores[i];
+			if (store.locationX == locationX && store.locationY == locationY){
+				next(store, 'store');
+			}
+		}
+	}
+	// Check for entrance
+	if (map.entrances){
+		for (var i = 0; i < map.entrances.length; i++){
+			var entrance = map.entrances[i];
+			if (entrance.locationX == locationX && entrance.locationY == locationY){
+				next(entrance, 'entrance');
+			}
+		}
+	}
+	next(null, null);
+};

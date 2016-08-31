@@ -145,12 +145,19 @@ viewPlay = function(req, res, pageData, full){
 		// Get players at current location
 		helper.getPlayersAtPlayer(pageData.player, function(players){
 			pageData.locationPlayers = players;
-			// Display the full page or just the template
-			if (full){
-				res.render('game/play', pageData);
-			} else {
-				res.render('templates/play', pageData);
-			}
+			
+			helper.getLocationAtPlayer(pageData.player, function(location, locationType){
+				pageData.location = location;
+				pageData.locationType = locationType;
+			
+				//TODO More stuff
+				// Display the full page or just the template
+				if (full){
+					res.render('game/play', pageData);
+				} else {
+					res.render('templates/play', pageData);
+				}
+			});
 		});
 	});
 }
