@@ -7,9 +7,9 @@ module.exports = function(http){
 	var disconnecting = [];
 	
 	io.on('connection', function(socket){
-		if (socket.handshake.session && socket.handshake.session.user){
+		if (socket.handshake.session && socket.handshake.session.player){
 			// Connection by logged in user
-			var username = socket.handshake.session.user.username;
+			var username = socket.handshake.session.player.name;
 			if (username){
 				
 				if (!clients[username]){
