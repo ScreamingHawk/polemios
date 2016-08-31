@@ -1,5 +1,8 @@
+-- Drop db if exists
+DROP DATABASE IF EXISTS polemiosDB;
+
 -- Create database
-CREATE database IF NOT EXISTS polemiosDB;
+CREATE DATABASE IF NOT EXISTS polemiosDB;
 
 USE polemiosDB;
 
