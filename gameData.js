@@ -73,3 +73,25 @@ module.exports.updateRaceFactionDefaults = function(next){
 	});
 };
 module.exports.updateRaceFactionDefaults();
+
+module.exports.updateWeapons = function(next){
+	db.runSql('SELECT weaponId, name, factionId, damage, mint FROM weapon', [], function(dbWeapons){
+		module.exports.weapons = dbWeapons;
+		console.log("Weapons: " + JSON.stringify(dbWeapons, null, 2));
+		if (next){
+			next(dbWeapons);
+		}
+	});
+};
+module.exports.updateWeapons();
+
+module.exports.updateArmours = function(next){
+	db.runSql('SELECT armourId, name, factionId, blocks, mint FROM armour', [], function(dbArmours){
+		module.exports.armours = dbArmours;
+		console.log("Armours: " + JSON.stringify(dbArmours, null, 2));
+		if (next){
+			next(dbArmours);
+		}
+	});
+};
+module.exports.updateArmours();
