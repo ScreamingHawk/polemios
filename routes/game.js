@@ -111,7 +111,7 @@ router.post('/create', function (req, res, next) {
 						res.render('game/create', pageData);
 					} else {
 						// Insert player
-						db.runSql('INSERT INTO player (userId, name, raceId, mapId) values (?, ?, ?, ?)', [req.session.user.userId, postedForm.name, raceId, 1], function(result){
+						db.runSql('INSERT INTO player (userId, name, raceId, mapId, health) values (?, ?, ?, 1, ?)', [req.session.user.userId, postedForm.name, raceId, helper.playerDefaultMaxHealth], function(result){
 							if (result.insertId){
 								db.runSql('INSERT INTO player_faction (playerId, factionId, fame) SELECT ?, factionId, fame FROM race_faction_default WHERE raceId = ?', [result.insertId, raceId], function(result2){
 									if (result2.insertId){

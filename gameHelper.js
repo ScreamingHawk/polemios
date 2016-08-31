@@ -24,6 +24,17 @@ module.exports.updatePlayer = function(playerId, next){
 	});
 };
 
+module.exports.playerDefaultMaxHealth = 10;
+
+module.exports.getPlayerMaxHealth = function(player, next){
+	var maxHealth = module.exports.playerDefaultMaxHealth;
+	if (player.armour){
+		// Armour adds blocks * skill% to max health
+		maxHealth += player.armour.blocks * player.armour.skill / 100;
+	}
+	next(maxHealth);
+}
+
 module.exports.movePlayer = function(player, move, next){
 	var map = module.exports.getMapFromPlayer(player);
 	var moved = false;
