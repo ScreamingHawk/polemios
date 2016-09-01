@@ -214,9 +214,9 @@ CREATE TABLE IF NOT EXISTS player_weapon_skill (
 CREATE TABLE IF NOT EXISTS player_armour_skill (
 	playerArmourSkillId INTEGER AUTO_INCREMENT, 
     playerId INTEGER NOT NULL,
-    weaponId INTEGER NOT NULL,
+    armourId INTEGER NOT NULL,
 	skill INTEGER NOT NULL,
 	PRIMARY KEY (playerArmourSkillId),
 	FOREIGN KEY (playerId) REFERENCES player (playerId),
-	FOREIGN KEY (weaponId) REFERENCES weapon (weaponId)
+	FOREIGN KEY (armourId) REFERENCES armour (armourId)
 )engine=innodb;

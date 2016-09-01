@@ -2,9 +2,11 @@
 var db = require('./db');
 var gameData = require('./gameData');
 
+module.exports.playerStartingMint = 300;
+
 /* Returns the player for the given user */
 module.exports.getPlayer = function(userId, next){
-	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mapId, locationX, locationY, lastAction FROM player WHERE userId = ?', [userId], function(dbPlayer){
+	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mint, mapId, locationX, locationY, lastAction FROM player WHERE userId = ?', [userId], function(dbPlayer){
 		if (dbPlayer != null){
 			dbPlayer.race = gameData.races[dbPlayer.raceId -1];	
 		}
@@ -15,9 +17,27 @@ module.exports.getPlayer = function(userId, next){
 	});
 };
 
+module.exports.getPlayerInventory = function(playerId, next){
+	db.runSql('SELECT name, equipLeft, equipRight FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId WHERE playerId = ?', [playerId], next);
+};
+module.exports.updatePlayerInventory = function(player, next){
+	module.exports.getPlayerInventory(player.playerId, function(dbInventory){
+		player.inventory = dbInventory;
+		next();
+	});
+}
+
 /* Updates the players lastAction */
 module.exports.updatePlayer = function(playerId, next){
 	db.runSql('UPDATE player SET lastAction = NOW() WHERE playerId = ?', [playerId], function(result){
+		if (next){
+			next();
+		}
+	});
+};
+
+module.exports.updatePlayerMint = function(player, next){
+	db.runSql('UPDATE player SET mint = ? WHERE playerId = ?', [player.mint, player.playerId], function(result){
 		if (next){
 			next();
 		}
@@ -163,3 +183,68 @@ findLocation = function(map, locationX, locationY, next){
 	// Nothing found
 	next(null, null);
 };
+
+module.exports.buyWeapon = function(player, weapon, next){
+	// Add to player inventory
+	db.runSql('INSERT INTO player_weapon (playerId, weaponId) VALUES (?, ?)', [player.playerId, weapon.weaponId], function(result){
+		// Update inventory
+		module.exports.updatePlayerInventory(player, function(){
+			// Update player mint
+			player.mint -= weapon.mint;
+			module.exports.updatePlayerMint(player, function(){
+				// Check player has a skill
+				db.runSqlSingleResult('SELECT playerWeaponSkillId FROM player_weapon_skill WHERE playerId = ? AND weaponId = ?', [player.playerId, weapon.weaponId], function(result){
+					if (result == null){
+						// Add skill with base stats
+						db.runSql('INSERT INTO player_weapon_skill (playerId, weaponId, skill) SELECT ?, ?, fame FROM race_faction_default WHERE raceId = ? AND factionId = ?', [player.playerId, weapon.weaponId, player.raceId, weapon.factionId], function(result){
+							next();
+						});
+					} else {
+						next();
+					}
+				});
+			});
+		});
+	});
+};
+
+module.exports.buyArmour = function(player, armour, next){
+	// Add to player inventory
+	db.runSql('INSERT INTO player_armour (playerId, armourId) VALUES (?, ?)', [player.playerId, armour.armourId], function(result){
+		// Update inventory
+		module.exports.updatePlayerInventory(player, function(){
+			// Update player mint
+			player.mint -= armour.mint;
+			module.exports.updatePlayerMint(player, function(){
+				// Check player has a skill
+				db.runSqlSingleResult('SELECT playerArmourSkillId FROM player_armour_skill WHERE playerId = ? AND armourId = ?', [player.playerId, armour.armourId], function(result){
+					if (result == null){
+						// Add skill with base stats
+						db.runSql('INSERT INTO player_armour_skill (playerId, armourId, skill) SELECT ?, ?, fame FROM race_faction_default WHERE raceId = ? AND factionId = ?', [player.playerId, armour.armourId, player.raceId, armour.factionId], function(result){
+							next();
+						});
+					} else {
+						next();
+					}
+				});
+			});
+		});
+	});
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

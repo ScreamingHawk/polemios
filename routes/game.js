@@ -113,7 +113,7 @@ router.post('/create', function (req, res, next) {
 						res.render('game/create', pageData);
 					} else {
 						// Insert player
-						db.runSql('INSERT INTO player (userId, name, raceId, mapId, health) values (?, ?, ?, 1, ?)', [req.session.user.userId, postedForm.name, raceId, helper.playerDefaultMaxHealth], function(result){
+						db.runSql('INSERT INTO player (userId, name, raceId, mapId, health, mint) values (?, ?, ?, 1, ?, ?)', [req.session.user.userId, postedForm.name, raceId, helper.playerDefaultMaxHealth, helper.playStartingMint], function(result){
 							if (result.insertId){
 								db.runSql('INSERT INTO player_faction (playerId, factionId, fame) SELECT ?, factionId, fame FROM race_faction_default WHERE raceId = ?', [result.insertId, raceId], function(result2){
 									if (result2.insertId){
@@ -184,6 +184,7 @@ router.post('/play', function (req, res, next){
 		var postBody = req.body;
 		var player = pageData.player;
 		if (postBody.move){
+			// Move requested
 			helper.movePlayer(player, postBody.move, function(err, moved){
 				if (!moved){
 					console.log('Player moved: '+postBody.move);
@@ -192,7 +193,46 @@ router.post('/play', function (req, res, next){
 				viewPlay(req, res, pageData);
 			});
 		} else {
-			viewPlay(req, res, pageData);
+			// Location aware options
+			helper.getLocationAtPlayer(player, function(location, locationType){
+				if (locationType == 'store'){
+					if (postBody.buyWeapon && location.sellsWeapons){
+						// Buy weapon requested
+						var weapon = gameData.weapons[postBody.buyWeapon - 1];
+						if (location.maxMint >= weapon.mint){
+							if (player.mint >= weapon.mint){
+								helper.buyWeapon(player, weapon, function(){
+									pageData.successMsg += "You purchased the "+weapon.name+"! ";
+									viewPlay(req, res, pageData);
+								});
+							} else {
+								pageData.errorMsg += "You can't afford the "+weapon.name+"! ";
+								viewPlay(req, res, pageData);
+							}
+						} else {
+							viewPlay(req, res, pageData);
+						}
+					} else if (postBody.buyArmour && location.sellsArmour){
+						// Buy armour requested
+						var armour = gameData.armours[postBody.buyArmour - 1];
+						if (location.maxMint >= armour.mint){
+							if (player.mint >= armour.mint){
+								helper.buyArmour(player, armour, function(){
+									pageData.successMsg += "You purchased the "+armour.name+"! ";
+									viewPlay(req, res, pageData);
+								});
+							} else {
+								pageData.errorMsg += "You can't afford the "+armour.name+"! ";
+								viewPlay(req, res, pageData);
+							}
+						} else {
+							viewPlay(req, res, pageData);
+						}
+					}
+				} else {
+					viewPlay(req, res, pageData);
+				}
+			});
 		}
 	});
 });

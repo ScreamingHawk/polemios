@@ -8,7 +8,16 @@
 	<dd><%= player.race.name %></dd>
 	<dt>Health:</dt>
 	<dd><%= player.health %></dd>
+	<dt>Mint:</dt>
+	<dd><%= player.mint %></dd>
 </dl>
+
+<strong>Inventory: </strong>
+<ul>
+<% player.inventory.forEach(function(item){ %>
+	<li><%= item.name %></li>
+<% }); %>
+</ul>
 
 <form id="gameForm" method="POST" class="hidden"></form>
 <div class="row">
@@ -42,8 +51,8 @@
 		<div class="col-sm-6">
 			<div class="form-horizontal">
 				<div class="form-group">
-					<label for="findEnemy" class="col-sm-2 control-label">Find Enemy: </label>
-					<div class="col-sm-6 col-md-4">
+					<label for="findEnemy" class="col-sm-4 control-label">Enemy: </label>
+					<div class="col-sm-8">
 						<select name="findEnemy" id="findEnemy" class="form-control">
 							<option value=""></option>
 							<% locationEnemies.forEach(function(enemy){ %>
@@ -53,7 +62,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-sm-offset-4 col-sm-8">
 						<button id="findEnemyButton" type="submit" class="btn btn-warning">Find Enemy!</button>
 					</div>
 				</div>
@@ -64,8 +73,8 @@
 				<% if (locationPlayers.length != 0){ %>
 					<div class="form-horizontal">
 						<div class="form-group">
-							<label for="attackPlayer" class="col-sm-2 control-label">Attack Player: </label>
-							<div class="col-sm-6 col-md-4">
+							<label for="attackPlayer" class="col-sm-4 control-label">Player: </label>
+							<div class="col-sm-8">
 								<select name="attackPlayer" id="attackPlayer" class="form-control">
 									<option value=""></option>
 									<% locationPlayers.forEach(function(player){ %>
@@ -75,7 +84,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
+							<div class="col-sm-offset-4 col-sm-8">
 								<button id="attackPlayerButton" type="submit" class="btn btn-danger">Attack Player!</button>
 							</div>
 						</div>

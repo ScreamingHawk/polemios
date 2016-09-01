@@ -20,6 +20,15 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('move', 'west');
 	});
+	// Set up shop buttons
+	$('#buyWeaponButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('buyWeapon', $('#buyWeapon').val());
+	});
+	$('#buyArmourButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('buyArmour', $('#buyArmour').val());
+	});
 };
 setUpGameForm();
 
