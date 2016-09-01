@@ -15,6 +15,30 @@ setUpGameForm = function(){
 			$(this).text('Show Inventory');
 		}
 	});
+	$('[data-unequipleft]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('unequipleft', $(this).data('unequipleft'));
+	});
+	$('[data-unequipright]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('unequipright', $(this).data('unequipright'));
+	});
+	$('[data-equipleft]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('equipleft', $(this).data('equipleft'));
+	});
+	$('[data-equipright]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('equipright', $(this).data('equipright'));
+	});
+	$('[data-unequipbody]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('unequipbody', $(this).data('unequipbody'));
+	});
+	$('[data-equipbody]').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('equipbody', $(this).data('equipbody'));
+	});
 	// Set up movement buttons
 	$('#move-never').click(function(e){
 		e.preventDefault();
@@ -50,6 +74,7 @@ setUpGameForm();
 
 ajaxGameFormAction = function(action, value){
 	//TODO Block inputs
+	console.log('ajaxing');
 	
 	gameForm.append('<input type="hidden" name="'+action+'" value="'+value+'">');
 	$.ajax({

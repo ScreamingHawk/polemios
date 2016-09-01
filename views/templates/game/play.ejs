@@ -15,11 +15,43 @@
 		</dl>
 		<a id="showHideInventory" href="" class="lead">Show Inventory</a>
 		<ul id="inventory" class="list-unstyled hidden">
-			<% if (typeof (player.inventory) == 'undefined' || player.inventory.length == 0){ %>
-				<li>You have no items</li>
+			<li>&nbsp;</li>
+			<li class="lead">Weapons</li>
+			<% if (typeof (player.weapons) == 'undefined' || player.weapons.length == 0){ %>
+				<li>You have no weapons</li>
 			<% } else { %>
-				<% player.inventory.forEach(function(item){ %>
-					<li><%= item.name %></li>
+				<% player.weapons.forEach(function(item){ %>
+					<li>
+						<%= item.name %>
+						<% if (item.equipLeft){ %>
+							<a data-unequipleft="<%= item.playerWeaponId %>" href="">(in Left)</a>
+						<% } else if (item.equipRight){ %>
+							<a data-unequipright="<%= item.playerWeaponId %>" href="">(in Right)</a>
+						<% } %>
+						<% if (!player.equipLeft){ %>
+							<a data-equipleft="<%= item.playerWeaponId %>" href="">(add to Left)</a>
+						<% } %>
+						<% if (!player.equipRight){ %>
+							<a data-equipright="<%= item.playerWeaponId %>" href="">(add to Right)</a>
+						<% } %>
+					</li>
+				<% }); %>
+			<% } %>
+			<li>&nbsp;</li>
+			<li class="lead">Armour</li>
+			<% if (typeof (player.armours) == 'undefined' || player.armours.length == 0){ %>
+				<li>You have no armour</li>
+			<% } else { %>
+				<% player.armours.forEach(function(item){ %>
+					<li>
+						<%= item.name %>
+						<% if (item.equip){ %>
+							<a data-unequipbody="<%= item.playerArmourId %>" href="">(on Body)</a>
+						<% } %>
+						<% if (!player.equipBody){ %>
+							<a data-equipbody="<%= item.playerArmourId %>" href="">(add to Body)</a>
+						<% } %>
+					</li>
 				<% }); %>
 			<% } %>
 		</ul>

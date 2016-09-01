@@ -209,6 +209,43 @@ router.post('/play', function (req, res, next){
 				}
 				viewPlay(req, res, pageData);
 			});
+		} else if (postBody.unequipleft || postBody.unequipright || postBody.equipleft || postBody.equipright) {
+			// Equip or unequip weapon requested
+			async.series([
+				function(callback){
+					if (postBody.unequipleft || postBody.unequipright){
+						// unequip current weapon
+						helper.unequipWeapon(player, postBody.unequipleft, callback);
+					} else if (postBody.equipleft){
+						// equip desired weapon left
+						helper.equipWeapon(player, true, postBody.equipleft, callback);
+					} else if (postBody.equipright){
+						// equip desired weapon right
+						helper.equipWeapon(player, false, postBody.equipright, callback);
+					} else {
+						callback();
+					}
+				},
+			], function(){
+				viewPlay(req, res, pageData);
+			});
+		} else if (postBody.unequipbody || postBody.equipbody) {
+			// Equip or unequip weapon requested
+			async.series([
+				function(callback){
+					if (postBody.unequipbody){
+						// unequip current armour
+						helper.unequipArmour(player, callback);
+					} else if (postBody.equipbody){
+						// equip desired armour right
+						helper.equipArmour(player, postBody.equipbody, callback);
+					} else {
+						callback();
+					}
+				},
+			], function(){
+				viewPlay(req, res, pageData);
+			});
 		} else {
 			// Location aware options
 			helper.getLocationAtPlayer(player, function(location, locationType){

@@ -1,4 +1,4 @@
-/* Get static look up values */
+var async = require('async');
 var db = require('./db');
 var gameData = require('./gameData');
 
@@ -17,17 +17,75 @@ module.exports.getPlayer = function(userId, next){
 	});
 };
 
-module.exports.getPlayerInventory = function(playerId, next){
-	db.runSql('SELECT name, equipLeft, equipRight FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId WHERE playerId = ?', [playerId], next);
+module.exports.getPlayerWeapons = function(playerId, next){
+	db.runSql('SELECT playerWeaponId, name, equipLeft, equipRight FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId WHERE playerId = ?', [playerId], next);
+};
+module.exports.getPlayerArmours = function(playerId, next){
+	db.runSql('SELECT playerArmourId, name, equip FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId WHERE playerId = ?', [playerId], next);
 };
 module.exports.updatePlayerInventory = function(player, next){
-	module.exports.getPlayerInventory(player.playerId, function(dbInventory){
-		player.inventory = dbInventory;
-		if (next){
+	async.series([
+		function(callback){
+			module.exports.getPlayerWeapons(player.playerId, function(dbPlayerWeapons){
+				player.weapons = dbPlayerWeapons;
+				player.equipLeft = null;
+				player.equipRight = null;
+				for (var i = 0; i < player.weapons.length; i++){
+					var item = player.weapons[i];
+					if (item.equipLeft){
+						player.equipLeft = item;
+					} else if (item.equipRight){
+						player.equipRight = item;
+					}
+				}
+				callback();
+			});
+		}, function(callback){
+			module.exports.getPlayerArmours(player.playerId, function(dbPlayerArmours){
+				player.armours = dbPlayerArmours;
+				player.equipBody = null;
+				for (var i = 0; i < player.armours.length; i++){
+					var item = player.armours[i];
+					if (item.equip){
+						player.equipBody = item;
+					}
+				}
+				callback();
+			});
+		}], function(){
 			next();
-		}
+		});
+};
+
+/* Equip and unequip weapons and armour */
+module.exports.unequipWeapon = function(player, left, next){
+	db.runSql('UPDATE player_weapon SET ?? = false WHERE playerId = ?', [left ? 'equipLeft' : 'equipRight', player.playerId], function(){
+		// Update players inventory
+		module.exports.updatePlayerInventory(player, next);
 	});
-}
+};
+module.exports.equipWeapon = function(player, left, playerWeaponId, next){
+	module.exports.unequipWeapon(player, left, function(){
+		db.runSql('UPDATE player_weapon SET ?? = true, ?? = false WHERE playerId = ? AND playerWeaponId = ?', [left ? 'equipLeft' : 'equipRight', left ? 'equipRight' : 'equipLeft', player.playerId, playerWeaponId], function(){
+			// Update players inventory
+			module.exports.updatePlayerInventory(player, next);
+		});
+	});
+};
+module.exports.unequipArmour = function(player, next){
+	db.runSql('UPDATE player_armour SET equip = false WHERE playerId = ?', [player.playerId], function(){
+		// Update players inventory
+		module.exports.updatePlayerInventory(player, next);
+	});
+};
+module.exports.equipArmour = function(player, playerArmourId, next){
+	module.exports.unequipArmour(player, function(){
+		db.runSql('UPDATE player_armour SET equip = true WHERE playerId = ? AND playerArmourId = ?', [player.playerId, playerArmourId], function(){
+			// Update players inventory
+			module.exports.updatePlayerInventory(player, next);
+		});
+	});
+};
 
 /* Updates the players lastAction */
 module.exports.updatePlayer = function(playerId, next){
