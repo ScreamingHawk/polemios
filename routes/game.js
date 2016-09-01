@@ -174,7 +174,7 @@ viewPlay = function(req, res, pageData, full){
 				if (full){
 					res.render('game/play', pageData);
 				} else {
-					res.render('templates/play', pageData);
+					res.render('templates/game/play', pageData);
 				}
 			});
 		});
