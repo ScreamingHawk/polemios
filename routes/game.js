@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var log = require('winston');
+var async = require("async");
+
 var commonRoute = require('./common');
 
 var db = require('../db');
@@ -37,9 +39,24 @@ gameRouteInit = function(req, res, next){
 	testCharacter(req, res, function(){
 		var pageData = createBasePageData(req);
 		pageData.javascriptFiles.push('play.js');
-		pageData.player = req.session.player;
-		if (pageData.player && pageData.player.mapId){
-			pageData.map = helper.getMapFromPlayer(pageData.player);
+		var player = req.session.player;
+		pageData.player = player;
+		if (player){
+			async.series([
+				function(callback){
+					if (player.mapId){
+						pageData.map = helper.getMapFromPlayer(player);
+					}
+					callback();
+				},
+				function(callback){
+					if (!player.inventory){
+						helper.updatePlayerInventory(player, callback);
+					} else {
+						callback();
+					}
+				}
+			]);
 		}
 		next(pageData);
 	});

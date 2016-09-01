@@ -23,7 +23,9 @@ module.exports.getPlayerInventory = function(playerId, next){
 module.exports.updatePlayerInventory = function(player, next){
 	module.exports.getPlayerInventory(player.playerId, function(dbInventory){
 		player.inventory = dbInventory;
-		next();
+		if (next){
+			next();
+		}
 	});
 }
 
