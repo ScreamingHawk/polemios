@@ -8,23 +8,32 @@ module.exports.playerStartingMint = 300;
 module.exports.getPlayer = function(userId, next){
 	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mint, mapId, locationX, locationY, lastAction FROM player WHERE userId = ?', [userId], function(dbPlayer){
 		if (dbPlayer != null){
-			dbPlayer.race = gameData.races[dbPlayer.raceId -1];	
-		}
-		console.log("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
-		if (next){
-			next(dbPlayer);
+			dbPlayer.race = gameData.races[dbPlayer.raceId -1];
+			async.series([
+				function(callback){
+					module.exports.updatePlayerInventory(dbPlayer, callback);
+				}, function(callback){
+					module.exports.getPlayerMaxHealth(dbPlayer, callback);
+				}], function(){
+					console.log("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
+					if (next){
+						next(dbPlayer);
+					}
+				});
+		} else {
+			next(null);
 		}
 	});
 };
 
 module.exports.getPlayerWeapons = function(playerId, next){
-	db.runSql('SELECT playerWeaponId, name, equipLeft, equipRight FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId WHERE playerId = ?', [playerId], next);
+	db.runSql('SELECT playerWeaponId, damage, name, equipLeft, equipRight, skill FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId INNER JOIN player_weapon_skill ON weapon.weaponId = player_weapon_skill.weaponId WHERE player_weapon.playerId = ?', [playerId], next);
 };
 module.exports.getPlayerArmours = function(playerId, next){
-	db.runSql('SELECT playerArmourId, name, equip FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId WHERE playerId = ?', [playerId], next);
+	db.runSql('SELECT playerArmourId, blocks, name, equip, skill FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId INNER JOIN player_armour_skill ON armour.armourId = player_armour_skill.armourId WHERE player_armour.playerId = ?', [playerId], next);
 };
 module.exports.updatePlayerInventory = function(player, next){
-	async.series([
+	async.parallel([
 		function(callback){
 			module.exports.getPlayerWeapons(player.playerId, function(dbPlayerWeapons){
 				player.weapons = dbPlayerWeapons;
@@ -75,14 +84,20 @@ module.exports.equipWeapon = function(player, left, playerWeaponId, next){
 module.exports.unequipArmour = function(player, next){
 	db.runSql('UPDATE player_armour SET equip = false WHERE playerId = ?', [player.playerId], function(){
 		// Update players inventory
-		module.exports.updatePlayerInventory(player, next);
+		module.exports.updatePlayerInventory(player, function(){
+			// Update players max health
+			module.exports.getPlayerMaxHealth(player, next);
+		});
 	});
 };
 module.exports.equipArmour = function(player, playerArmourId, next){
 	module.exports.unequipArmour(player, function(){
 		db.runSql('UPDATE player_armour SET equip = true WHERE playerId = ? AND playerArmourId = ?', [player.playerId, playerArmourId], function(){
 			// Update players inventory
-			module.exports.updatePlayerInventory(player, next);
+			module.exports.updatePlayerInventory(player, function(){
+				// Update players max health
+				module.exports.getPlayerMaxHealth(player, next);
+			});
 		});
 	});
 };
@@ -108,9 +123,13 @@ module.exports.playerDefaultMaxHealth = 10;
 
 module.exports.getPlayerMaxHealth = function(player, next){
 	var maxHealth = module.exports.playerDefaultMaxHealth;
-	if (player.armour){
+	if (player.equipBody){
 		// Armour adds blocks * skill% to max health
-		maxHealth += player.armour.blocks * player.armour.skill / 100;
+		maxHealth += player.equipBody.blocks * player.equipBody.skill / 100;
+	}
+	player.maxHealth = maxHealth;
+	if (player.health > player.maxHealth){
+		player.health = player.maxHealth;
 	}
 	next(maxHealth);
 };

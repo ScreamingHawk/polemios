@@ -50,15 +50,18 @@ gameRouteInit = function(req, res, next){
 					callback();
 				},
 				function(callback){
-					if (!player.inventory){
+					if (!player.weapons || !player.armour){
 						helper.updatePlayerInventory(player, callback);
 					} else {
 						callback();
 					}
 				}
-			]);
+			], function(){
+				next(pageData);
+			});
+		} else {
+			next(pageData);
 		}
-		next(pageData);
 	});
 };
 

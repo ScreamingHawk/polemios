@@ -9,7 +9,7 @@
 			<dt>Race:</dt>
 			<dd><%= player.race.name %></dd>
 			<dt>Health:</dt>
-			<dd><%= player.health %></dd>
+			<dd><%= player.health %> / <%= player.maxHealth %></dd>
 			<dt>Mint:</dt>
 			<dd><%= player.mint %></dd>
 		</dl>
@@ -22,7 +22,7 @@
 			<% } else { %>
 				<% player.weapons.forEach(function(item){ %>
 					<li>
-						<%= item.name %>
+						<%= item.name %> (Skill: <%= item.skill %>)
 						<% if (item.equipLeft){ %>
 							<a data-unequipleft="<%= item.playerWeaponId %>" href="">(in Left)</a>
 						<% } else if (item.equipRight){ %>
@@ -44,7 +44,7 @@
 			<% } else { %>
 				<% player.armours.forEach(function(item){ %>
 					<li>
-						<%= item.name %>
+						<%= item.name %> (Skill: <%= item.skill %>)
 						<% if (item.equip){ %>
 							<a data-unequipbody="<%= item.playerArmourId %>" href="">(on Body)</a>
 						<% } %>
