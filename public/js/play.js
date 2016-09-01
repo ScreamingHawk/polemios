@@ -3,6 +3,18 @@ var gameContainer = $('#gameContainer');
 
 setUpGameForm = function(){
 	gameForm = $('#gameForm');
+	// Set up inventory
+	$('#showHideInventory').click(function(e){
+		e.preventDefault();
+		var inventory = $('#inventory');
+		if (inventory.hasClass('hidden')){
+			inventory.removeClass('hidden');
+			$(this).text('Hide Inventory');
+		} else {
+			inventory.addClass('hidden');
+			$(this).text('Show Inventory');
+		}
+	});
 	// Set up movement buttons
 	$('#move-never').click(function(e){
 		e.preventDefault();
@@ -19,6 +31,10 @@ setUpGameForm = function(){
 	$('#move-weetbix').click(function(e){
 		e.preventDefault();
 		return ajaxGameFormAction('move', 'west');
+	});
+	$('#move-refresh').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('refresh', 'refresh');
 	});
 	// Set up shop buttons
 	$('#buyWeaponButton').click(function(e){
