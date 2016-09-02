@@ -75,6 +75,19 @@ CREATE TABLE IF NOT EXISTS store (
 	FOREIGN KEY (factionId) REFERENCES faction (factionId)
 )engine=innodb;
 
+-- Create shrine table
+CREATE TABLE IF NOT EXISTS shrine (
+	shrineId INTEGER AUTO_INCREMENT,
+    name varchar(30) UNIQUE NOT NULL,
+    mapId INTEGER NOT NULL,
+    locationX INTEGER NOT NULL,
+    locationY INTEGER NOT NULL,
+    factionId INTEGER,
+	PRIMARY KEY (shrineId),
+	FOREIGN KEY (mapId) REFERENCES map (mapId),
+	FOREIGN KEY (factionId) REFERENCES faction (factionId)
+)engine=innodb;
+
 -- Create map change table
 CREATE TABLE IF NOT EXISTS entrance (
 	entranceId INTEGER AUTO_INCREMENT,

@@ -2,7 +2,6 @@ USE polemiosDB;
 
 -- Add maps and location data
 -- TODO Better descriptions
--- TODO Remove test locations
 INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Docks', 3, 5, false, 'The first stop for new adventurers. ');
 INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (2, 'The Wilderness', 5, 5, true, 'The last stop for unprepared adventurers. ');
 
@@ -52,6 +51,10 @@ INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Ha
 -- Add store data
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Weapons', 1, 1, 1, null, true, false, 1000);
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Armour', 1, 1, 2, null, false, true, 1000);
+
+-- Add shrine data
+INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Dock Shrine', 1, 0, 1, null);
+
 
 -- Add weapon data
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
