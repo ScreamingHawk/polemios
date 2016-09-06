@@ -133,11 +133,11 @@ router.post('/create', function (req, res, next) {
 						res.render('game/create', pageData);
 					} else {
 						// Insert player
-						db.runSql('INSERT INTO player (userId, name, raceId, mapId, health, mint) values (?, ?, ?, 1, ?, ?)', [req.session.user.userId, postedForm.name, raceId, helper.playerDefaultMaxHealth, helper.playStartingMint], function(result){
+						db.runSql('INSERT INTO player (userId, name, raceId, mapId, health, mint) values (?, ?, ?, 1, ?, ?)', [req.session.user.userId, postedForm.name, raceId, helper.playerDefaultMaxHealth, helper.playerStartingMint], function(result){
 							if (result.insertId){
 								db.runSql('INSERT INTO player_faction (playerId, factionId, fame) SELECT ?, factionId, fame FROM race_faction_default WHERE raceId = ?', [result.insertId, raceId], function(result2){
 									if (result2.insertId){
-										console.log('Created character: '+postedForm.name);
+										log.info('Created character: '+postedForm.name);
 										res.redirect('/game/create?user_created=true');
 									} else {
 										pageData.errorMsg += "Error creating character. Please contact support. ";
@@ -207,7 +207,6 @@ router.post('/play', function (req, res, next){
 			// Move requested
 			helper.movePlayer(player, postBody.move, function(err, moved){
 				if (!moved){
-					console.log('Player moved: '+postBody.move);
 					pageData.errorMsg += err;
 				}
 				viewPlay(req, res, pageData);
@@ -285,6 +284,17 @@ router.post('/play', function (req, res, next){
 						} else {
 							viewPlay(req, res, pageData);
 						}
+					}
+				} else if (locationType == 'shrine'){
+					if (postBody.shrineHeal){
+						helper.getPlayerMaxHealth(player, function(maxHealth){
+							//TODO Test location.factionId against players faction fame
+							pageData.successMsg += 'Your body has been healed! ';
+							player.health = maxHealth;
+							helper.updatePlayerHealth(player, function(){
+								viewPlay(req, res, pageData);
+							});
+						});
 					}
 				} else {
 					viewPlay(req, res, pageData);

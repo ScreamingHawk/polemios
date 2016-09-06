@@ -69,6 +69,11 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('buyArmour', $('#buyArmour').val());
 	});
+	// Set up shrine buttons
+	$('#shrineHealButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('shrineHeal', 'heal');
+	});
 };
 setUpGameForm();
 

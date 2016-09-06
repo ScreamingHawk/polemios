@@ -119,6 +119,14 @@ module.exports.updatePlayerMint = function(player, next){
 	});
 };
 
+module.exports.updatePlayerHealth = function(player, next){
+	db.runSql('UPDATE player SET health = ? WHERE playerId = ?', [player.health, player.playerId], function(result){
+		if (next){
+			next();
+		}
+	});
+};
+
 module.exports.playerDefaultMaxHealth = 10;
 
 module.exports.getPlayerMaxHealth = function(player, next){
@@ -129,6 +137,7 @@ module.exports.getPlayerMaxHealth = function(player, next){
 	}
 	player.maxHealth = maxHealth;
 	if (player.health > player.maxHealth){
+		// Reduce players health to maxHealth
 		player.health = player.maxHealth;
 	}
 	next(maxHealth);
@@ -255,6 +264,16 @@ findLocation = function(map, locationX, locationY, next){
 			var entrance = map.entrances[i];
 			if (entrance.locationX == locationX && entrance.locationY == locationY){
 				next(entrance, 'entrance');
+				return;
+			}
+		}
+	}
+	// Check for shrines
+	if (map.shrines){
+		for (var i = 0; i < map.shrines.length; i++){
+			var shrine = map.shrines[i];
+			if (shrine.locationX == locationX && shrine.locationY == locationY){
+				next(shrine, 'shrine');
 				return;
 			}
 		}

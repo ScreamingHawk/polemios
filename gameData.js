@@ -60,7 +60,7 @@ module.exports.updateMap = function(mapId, next){
 			});
 		}, function(callback){
 			// Get shrines
-			db.runSql('SELECT shrineId, locationX, locationY, factionId FROM shrine WHERE mapId = ?', [mapId], function(dbShrines){
+			db.runSql('SELECT shrineId, name, locationX, locationY, factionId FROM shrine WHERE mapId = ?', [mapId], function(dbShrines){
 				map.shrines = dbShrines;
 				console.log("Shrines for map("+mapId+"): " + JSON.stringify(dbShrines, null, 2));
 				callback();
