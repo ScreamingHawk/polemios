@@ -1,4 +1,6 @@
 /* Get static look up values */
+var async = require('async');
+
 var db = require('./db');
 
 module.exports.updateRaces = function(next){
@@ -41,26 +43,43 @@ module.exports.updateMap = function(mapId, next){
 			map = loopMap;
 		}
 	});
-	// Get stores
-	db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour, maxMint FROM store WHERE mapId = ?', [mapId], function(dbStores){
-		map.stores = dbStores;
-		console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
-		// Get entrances
-		db.runSql('SELECT entranceId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame FROM entrance WHERE mapId = ?', [mapId], function(dbEntrances){
-			map.entrances = dbEntrances;
-			console.log("Entrances for map("+mapId+"): " + JSON.stringify(dbEntrances, null, 2));
+	async.parallel([
+		function(callback){
+			// Get stores
+			db.runSql('SELECT storeId, locationX, locationY, name, factionId, sellsWeapons, sellsArmour, maxMint FROM store WHERE mapId = ?', [mapId], function(dbStores){
+				map.stores = dbStores;
+				console.log("Stores for map("+mapId+"): " + JSON.stringify(dbStores, null, 2));
+				callback();
+			});
+		}, function(callback){
+			// Get entrances
+			db.runSql('SELECT entranceId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame FROM entrance WHERE mapId = ?', [mapId], function(dbEntrances){
+				map.entrances = dbEntrances;
+				console.log("Entrances for map("+mapId+"): " + JSON.stringify(dbEntrances, null, 2));
+				callback();
+			});
+		}, function(callback){
+			// Get shrines
+			db.runSql('SELECT shrineId, locationX, locationY, factionId FROM shrine WHERE mapId = ?', [mapId], function(dbShrines){
+				map.shrines = dbShrines;
+				console.log("Shrines for map("+mapId+"): " + JSON.stringify(dbShrines, null, 2));
+				callback();
+			});
+		}, function(callback){
 			// Get enemies
 			db.runSql('SELECT enemyId, name FROM enemy WHERE mapId = ?', [mapId], function(dbEnemies){
 				map.enemies = dbEnemies;
 				console.log("Enemies for map("+mapId+"): " + JSON.stringify(dbEnemies, null, 2));
-				//TODO More locations
-				map.loaded = true;
-				if (next){
-					next(map);
-				}
+				callback();
 			});
-		});
-	});
+		}
+		], function(){
+			map.loaded = true;
+			if (next){
+				next(map);
+			}
+		}
+	);
 };
 
 module.exports.updateRaceFactionDefaults = function(next){
