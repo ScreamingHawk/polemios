@@ -112,7 +112,7 @@ module.exports.updatePlayer = function(playerId, next){
 };
 
 module.exports.updatePlayerMint = function(player, next){
-	db.runSql('UPDATE player SET mint = ? WHERE playerId = ?', [player.mint, player.playerId], function(result){
+	db.runSql('UPDATE player SET mint = ?, lastAction = NOW() WHERE playerId = ?', [player.mint, player.playerId], function(result){
 		if (next){
 			next();
 		}
@@ -120,7 +120,7 @@ module.exports.updatePlayerMint = function(player, next){
 };
 
 module.exports.updatePlayerHealth = function(player, next){
-	db.runSql('UPDATE player SET health = ? WHERE playerId = ?', [player.health, player.playerId], function(result){
+	db.runSql('UPDATE player SET health = ?, lastAction = NOW() WHERE playerId = ?', [player.health, player.playerId], function(result){
 		if (next){
 			next();
 		}
