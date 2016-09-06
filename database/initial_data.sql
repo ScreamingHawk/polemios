@@ -62,7 +62,12 @@ INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Knife', 2
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Pistol', 3, 100, 100);
 
 -- Add armour data
-INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Glowing Cotton Robe', 1, 100, 100);
-INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Flickering Bronze Curiass', 2, 100, 100);
-INSERT INTO armour (name, factionId, blocks, mint) VALUE ('Bright Leather Gambeson', 3, 100, 100);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Cotton Robe', 1, 100, 100);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Bronze Curiass', 2, 100, 100);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Leather Gambeson', 3, 100, 100);
 
+
+
+
+-- Update complete
+INSERT INTO database_version (version) VALUES (0);

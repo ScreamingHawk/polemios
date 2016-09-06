@@ -31,6 +31,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
+    "execsql": "0.0.3",
     "express": "~4.13.4",
     "express-session": "^1.14.0",
     "express-socket.io-session": "^1.3.1",

@@ -1,10 +1,14 @@
--- Drop db if exists
-DROP DATABASE IF EXISTS polemiosDB;
-
 -- Create database
 CREATE DATABASE IF NOT EXISTS polemiosDB;
 
 USE polemiosDB;
+
+-- Create version table
+CREATE TABLE IF NOT EXISTS database_version (
+	version INTEGER UNIQUE NOT NULL,
+	updated DATETIME DEFAULT NOW()
+)engine=innodb;
+
 
 -- Create user table
 CREATE TABLE IF NOT EXISTS polemios_user (
