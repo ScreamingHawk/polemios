@@ -288,9 +288,21 @@ router.post('/play', function (req, res, next){
 				} else if (locationType == 'shrine'){
 					if (postBody.shrineHeal){
 						helper.getPlayerMaxHealth(player, function(maxHealth){
-							//TODO Test location.factionId against players faction fame
+							healTo = maxHealth;
+							if (location.factionId != null){
+								// Player heals up to their fame value for the shrines faction
+								for (var i = 0; i < player.fame.length; i++){
+									var pFame = player.fame[i];
+									if (pFame.factionId == location.factionId){
+										if (pFame < healTo){
+											healTo = pFrame;
+										}
+										break;
+									}
+								}
+							}
 							pageData.successMsg += 'Your body has been healed! ';
-							player.health = maxHealth;
+							player.health = healTo;
 							helper.updatePlayerHealth(player, function(){
 								viewPlay(req, res, pageData);
 							});

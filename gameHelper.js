@@ -1,4 +1,5 @@
 var async = require('async');
+var log = require('winston');
 var db = require('./db');
 var gameData = require('./gameData');
 
@@ -11,11 +12,20 @@ module.exports.getPlayer = function(userId, next){
 			dbPlayer.race = gameData.races[dbPlayer.raceId -1];
 			async.series([
 				function(callback){
+					// Update inventory
 					module.exports.updatePlayerInventory(dbPlayer, callback);
 				}, function(callback){
-					module.exports.getPlayerMaxHealth(dbPlayer, callback);
+					// Update player max health
+					module.exports.getPlayerMaxHealth(dbPlayer, function(){
+						callback();
+					});
+				}, function(callback){
+					// Update player faction fame
+					module.exports.getPlayerFactionFame(dbPlayer, function(){
+						callback();
+					});
 				}], function(){
-					console.log("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
+					log.debug("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
 					if (next){
 						next(dbPlayer);
 					}
@@ -141,6 +151,14 @@ module.exports.getPlayerMaxHealth = function(player, next){
 		player.health = player.maxHealth;
 	}
 	next(maxHealth);
+};
+
+module.exports.getPlayerFactionFame = function(player, next){
+	db.runSql('SELECT factionId, fame FROM player_faction WHERE playerId = ?', [player.playerId], function(results){
+		log.debug('Player faction fame: '+JSON.stringify(results, null, 2));
+		player.fame = results;
+		next(results);
+	});
 };
 
 module.exports.movePlayer = function(player, move, next){

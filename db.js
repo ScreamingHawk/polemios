@@ -71,12 +71,10 @@ module.exports.runSql = function(sql, params, next){
 				if (next != null){
 					next(null);
 				}
-				return null;
 			} else {
 				if (next != null){
 					next(result);
 				}
-				return result;
 			}
 		});
 	});
