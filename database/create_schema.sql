@@ -92,6 +92,17 @@ CREATE TABLE IF NOT EXISTS shrine (
 	FOREIGN KEY (factionId) REFERENCES faction (factionId)
 )engine=innodb;
 
+-- Create sign post table
+CREATE TABLE IF NOT EXISTS signpost (
+	signpostId INTEGER AUTO_INCREMENT,
+    description TEXT NOT NULL,
+    mapId INTEGER NOT NULL,
+    locationX INTEGER NOT NULL,
+    locationY INTEGER NOT NULL,
+	PRIMARY KEY (signpostId),
+	FOREIGN KEY (mapId) REFERENCES map (mapId)
+)engine=innodb;
+
 -- Create map change table
 CREATE TABLE IF NOT EXISTS entrance (
 	entranceId INTEGER AUTO_INCREMENT,

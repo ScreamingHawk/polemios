@@ -85,6 +85,12 @@
 		<div class="col-sm-12">
 			<% include ./store %>
 		</div>
+	<% } else if (locationType == 'signpost'){ %>
+		<div class="col-sm-12">
+			<h4>There is a sign here!</h4>
+			
+			<div class="shaded padded"><%- location.description %></div>
+		</div>
 	<% } else if (locationType == 'entrance'){ %>
 		<div class="col-sm-12">
 			<h4>This is the entrance to another map!</h4>

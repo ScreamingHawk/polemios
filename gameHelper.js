@@ -296,6 +296,16 @@ findLocation = function(map, locationX, locationY, next){
 			}
 		}
 	}
+	// Check for signposts
+	if (map.signposts){
+		for (var i = 0; i < map.signposts.length; i++){
+			var signpost = map.signposts[i];
+			if (signpost.locationX == locationX && signpost.locationY == locationY){
+				next(signpost, 'signpost');
+				return;
+			}
+		}
+	}
 	// Nothing found
 	next(null, null);
 };

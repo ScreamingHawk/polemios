@@ -91,7 +91,7 @@ getDatabaseVersion = function(next){
 module.exports.updateDatabase = function(next){
 	getDatabaseVersion(function(version){
 		if (version == null){
-			createDatabaseFromScratch(next);
+			module.exports.createDatabaseFromScratch(next);
 		} else {
 			async.eachSeries(fs.readdirSync('database'), function(name, callback){
 				if (name == 'drop_schema.sql' || name == 'create_schema.sql' || name == 'initial_data.sql'){

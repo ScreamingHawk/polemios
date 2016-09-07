@@ -55,6 +55,9 @@ INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, s
 -- Add shrine data
 INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Dock Shrine', 1, 0, 1, null);
 
+-- Add signpost data
+INSERT INTO signpost (mapId, locationX, locationY, description) VALUES (1, 0, 0, '<h4>Welcome to Polemios!</h4>A land of adventure, treasure and chaos. <br/><br/>If you&apos;ve just landed, you should probably find a store to equip yourself. <br/><br/>To find out more about Polemios check out the wiki. ');
+
 
 -- Add weapon data
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);

@@ -66,6 +66,13 @@ module.exports.updateMap = function(mapId, next){
 				callback();
 			});
 		}, function(callback){
+			// Get signposts
+			db.runSql('SELECT signpostId, locationX, locationY, description FROM signpost WHERE mapId = ?', [mapId], function(dbSignposts){
+				map.signposts = dbSignposts;
+				console.log("Signposts for map("+mapId+"): " + JSON.stringify(dbSignposts, null, 2));
+				callback();
+			});
+		}, function(callback){
 			// Get enemies
 			db.runSql('SELECT enemyId, name FROM enemy WHERE mapId = ?', [mapId], function(dbEnemies){
 				map.enemies = dbEnemies;
