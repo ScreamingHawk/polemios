@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var log = require('winston');
+var validator = require('validator');
 var commonRoute = require('./common');
 
 var db = require('../db');
@@ -24,6 +25,8 @@ router.post('/signup', function(req, res, next) {
 	pageData.javascriptFiles.push('vendor/sha512.min.js');
 
 	var postUser = req.body;
+	postUser.username = validator.escape(postUser.username);
+	postUser.email = validator.escape(postUser.email);
 	if (postUser.username == null || postUser.p == null || postUser.p.length != 128 || postUser.email == null){
 		pageData.errorMsg += "Invalid registration details. ";
 		res.render('user/signup', pageData);

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var log = require('winston');
 var async = require("async");
+var validator = require('validator');
 
 var commonRoute = require('./common');
 
@@ -115,9 +116,12 @@ router.post('/create', function (req, res, next) {
 			res.redirect('/game/play?has_character=true');
 		} else {
 			var postedForm = req.body;
+			postedForm.name = validator.escape(postedForm.name);
 			//TODO Input validation
 			if (!postedForm.name){
 				pageData.errorMsg += "No name provided. ";
+			} else if (postedForm.name.length > 30){
+				pageData.errorMsg += "Name cannot be more than 30 characters. ";
 			}
 			if (!postedForm.race){
 				pageData.errorMsg += "No race selected. ";
