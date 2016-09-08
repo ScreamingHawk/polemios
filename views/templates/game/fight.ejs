@@ -16,6 +16,24 @@
 				<button id="findEnemyButton" type="submit" class="btn btn-warning">Find Enemy!</button>
 			</div>
 		</div>
+		<% if (typeof(enemy) != 'undefined'){ %>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">You found a <%= enemy.name %>! Health: <%= enemy.health %></label>
+				<div class="col-sm-8">
+					<button id="fightEnemyButton" type="submit" class="btn btn-danger <%= (enemy.health <= 0 ? 'disabled' : '') %>">Fight!</button>
+				</div>
+			</div>
+			
+			<% if (typeof(combatLog) != 'undefined' && combatLog.length > 0){ %>
+				<div class="padded shaded">
+					<ul class="list-unstyled">
+						<% combatLog.forEach(function(log){ %>
+							<li><%= log %></li>
+						<% }); %>
+					</ul>
+				</div>
+			<% } %>
+		<% } %>
 	</div>
 </div>
 <div class="col-sm-6">

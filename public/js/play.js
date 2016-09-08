@@ -74,6 +74,15 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('shrineHeal', 'heal');
 	});
+	// Set up combat buttons
+	$('#findEnemyButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('findEnemy', $('#findEnemy').val());
+	});
+	$('#fightEnemyButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('fightEnemy', 'fightEnemy');
+	});
 };
 setUpGameForm();
 

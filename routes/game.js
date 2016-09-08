@@ -31,39 +31,41 @@ createBasePageData = function(req){
 }
 
 gameRouteInitNoCharacter = function(req, res){
-	testLogin(req, res);
-	return createBasePageData(req);
+	if (testLogin(req, res)){
+		return createBasePageData(req);
+	}
 }
 
 gameRouteInit = function(req, res, next){
-	testLogin(req, res);
-	testCharacter(req, res, function(){
-		var pageData = createBasePageData(req);
-		pageData.javascriptFiles.push('play.js');
-		var player = req.session.player;
-		pageData.player = player;
-		if (player){
-			async.series([
-				function(callback){
-					if (player.mapId){
-						pageData.map = helper.getMapFromPlayer(player);
-					}
-					callback();
-				},
-				function(callback){
-					if (!player.weapons || !player.armour){
-						helper.updatePlayerInventory(player, callback);
-					} else {
+	if (testLogin(req, res)){
+		testCharacter(req, res, function(){
+			var pageData = createBasePageData(req);
+			pageData.javascriptFiles.push('play.js');
+			var player = req.session.player;
+			pageData.player = player;
+			if (player){
+				async.series([
+					function(callback){
+						if (player.mapId){
+							pageData.map = helper.getMapFromPlayer(player);
+						}
 						callback();
+					},
+					function(callback){
+						if (!player.weapons || !player.armour){
+							helper.updatePlayerInventory(player, callback);
+						} else {
+							callback();
+						}
 					}
-				}
-			], function(){
+				], function(){
+					next(pageData);
+				});
+			} else {
 				next(pageData);
-			});
-		} else {
-			next(pageData);
-		}
-	});
+			}
+		});
+	}
 };
 
 /* Return true if the user has a character, false otherwise */
@@ -252,6 +254,89 @@ router.post('/play', function (req, res, next){
 			], function(){
 				viewPlay(req, res, pageData);
 			});
+		} else if (postBody.findEnemy){
+			// Load an enemy to fight
+			if (player.health > 0){
+				helper.getEnemiesAtMap(pageData.map.mapId, function(enemies){
+					for (var i = 0; i < enemies.length; i++){
+						var enemy = enemies[i];
+						if (enemy.enemyId == postBody.findEnemy){
+							req.session.enemy = enemy;
+							pageData.enemy = enemy;
+							req.session.combatLog = [];
+							pageData.combatLog = [];
+							//TODO Random enemy type
+							break;
+						}
+					}
+					if (pageData.enemy == null){
+						pageData.errorMsg += 'Could not find enemy to fight. ';
+					}
+					viewPlay(req, res, pageData);
+				});
+			} else {
+				pageData.errorMsg += 'Ghosts can\t fight! ';
+				viewPlay(req, res, pageData);
+			}
+		} else if (postBody.fightEnemy){
+			// Fight the loaded enemy
+			var enemy = req.session.enemy;
+			if (enemy == null){
+				pageData.errorMsg += 'No enemy to fight! ';
+				viewPlay(req, res, pageData);
+			} else {
+				var combatLog = req.session.combatLog;
+				// Combat round
+				attackEnemy(player, player.equipLeft, enemy, 'left', combatLog);
+				if (enemy.health > 0){
+					attackEnemy(player, player.equipRight, enemy, 'right', combatLog);
+				}
+				if (enemy.health > 0){
+					// Enemy attacks
+					var dmg = Math.round(helper.getRandomInt(90, 110) * enemy.damage / 100);
+					if (player.equipbody == null){
+						player.health -= dmg;
+						combatLog.push(enemy.name + ' did ' + dmg + ' damage!');
+					} else {
+						// Arour blocks
+						var armour = player.equipbody;
+						dmg -= Math.round(helper.getRandomInt(armour.skill, 100) * armour.blocks / 100);
+						//TODO incorporate faction bonuses
+						player.health -= dmg;
+						combatLog.push(enemy.name + ' did ' + dmg + ' damage!');
+						if (helper.skillCheck(200 - armour.skill)){
+							// Player skills up
+							armour.skill++;
+							helper.updateArmourSkill(player, armour);
+							combatLog.push('Your skill with ' + armour.name + ' increased!');
+						}
+					}
+					helper.updatePlayerHealth(player);
+				}
+				pageData.enemy = enemy;
+				pageData.combatLog = combatLog;
+//				log.debug('Combat log: '+JSON.stringify(combatLog, null, 2));
+				if (enemy.health <= 0){
+					// Enemy killed. Reward player
+					player.mint += enemy.mint;
+					helper.updatePlayerMint(player);
+					// Clear enemy info
+					req.session.enemy = null;
+					req.session.combatLog = null;
+				}
+				if (player.health <= 0){
+					// Player killed
+					combatLog.push(enemy.name + ' killed you!');
+					// Clear enemy info
+					req.session.enemy = null;
+					req.session.combatLog = null;
+					helper.killPlayer(player, function(){
+						viewPlay(req, res, pageData);
+					});
+				} else {
+					viewPlay(req, res, pageData);
+				}
+			}
 		} else {
 			// Location aware options
 			helper.getLocationAtPlayer(player, function(location, locationType){
@@ -319,6 +404,33 @@ router.post('/play', function (req, res, next){
 		}
 	});
 });
+
+attackEnemy = function(player, weapon, enemy, hand, combatLog){
+	if (weapon == null){
+		// No weapon, use hand
+		enemy.health -= 1;
+		combatLog.push('Your ' + hand + ' hand did 1 damage!');
+	} else {
+		var hit = helper.skillCheck(weapon.skill / 2);
+		if (hit){
+			var dmg = Math.round(helper.getRandomInt(weapon.skill, 100) * weapon.damage / 100);
+			enemy.health -= dmg;
+			combatLog.push('Your ' + weapon.name + ' did ' + dmg + ' damage!');
+		} else {
+			combatLog.push('Your ' + weapon.name + ' missed!');
+		}
+		// Skill check regardless of hit/miss
+		if (helper.skillCheck(200 - weapon.skill)){
+			// Player skills up
+			weapon.skill++;
+			helper.updateWeaponSkill(player, weapon);
+			combatLog.push('Your skill with ' + weapon.name + ' increased!');
+		}
+	}
+	if (enemy.health <= 0){
+		combatLog.push(enemy.name + ' was killed!');
+	}
+}
 
 
 module.exports = router;

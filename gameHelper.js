@@ -3,6 +3,28 @@ var log = require('winston');
 var db = require('./db');
 var gameData = require('./gameData');
 
+/* Generates a random integer between min and max, inclusive */
+module.exports.getRandomInt = function(min, max) {
+	if (min > max){
+		var temp = min;
+		min = max;
+		max = temp;
+	}
+	max += 1;
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+/* Randomly passes or fails a skill check with passChance probability */
+module.exports.skillCheck = function(passChance) {
+	var passCheck = module.exports.getRandomInt(0, 100);
+	// A pass occurs when the roll is lower than the pass chance
+	var pass = passCheck <= passChance;
+	log.debug('Skill check at rate '+passChance+' ' + (pass?'passed':'failed') + ' with ' + passCheck);
+	return pass;
+}
+
 module.exports.playerStartingMint = 300;
 
 /* Returns the player for the given user */
@@ -37,10 +59,10 @@ module.exports.getPlayer = function(userId, next){
 };
 
 module.exports.getPlayerWeapons = function(playerId, next){
-	db.runSql('SELECT playerWeaponId, damage, name, equipLeft, equipRight, skill FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId INNER JOIN player_weapon_skill ON weapon.weaponId = player_weapon_skill.weaponId WHERE player_weapon.playerId = ?', [playerId], next);
+	db.runSql('SELECT playerWeaponId, weapon.weaponId, damage, name, equipLeft, equipRight, skill FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId INNER JOIN player_weapon_skill ON weapon.weaponId = player_weapon_skill.weaponId WHERE player_weapon.playerId = ?', [playerId], next);
 };
 module.exports.getPlayerArmours = function(playerId, next){
-	db.runSql('SELECT playerArmourId, blocks, name, equip, skill FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId INNER JOIN player_armour_skill ON armour.armourId = player_armour_skill.armourId WHERE player_armour.playerId = ?', [playerId], next);
+	db.runSql('SELECT playerArmourId, armour.armourId, blocks, name, equip, skill FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId INNER JOIN player_armour_skill ON armour.armourId = player_armour_skill.armourId WHERE player_armour.playerId = ?', [playerId], next);
 };
 module.exports.updatePlayerInventory = function(player, next){
 	async.parallel([
@@ -112,9 +134,26 @@ module.exports.equipArmour = function(player, playerArmourId, next){
 	});
 };
 
-/* Updates the players lastAction */
-module.exports.updatePlayer = function(playerId, next){
-	db.runSql('UPDATE player SET lastAction = NOW() WHERE playerId = ?', [playerId], function(result){
+/* Updates the skill of the player for the given weapon */
+module.exports.updateWeaponSkill = function(player, weapon, next){
+	db.runSql('UPDATE player_weapon_skill SET skill = ? WHERE playerId = ? AND weaponId = ?', [weapon.skill, player.playerId, weapon.weaponId], function(){
+		if (next){
+			next();
+		}
+	});
+};
+
+/* Updates the skill of the player for the given armour */
+module.exports.updateArmourSkill = function(player, armour, next){
+	db.runSql('UPDATE player_armour_skill SET skill = ? WHERE playerId = ? AND armourId = ?', [armour.skill, player.playerId, armour.armourId], function(){
+		if (next){
+			next();
+		}
+	});
+};
+
+module.exports.updatePlayer = function(player, next){
+	db.runSql('UPDATE player SET mint = ?, health = ?, lastAction = NOW() WHERE playerId = ?', [player.mint, player.health, player.playerId], function(result){
 		if (next){
 			next();
 		}
@@ -137,13 +176,18 @@ module.exports.updatePlayerHealth = function(player, next){
 	});
 };
 
+module.exports.killPlayer = function(player, next){
+	player.mint = 0;
+	player.health = 0;
+	updatePlayer(next);
+}
+
 module.exports.playerDefaultMaxHealth = 10;
 
 module.exports.getPlayerMaxHealth = function(player, next){
 	var maxHealth = module.exports.playerDefaultMaxHealth;
 	if (player.equipBody){
-		// Armour adds blocks * skill% to max health
-		maxHealth += player.equipBody.blocks * player.equipBody.skill / 100;
+		maxHealth = player.equipBody.blocks * 2;
 	}
 	player.maxHealth = maxHealth;
 	if (player.health > player.maxHealth){

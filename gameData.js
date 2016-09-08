@@ -74,7 +74,7 @@ module.exports.updateMap = function(mapId, next){
 			});
 		}, function(callback){
 			// Get enemies
-			db.runSql('SELECT enemyId, name FROM enemy WHERE mapId = ?', [mapId], function(dbEnemies){
+			db.runSql('SELECT enemyId, name, damage, health, mint FROM enemy WHERE mapId = ?', [mapId], function(dbEnemies){
 				map.enemies = dbEnemies;
 				console.log("Enemies for map("+mapId+"): " + JSON.stringify(dbEnemies, null, 2));
 				callback();
