@@ -1,24 +1,33 @@
 USE polemiosDB;
 
 -- Add maps and location data
--- TODO Better descriptions
 INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (1, 'The Docks', 3, 5, false, 'The first stop for new adventurers. ');
-INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (2, 'The Wilderness', 5, 5, true, 'The last stop for unprepared adventurers. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (2, 'The Wilderness', 9, 9, true, 'The grand lands of Polemios stretch out before you. Everything from the crags to the forests and beyond the mountain range lies within her dominion. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (3, 'Haarish', 4, 4, false, 'The ancient Kobold city of Haarish, once a mountain, now stands a giant stone fortress. A true monument to Kobold masonry and home to the Flicker Rebellion. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (4, 'Bright Empire Capital', 4, 4, false, 'Engine smoke and fierce turrets tower over the fortress city. Home to the finest in high tech weaponry, arms and armour. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (5, 'Ethereal Palace City', 4, 4, false, "Resonating with magical energy, the capital of Polemios' largest empire stands a marvel of crystals, glass, and marble. ");
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (6, 'Scaled Caves' 3, 5, false, 'Winding endlessly under the lands of Polemios are a system of caves dug out by the ancient resident Kobolds. Here at its mouth lies the embassy to the core of the world. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (7, 'Bladewood Forest' 5, 5, true, 'Populated by the more savage Orc tribes, the untamed northern Polemios stretches off into a sea of wood. The forest is known for its predators whom take advantage of prey tangled in the underbrush. ');
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (8, "Sears' Caves", 7, 3, true, "These caves are fabled to be dug out by a pair of brother kobolds in search of the Soul Stones, allegedly digging to the core of the earth. The oldest known Kobold city lies within these caves and is named after the eldest brother. ");
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (9, 'Ethereal Labs', 4, 4, true, "The birthplace of the slimes, filled with monstrosities and failed experiments by Ethereal and Human scientists in hopes of synthesising the Soul Stones. " );
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (10, 'Forward Operating Base' 4, 4, true, "The last fortification to be set up by the Bright Empire's march into Glow Territory and the most hotly contested. It lies on a river in a corridor between the greater north and south of the continent. ");
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (11, 'Railroads', 3, 5, true, "A large rail yard of the Glow Empire built to supply Bladewood, marble, and ore from the rich northern frontier. Escapee slimes and prisoners of war stow away on the freight trains while the shadowy corners have been occupied by criminals and vagrants. ");
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (12, "Lake Azure", 4, 4, true, "Fresh glacial melt flows into the lake, the silts giving the lake its characteristic colour. Floating in its center is a sphere of energy home to the high Emperor of the Glow Empire and the command center for the empire's war effort. ");
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (13, "Crystal Mines", 5, 3, true, "Rich with veins of ore and large crystal geodes, these mines provide the Bright Empire with near endless resources. Deep in its bowels lies a cavern of Soul Stones and the ancient guardians that protect them. " );
+INSERT INTO map (mapId, name, height, width, pvp, description) VALUES (14, "The Academy", 3, 3, false, "Separate from any empire, The Academy serves to train elite soldiers in the art of combat and war. Few are worthy of entry and less survive to graduation. ");
 
 -- Add race data
--- TODO Better description
-INSERT INTO race (raceId, name, description) VALUES (1, 'Human', 'Humans');
-INSERT INTO race (raceId, name, description) VALUES (2, 'Kobold', 'Kobolds');
-INSERT INTO race (raceId, name, description) VALUES (3, 'Ethereal', 'Ethereal');
-INSERT INTO race (raceId, name, description) VALUES (4, 'Orc', 'Orcs');
-INSERT INTO race (raceId, name, description) VALUES (5, 'Slime', 'Slimes');
-INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Golems');
+INSERT INTO race (raceId, name, description) VALUES (1, 'Human', 'Intelligent but frail beings. Humans washed up on the shores of Polemios after a calamaty destroyed their homeland. They excell in innovation and the development of sophisticated tools and weapons. ');
+INSERT INTO race (raceId, name, description) VALUES (2, 'Kobold', 'Stout reptilian creatures. Masters of masonry and defensive warfare, kobolds are the original inhabitants of Polemios and over thousands of years dug out many mountain fortresses in search of a sacred crystal known as the Soul Stones. ');
+INSERT INTO race (raceId, name, description) VALUES (3, 'Ethereal', "Winged humanoid beings whose body is more energy than flesh. These beings of light descended unto the early feudal human kingdoms and usurped power, uniting the continent into a single empire. They rule through a meritocracy with magical prowess being the sole indicator of a citizen's standing. ");
+INSERT INTO race (raceId, name, description) VALUES (4, 'Orc', 'Large, muscular, and savage creatures of the wild forests. Although sentient, orcs rarely care for anything outside of violence and live solely for war. They roam the continent as mercenaries and tribal warriors with little regard to laws. ');
+INSERT INTO race (raceId, name, description) VALUES (5, 'Slime', 'Pure energy held together in a translucent, gelatenous form whose upper half resembles that of a human. Created by ethereal and human scientists, Slimes were a failed attempt at synthesising Soul Stones and hold a great aptitude towards magic. Seen as a threat by the Glow Emperor, some slimes have been corrupted to hunt their own kind. ');
+INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Modular mechanical frames given life by harnessing the power of the Soul Stones. Originally built to aid construction, the Soul Stones have gifted these beings with sentience and lead to their adoption by the Bright Empire. Some serve as soldiers, being retooled to harness weaponry however most prefer to serve as logisticians. ');
 
 -- Add faction data
--- TODO Better description
-INSERT INTO faction (factionId, name, description) VALUES (1, 'Glow', 'The magic faction');
-INSERT INTO faction (factionId, name, description) VALUES (2, 'Flicker', 'The steam faction');
-INSERT INTO faction (factionId, name, description) VALUES (3, 'Bright', 'The electricity faction');
+INSERT INTO faction (factionId, name, description) VALUES (1, 'Glow', 'The united empire founded and ruled by the Ethereals.');
+INSERT INTO faction (factionId, name, description) VALUES (2, 'Flicker', 'A rebellion lead by Kobold priests to as part of their ancient prophecy surrounding the Soul Stones.');
+INSERT INTO faction (factionId, name, description) VALUES (3, 'Bright', 'An empire founded in the flames of a revolution against the tyrannous Glow Empire.');
 
 -- Add race faction default data
 -- TODO Fix fame scale
@@ -47,6 +56,30 @@ INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck S
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 50, 500, 50, 1);
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 100, 1000, 100, 1);
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 1000, 10000, 1000, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Wolf', null, 500, 5000, 500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Lepper', null, 1000, 10000, 1000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Poacher', null, 2000, 20000, 2000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Caravan Guard', null, 5000, 20000, 3000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Dire Wolf', null, 2000, 50000, 3000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Orc Wanderer', null, 5000, 50000, 5000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Highwayman', null, 7500, 75000, 7500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Disserter', null, 10000, 100000, 10000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bounty Hunter', null, 50000, 100000, 100000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sparring Trainer', null, 5000, 50000, 5000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Grunt', 1, 10000, 100000, 10000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Saboteur', null, 25000, 100000, 25000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Lieutenant' 1, 50000, 500000, 50000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Captain', 1, 100000, 900000, 100000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Vandal', null, 5000, 50000, 5000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Spy', 2, 10000, 100000, 10000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Turncoat', null, 25000, 100000, 25000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Terrorist' 2, 50000, 500000, 50000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bright Assassin', 3, 100000, 900000, 100000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Scamp', null, 5000, 50000, 0, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Prospector', 1, 10000, 100000, 10000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Slime Hunter', 1, 25000, 100000, 25000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Fire Ant' null, 50000, 500000, 50000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Corrupted Slime', 1, 100000, 900000, 100000, 8);
 
 -- Add store data
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Weapons', 1, 0, 1, null, true, false, 1000);
