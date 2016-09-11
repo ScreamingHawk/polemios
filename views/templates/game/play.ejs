@@ -93,9 +93,15 @@
 		</div>
 	<% } else if (locationType == 'entrance'){ %>
 		<div class="col-sm-12">
-			<h4>This is the entrance to another map!</h4>
+			<h4>This is the entrance to <strong><%= location.map2Name %></strong>!</h4>
 			
-			//TODO Implementation Pending!
+			<div class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button id="enterEntranceButton" type="submit" class="btn btn-success">Enter!</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	<% } else if (locationType == 'shrine'){ %>
 		<div class="col-sm-12">

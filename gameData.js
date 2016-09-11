@@ -53,7 +53,7 @@ module.exports.updateMap = function(mapId, next){
 			});
 		}, function(callback){
 			// Get entrances
-			db.runSql('SELECT entranceId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame FROM entrance WHERE mapId = ?', [mapId], function(dbEntrances){
+			db.runSql('SELECT entranceId, locationX, locationY, map2Id, location2X, location2Y, map.name as map2Name, factionId, fame FROM entrance JOIN map ON entrance.map2Id = map.mapId WHERE entrance.mapId = ?', [mapId], function(dbEntrances){
 				map.entrances = dbEntrances;
 				console.log("Entrances for map("+mapId+"): " + JSON.stringify(dbEntrances, null, 2));
 				callback();
