@@ -419,8 +419,8 @@ attackEnemy = function(player, weapon, enemy, hand, combatLog){
 		} else {
 			combatLog.push('Your ' + weapon.name + ' missed!');
 		}
-		// Skill check regardless of hit/miss
-		if (helper.skillCheck(200 - weapon.skill)){
+		// Skill check regardless of hit/miss, only if enemy not dead
+		if (enemy.health > 0 && helper.skillCheck(200 - weapon.skill)){
 			// Player skills up
 			weapon.skill++;
 			helper.updateWeaponSkill(player, weapon);
