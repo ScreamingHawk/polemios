@@ -91,6 +91,9 @@ INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Dock 
 -- Add signpost data
 INSERT INTO signpost (mapId, locationX, locationY, description) VALUES (1, 0, 0, '<h4>Welcome to Polemios!</h4>A land of adventure, treasure and chaos. <br/><br/>If you&apos;ve just landed, you should probably find a store to equip yourself. <br/><br/>To find out more about Polemios check out the wiki. ');
 
+-- Add entrance data
+INSERT INTO entrance (mapId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame) VALUES (1, 3, 5, 2, 1, 6, null, null); -- Docks -> Wilderness
+INSERT INTO entrance (mapId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame) VALUES (2, 1, 6, 1, 3, 5, null, null); -- Wilderness -> Docks
 
 -- Add weapon data
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
