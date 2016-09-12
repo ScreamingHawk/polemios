@@ -127,7 +127,9 @@ module.exports.updateDatabase = function(next){
 					}
 				}
 			}, function(){
-				getDatabaseVersion(next);
+				getDatabaseVersion(function(version){
+					next();
+				});
 			});
 		}
 	});

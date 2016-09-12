@@ -20,7 +20,7 @@ module.exports = function (appCallback){
 				db.createDatabaseFromScratch(callback);
 			} else {
 				log.warn('Updaing database. ');
-				db.updateDatabase();
+				db.updateDatabase(callback);
 			}
 		}], function(){
 
@@ -67,8 +67,8 @@ module.exports = function (appCallback){
 				resave: true
 			}
 			if (app.get('env') === 'production') {
-//				app.set('trust proxy', 1);
-//				sess.cookie.secure = true;
+				app.set('trust proxy', 1);
+				sess.cookie.secure = true;
 			}
 			app.session = session(sess);
 			app.use(app.session);
