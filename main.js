@@ -41,10 +41,12 @@ module.exports = function (appCallback){
 			// Force https in production
 			if (app.get('env') == 'production'){
 				app.use(function(req, res, next) {
-					if (!req.secure && req.protocol !== 'https') {
+					if(!req.secure && req.get('X-Forwarded-Proto') !== 'https') {
 						res.redirect('https://' + req.get('Host') + req.url);
+					} else {
+						next();
 					}
-				}
+				});
 			}
 
 			// set up static and configure app
