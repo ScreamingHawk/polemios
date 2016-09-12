@@ -1,5 +1,5 @@
 var async = require('async');
-var log = require('winston');
+var log = require('./log');
 var db = require('./db');
 var gameData = require('./gameData');
 

@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var log = require('winston');
+var log = require('./log');
 var fs = require('fs');
 var async = require('async');
 
@@ -32,7 +32,7 @@ sqlFromFile = function(filename, callback){
 		}
 		execsql.end();
 		callback();
-	})
+	});
 };
 
 // Return a single result from a query

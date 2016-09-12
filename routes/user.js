@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var log = require('winston');
+var log = require('../log');
 var validator = require('validator');
 var commonRoute = require('./common');
 

@@ -8,12 +8,7 @@ module.exports = function (appCallback){
 	var bodyParser = require('body-parser');
 	var session = require('express-session');
 	var async = require('async');
-
-	// configure logging
-	var log = require('winston');
-
-	log.remove(log.transports.Console);
-	log.add(log.transports.Console, {'timestamp':true, level: process.env.POLEMIOS_LOG_LEVEL});
+	var log = require('./log');
 
 	var app = express();
 
