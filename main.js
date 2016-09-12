@@ -36,6 +36,7 @@ module.exports = function (appCallback){
 			if (app.get('env') === 'production'){
 				app.use(function(req, res, next) {
 					if(!req.secure && req.get('X-Forwarded-Proto') !== 'https') {
+						log.warn('Redirecting from http to https');
 						res.redirect('https://' + req.get('Host') + req.url);
 					} else {
 						next();
