@@ -83,6 +83,11 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('fightEnemy', 'fightEnemy');
 	});
+	// Set up entrance buttons
+	$('#enterEntranceButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('enterEntrance', 'enterEntrance');
+	});
 };
 setUpGameForm();
 

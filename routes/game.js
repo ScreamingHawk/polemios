@@ -166,27 +166,36 @@ router.post('/create', function (req, res, next) {
 });
 
 viewPlay = function(req, res, pageData, full){
-	// Get enemies at current map
-	helper.getEnemiesAtMap(pageData.map.mapId, function(enemies){
-		pageData.locationEnemies = enemies;
-		
-		// Get players at current location
-		helper.getPlayersAtPlayer(pageData.player, function(players){
-			pageData.locationPlayers = players;
-			
+	async.parallel([
+		function(callback){
+			// Get enemies at current map
+			helper.getEnemiesAtMap(pageData.map.mapId, function(enemies){
+				pageData.locationEnemies = enemies;
+				callback();
+			});
+		}, 
+		function(callback){
+			// Get players at current location
+			helper.getPlayersAtPlayer(pageData.player, function(players){
+				pageData.locationPlayers = players;
+				callback();
+			});
+		}, 
+		function(callback){
+			// Get location at current location
 			helper.getLocationAtPlayer(pageData.player, function(location, locationType){
 				pageData.location = location;
 				pageData.locationType = locationType;
-			
-				//TODO More stuff
-				// Display the full page or just the template
-				if (full){
-					res.render('game/play', pageData);
-				} else {
-					res.render('templates/game/play', pageData);
-				}
+				callback();
 			});
-		});
+		}
+	], function(){
+		// Display the full page or just the template
+		if (full){
+			res.render('game/play', pageData);
+		} else {
+			res.render('templates/game/play', pageData);
+		}
 	});
 }
 
@@ -373,6 +382,8 @@ router.post('/play', function (req, res, next){
 						} else {
 							viewPlay(req, res, pageData);
 						}
+					} else {
+						viewPlay(req, res, pageData);
 					}
 				} else if (locationType == 'shrine'){
 					if (postBody.shrineHeal){
@@ -396,6 +407,20 @@ router.post('/play', function (req, res, next){
 								viewPlay(req, res, pageData);
 							});
 						});
+					} else {
+						viewPlay(req, res, pageData);
+					}
+				} else if (locationType == 'entrance'){
+					if (postBody.enterEntrance){
+						player.locationX = location.location2X;
+						player.locationY = location.location2Y;
+						player.mapId = location.map2Id;
+						helper.movePlayerDB(player.playerId, player.mapId, player.locationX, player.locationY, function(){
+							pageData.map = helper.getMapFromPlayer(player);
+							viewPlay(req, res, pageData);
+						});
+					} else {
+						viewPlay(req, res, pageData);
 					}
 				} else {
 					viewPlay(req, res, pageData);
@@ -419,8 +444,8 @@ attackEnemy = function(player, weapon, enemy, hand, combatLog){
 		} else {
 			combatLog.push('Your ' + weapon.name + ' missed!');
 		}
-		// Skill check regardless of hit/miss
-		if (helper.skillCheck(200 - weapon.skill)){
+		// Skill check regardless of hit/miss, only if enemy not dead
+		if (enemy.health > 0 && helper.skillCheck(200 - weapon.skill)){
 			// Player skills up
 			weapon.skill++;
 			helper.updateWeaponSkill(player, weapon);

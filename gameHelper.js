@@ -247,7 +247,7 @@ module.exports.movePlayer = function(player, move, next){
 	}
 	if (moved){
 		module.exports.movePlayerDB(player.playerId, player.mapId, player.locationX, player.locationY, function(){
-			next('', true);
+			next(null, true);
 		});
 	} else {
 		next(errorMsg, false);

@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS polemios_user (
 CREATE TABLE IF NOT EXISTS race (
 	raceId INTEGER NOT NULL, 
     name varchar(30) UNIQUE NOT NULL,
-	description varchar(200) NOT NULL,
+	description varchar(350) NOT NULL,
 	PRIMARY KEY (raceId)
 )engine=innodb;
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS race_faction_default (
 CREATE TABLE IF NOT EXISTS map (
 	mapId INTEGER NOT NULL,
     name varchar(30) UNIQUE NOT NULL,
-    description varchar(200),
+    description varchar(300),
     height INTEGER NOT NULL,
     width INTEGER NOT NULL,
 	pvp BOOLEAN NOT NULL DEFAULT TRUE,
