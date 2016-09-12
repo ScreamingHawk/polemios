@@ -84,7 +84,9 @@ getDatabaseVersion = function(next){
 	module.exports.runSqlSingleResult('SELECT MAX(version) as version FROM database_version;', null, function(result){
 		var version = result.version;
 		log.info("Database is at version: "+version);
-		next(version);
+		if (next != null){
+			next(version);
+		}
 	});
 }
 
