@@ -3,7 +3,6 @@ module.exports = function (appCallback){
 	var express = require('express');
 	var path = require('path');
 	var favicon = require('serve-favicon');
-	var morgan = require('morgan');
 	var cookieParser = require('cookie-parser');
 	var bodyParser = require('body-parser');
 	var session = require('express-session');
@@ -47,6 +46,7 @@ module.exports = function (appCallback){
 			// set up static and configure app
 			app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 			if (app.get('env') === 'development') {
+				var morgan = require('morgan');
 				app.use(morgan('dev'));
 			}
 			app.use(bodyParser.json());
@@ -66,8 +66,8 @@ module.exports = function (appCallback){
 				resave: true
 			}
 			if (app.get('env') === 'production') {
-				app.set('trust proxy', 1);
-				sess.cookie.secure = true;
+//				app.set('trust proxy', 1);
+//				sess.cookie.secure = true;
 			}
 			app.session = session(sess);
 			app.use(app.session);
