@@ -37,6 +37,15 @@ module.exports = function (appCallback){
 			// view engine setup
 			app.set('views', path.join(__dirname, 'views'));
 			app.set('view engine', 'ejs');
+			
+			// Force https in production
+			if (app.get('env') == 'production'){
+				app.use(function(req, res, next) {
+					if (!req.secure && req.protocol !== 'https') {
+						res.redirect('https://' + req.get('Host') + req.url);
+					}
+				}
+			}
 
 			// set up static and configure app
 			app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
