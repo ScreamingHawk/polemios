@@ -17,10 +17,10 @@ module.exports = function (appCallback){
 	async.series([
 		function(callback){
 			if (app.get('env') === 'development') {
-				log.info('Creating database from scratch. ');
+				log.warn('Creating database from scratch. ');
 				db.createDatabaseFromScratch(callback);
 			} else {
-				log.info('Updaing database. ');
+				log.warn('Updaing database. ');
 				db.updateDatabase();
 			}
 		}], function(){
