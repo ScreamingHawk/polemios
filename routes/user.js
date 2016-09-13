@@ -50,13 +50,13 @@ router.post('/signup', function(req, res, next) {
 						if (dbUser == null){
 							// Failed. No user
 							pageData.errorMsg += "Error creating user. Please contact Polemios Support. ";
+							res.render('user/signup', pageData);
 						} else {
 							// Success
 							req.session.user = dbUser;
-							pageData.user = dbUser;
-							pageData.successMsg += postUser.username + " created successfully! ";
+							req.session.successMsg = postUser.username + " created successfully! ";
+							res.redirect('/game/create');
 						}
-						res.render('user/signup', pageData);
 					});
 				});
 			}
