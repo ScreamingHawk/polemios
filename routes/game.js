@@ -292,7 +292,7 @@ router.post('/play', function (req, res, next){
 			var enemy = req.session.enemy;
 			if (enemy == null){
 				pageData.errorMsg += 'No enemy to fight! ';
-				viewPlay(req, res, pageData);
+				return viewPlay(req, res, pageData);
 			} else {
 				var combatLog = req.session.combatLog;
 				// Combat round
@@ -303,17 +303,20 @@ router.post('/play', function (req, res, next){
 				if (enemy.health > 0){
 					// Enemy attacks
 					var dmg = Math.round(helper.getRandomInt(90, 110) * enemy.damage / 100);
-					if (player.equipbody == null){
+					if (player.equipBody == null){
 						player.health -= dmg;
 						combatLog.push(enemy.name + ' did ' + dmg + ' damage!');
 					} else {
 						// Arour blocks
-						var armour = player.equipbody;
+						var armour = player.equipBody;
 						dmg -= Math.round(helper.getRandomInt(armour.skill, 100) * armour.blocks / 100);
 						//TODO incorporate faction bonuses
+						if (dmg < 0){
+							dmg = 0;
+						}
 						player.health -= dmg;
 						combatLog.push(enemy.name + ' did ' + dmg + ' damage!');
-						if (helper.skillCheck(200 - armour.skill)){
+						if (player.health > 0 && helper.skillCheck(200 - armour.skill)){
 							// Player skills up
 							armour.skill++;
 							helper.updateArmourSkill(player, armour);
@@ -346,6 +349,72 @@ router.post('/play', function (req, res, next){
 					viewPlay(req, res, pageData);
 				}
 			}
+		} else if (postBody.attackPlayer){
+			if (player.health <= 0){
+				// Current player is dead
+				pageData.errorMsg += 'Ghosts can\'t fight! ';
+				return viewPlay(req, res, pageData);
+			}
+			// Check player is still there
+			helper.getPlayerIfAtPlayer(postBody.attackPlayer, player, function(attackedPlayer){
+				if (attackedPlayer == null){
+					pageData.errorMsg += 'The player is no longer there! ';
+					return viewPlay(req, res, pageData);
+				}
+				if (attackedPlayer.health <= 0){
+					pageData.errorMsg += 'The player is dead! ';
+					return viewPlay(req, res, pageData);
+				}
+				// Attack the player
+				var combatLog = [];
+				//TODO Initiative
+				// Combat round
+				attackPlayer(player, player.equipLeft, attackedPlayer, 'left', combatLog);
+				if (attackedPlayer.health > 0){
+					attackPlayer(player, player.equipRight, attackedPlayer, 'right', combatLog);
+				}
+				// Combat round attacked player
+				if (attackedPlayer.health > 0){
+					attackPlayer(attackedPlayer, attackedPlayer.equipLeft, player, 'left', combatLog);
+					if (player.health > 0){
+						attackPlayer(attackedPlayer, attackedPlayer.equipRight, player, 'right', combatLog);
+					}
+				}
+				helper.updatePlayerHealth(player);
+				helper.updatePlayerHealth(attackedPlayer);
+				
+				async.parallel([
+					function(callback){
+						if (attackedPlayer.health <= 0){
+							// Enemy killed. Reward player
+							player.mint += attackedPlayer.mint;
+							attackedPlayer.mint = 0;
+							helper.updatePlayerMint(player);
+							helper.killPlayer(attackedPlayer, function(){
+								callback();
+							});
+						} else {
+							callback();
+						}
+					},
+					function(callback){
+						if (player.health <= 0){
+							// Player killed. Reward enemy
+							attackedPlayer.mint += player.mint;
+							player.mint = 0;
+							helper.updatePlayerMint(attackedPlayer);
+							helper.killPlayer(player, function(){
+								callback();
+							});
+						} else {
+							callback();
+						}
+					}
+				], function(){
+					pageData.combatLog = combatLog;
+					return viewPlay(req, res, pageData);
+				});
+			});
 		} else {
 			// Location aware options
 			helper.getLocationAtPlayer(player, function(location, locationType){
@@ -439,6 +508,7 @@ attackEnemy = function(player, weapon, enemy, hand, combatLog){
 		var hit = helper.skillCheck(weapon.skill / 2);
 		if (hit){
 			var dmg = Math.round(helper.getRandomInt(weapon.skill, 100) * weapon.damage / 100);
+			//TODO enemy factionId check
 			enemy.health -= dmg;
 			combatLog.push('Your ' + weapon.name + ' did ' + dmg + ' damage!');
 		} else {
@@ -454,6 +524,48 @@ attackEnemy = function(player, weapon, enemy, hand, combatLog){
 	}
 	if (enemy.health <= 0){
 		combatLog.push(enemy.name + ' was killed!');
+	}
+}
+
+attackPlayer = function(player, weapon, attackedPlayer, hand, combatLog){
+	if (weapon == null){
+		// No weapon, use hand
+		attackedPlayer.health -= 1;
+		combatLog.push(player.name + '\'s ' + hand + ' hand did 1 damage to ' + attackedPlayer.name + '!');
+	} else {
+		var armour = attackedPlayer.equipBody;
+		var hit = helper.skillCheck(weapon.skill / 2);
+		if (hit){
+			var dmg = Math.round(helper.getRandomInt(weapon.skill, 100) * weapon.damage / 100);
+			if (armour != null){
+				dmg -= Math.round(helper.getRandomInt(armour.skill, 100) * armour.blocks / 100);
+				//TODO incorporate faction bonuses
+			}
+			if (dmg < 0){
+				dmg = 0;
+			}
+			attackedPlayer.health -= dmg;
+			combatLog.push(player.name + '\'s ' + weapon.name + ' did ' + dmg + ' damage to ' + attackedPlayer.name + '!');
+		} else {
+			combatLog.push(player.name + '\'s ' + weapon.name + ' missed!');
+		}
+		// Skill check regardless of hit/miss, only if attackedPlayer not dead
+		if (attackedPlayer.health > 0 && helper.skillCheck(200 - weapon.skill)){
+			// Player skills up
+			weapon.skill++;
+			helper.updateWeaponSkill(player, weapon);
+			combatLog.push(player.name + '\'s skill with ' + weapon.name + ' increased!');
+		}
+		// Skill check armour if worn and hit and alive
+		if (armour != null && hit && attackedPlayer.health > 0 && helper.skillCheck(200 - armour.skill)){
+			// attackedPlayer skills up
+			armour.skill++;
+			helper.updateArmourSkill(attackedPlayer, armour);
+			combatLog.push(attackedPlayer.name + '\'s skill with ' + armour.name + ' increased!');
+		}
+	}
+	if (attackedPlayer.health <= 0){
+		combatLog.push(attackedPlayer.name + ' was killed!');
 	}
 }
 

@@ -124,12 +124,11 @@ router.post('/signin', function(req, res, next) {
 						//FIXME Prevent password enumeration
 						res.render('user/signin', pageData);
 					} else {
-						req.session.user = dbUser;
-						pageData.user = dbUser;
-						pageData.successMsg += "Welcome "+dbUser.username+"!";
 						// Load the users player
+						req.session.user = dbUser;
 						//TODO Use redirect_loc
-						res.render('user/signin', pageData);
+						req.session.successMsg = "Welcome "+dbUser.username+"! ";
+						res.redirect('/game/play');
 					}
 				});
 			}

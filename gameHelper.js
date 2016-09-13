@@ -30,39 +30,52 @@ module.exports.playerStartingMint = 300;
 /* Returns the player for the given user */
 module.exports.getPlayer = function(userId, next){
 	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mint, mapId, locationX, locationY, lastAction FROM player WHERE userId = ?', [userId], function(dbPlayer){
-		if (dbPlayer != null){
-			dbPlayer.race = gameData.races[dbPlayer.raceId -1];
-			async.series([
-				function(callback){
-					// Update inventory
-					module.exports.updatePlayerInventory(dbPlayer, callback);
-				}, function(callback){
-					// Update player max health
-					module.exports.getPlayerMaxHealth(dbPlayer, function(){
-						callback();
-					});
-				}, function(callback){
-					// Update player faction fame
-					module.exports.getPlayerFactionFame(dbPlayer, function(){
-						callback();
-					});
-				}], function(){
-					log.debug("Player for user ("+userId+"): " + JSON.stringify(dbPlayer, null, 2));
-					if (next){
-						next(dbPlayer);
-					}
-				});
-		} else {
-			next(null);
-		}
+		loadPlayerDetails(dbPlayer, next);
 	});
 };
 
+/* Returns the player for the given playerId */
+module.exports.getPlayerIfAtPlayer = function(playerId, player, next){
+	db.runSqlSingleResult('SELECT playerId, name, raceId, health, mint, lastAction FROM player WHERE playerId = ? AND mapId = ? AND locationX = ? AND locationY = ?', [playerId, player.mapId, player.locationX, player.locationY], function(dbPlayer){
+		loadPlayerDetails(dbPlayer, next);
+	});
+};
+
+loadPlayerDetails = function(player, next){
+	if (player != null){
+		player.race = gameData.races[player.raceId -1];
+		async.series([
+			function(callback){
+				// Update inventory
+				module.exports.updatePlayerInventory(player, function(){
+					callback();
+				});
+			}, function(callback){
+				// Update player max health
+				module.exports.getPlayerMaxHealth(player, function(){
+					callback();
+				});
+			}, function(callback){
+				// Update player faction fame
+				module.exports.getPlayerFactionFame(player, function(){
+					callback();
+				});
+			}], function(){
+//				log.debug("Load Player: " + JSON.stringify(player, null, 2));
+				if (next){
+					next(player);
+				}
+			});
+	} else {
+		next(null);
+	}
+};
+
 module.exports.getPlayerWeapons = function(playerId, next){
-	db.runSql('SELECT playerWeaponId, weapon.weaponId, damage, name, equipLeft, equipRight, skill FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId INNER JOIN player_weapon_skill ON weapon.weaponId = player_weapon_skill.weaponId WHERE player_weapon.playerId = ?', [playerId], next);
+	db.runSql('SELECT playerWeaponId, weapon.weaponId, damage, name, equipLeft, equipRight, skill FROM player_weapon INNER JOIN weapon ON weapon.weaponId = player_weapon.weaponId INNER JOIN player_weapon_skill ON player_weapon.weaponId = player_weapon_skill.weaponId WHERE player_weapon.playerId = ? AND player_weapon_skill.playerId = ?', [playerId, playerId], next);
 };
 module.exports.getPlayerArmours = function(playerId, next){
-	db.runSql('SELECT playerArmourId, armour.armourId, blocks, name, equip, skill FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId INNER JOIN player_armour_skill ON armour.armourId = player_armour_skill.armourId WHERE player_armour.playerId = ?', [playerId], next);
+	db.runSql('SELECT playerArmourId, armour.armourId, blocks, name, equip, skill FROM player_armour INNER JOIN armour ON armour.armourId = player_armour.armourId INNER JOIN player_armour_skill ON player_armour.armourId = player_armour_skill.armourId WHERE player_armour.playerId = ? AND player_armour_skill.playerId = ?', [playerId, playerId], next);
 };
 module.exports.updatePlayerInventory = function(player, next){
 	async.parallel([
@@ -177,9 +190,10 @@ module.exports.updatePlayerHealth = function(player, next){
 };
 
 module.exports.killPlayer = function(player, next){
+	log.info("Killing player: "+player.playerId);
 	player.mint = 0;
 	player.health = 0;
-	updatePlayer(next);
+	module.exports.updatePlayer(player, next);
 }
 
 module.exports.playerDefaultMaxHealth = 10;
@@ -199,7 +213,6 @@ module.exports.getPlayerMaxHealth = function(player, next){
 
 module.exports.getPlayerFactionFame = function(player, next){
 	db.runSql('SELECT factionId, fame FROM player_faction WHERE playerId = ?', [player.playerId], function(results){
-		log.debug('Player faction fame: '+JSON.stringify(results, null, 2));
 		player.fame = results;
 		next(results);
 	});
@@ -269,7 +282,7 @@ module.exports.getMapFromPlayer = function(player){
 };
 
 module.exports.getPlayersAt = function(mapId, locationX, locationY, next){
-	db.runSql('SELECT playerId, name FROM player WHERE mapId = ? AND locationX = ? AND locationY = ? AND lastAction > ADDDATE(NOW(), INTERVAL -1 HOUR)', [mapId, locationX, locationY], next);
+	db.runSql('SELECT playerId, name, health FROM player WHERE mapId = ? AND locationX = ? AND locationY = ? AND lastAction > ADDDATE(NOW(), INTERVAL -1 HOUR)', [mapId, locationX, locationY], next);
 };
 
 module.exports.getPlayersAtPlayer = function(player, next){

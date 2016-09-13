@@ -39,24 +39,45 @@
 <div class="col-sm-6">
 	<% if (map.pvp){ %>
 		<% if (locationPlayers.length != 0){ %>
-			<div class="form-horizontal">
-				<div class="form-group">
-					<label for="attackPlayer" class="col-sm-4 control-label">Player: </label>
-					<div class="col-sm-8">
-						<select name="attackPlayer" id="attackPlayer" class="form-control">
-							<option value=""></option>
-							<% locationPlayers.forEach(function(player){ %>
-								<option value="<%= player.playerId %>"><%= player.name %></option>
+			<% 
+				aliveLocationPlayers = []; 
+				locationPlayers.forEach(function(locPlayer){
+					if (locPlayer.health > 0){
+						aliveLocationPlayers.push(locPlayer);
+					}
+				});
+				if (aliveLocationPlayers.length > 0){
+			%>
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label for="attackPlayer" class="col-sm-4 control-label">Player: </label>
+						<div class="col-sm-8">
+							<select name="attackPlayer" id="attackPlayer" class="form-control">
+								<option value=""></option>
+								<% aliveLocationPlayers.forEach(function(locPlayer){ %>
+									<option value="<%= locPlayer.playerId %>"><%= locPlayer.name %></option>
+								<% }); %>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-8">
+							<button id="attackPlayerButton" type="submit" class="btn btn-danger">Attack Player!</button>
+						</div>
+					</div>
+				</div>
+				<% if (typeof(combatLog) != 'undefined' && combatLog.length > 0){ %>
+					<div class="padded shaded">
+						<ul class="list-unstyled">
+							<% combatLog.forEach(function(log){ %>
+								<li><%= log %></li>
 							<% }); %>
-						</select>
+						</ul>
 					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-4 col-sm-8">
-						<button id="attackPlayerButton" type="submit" class="btn btn-danger">Attack Player!</button>
-					</div>
-				</div>
-			</div>
+				<% } %>
+			<% } else { %>
+				<span>There are no other players here.</span>
+			<% } %>
 		<% } %>
 	<% } else { %>
 		<span>Player killing is forbidden in <%= map.name %>.</span>

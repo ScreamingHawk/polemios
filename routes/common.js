@@ -15,5 +15,7 @@ module.exports.initPageData = function(session){
 			active: (session.chatboxActive ? true : false)
 		}
 	};
+	session.errorMsg = '';
+	session.successMsg = '';
 	return pageData;
 };
