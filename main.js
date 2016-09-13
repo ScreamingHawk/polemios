@@ -15,7 +15,7 @@ module.exports = function (appCallback){
 
 	async.series([
 		function(callback){
-			if (app.get('env') === 'development') {
+			if (process.env.POLEMIOS_DB_RESET === 'true') {
 				log.warn('Creating database from scratch. ');
 				db.createDatabaseFromScratch(callback);
 			} else {
