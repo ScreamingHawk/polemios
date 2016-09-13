@@ -8,7 +8,7 @@ function formhash(form, password) {
 	p.value = hex_sha512(password.value);
 	
 	// Clear password so plain text is not sent.
-	password.value = "";
+	password.value = " ";
 	
 	form.submit();
 }
@@ -46,8 +46,8 @@ function regformhash(form, username, email, password, conf) {
 	p.value = hex_sha512(password.value);
 	
 	// Clear password so plain text is not sent.
-	password.value = "";
-	conf.value = "";
+	password.value = " ";
+	conf.value = " ";
 	
 	form.submit();
 	return true;
