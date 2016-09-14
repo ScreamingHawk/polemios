@@ -1,7 +1,8 @@
 		<div class="container">
-			<hr />
-			
 			<% if (typeof(blockAds) === 'undefined'){ %>
+				<hr />
+				
+				<span style="position: absolute;"><strong>Ad: </strong></span>
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<ins class="adsbygoogle"
 					 style="display:block"
@@ -11,9 +12,16 @@
 				<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 				</script>
+				<script src="/js/vendor/blockadblock.js"></script>
 				
-				<hr />
+				<div id="adBlockPlea" class="hidden padded shaded text-center">
+					<h4>We hope you are enjoying Polemios!</h4>
+					<p>Our site is made possible through online advertising. Please consider supporting Polemios by whitelisting our domain. </p>
+					<p>Alternatively, consider donating via <a href="https://www.changetip.com/tipme/michaelstanden"><i class="fa fa-btc"></i> Bitcoin</a>. </p>
+				</div>
 			<% } %>
+			
+			<hr />
 
 			<footer>
 				<p>&copy; Michael &amp; Jared Standen 2016</p>
