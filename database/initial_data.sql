@@ -92,8 +92,33 @@ INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Dock 
 INSERT INTO signpost (mapId, locationX, locationY, description) VALUES (1, 0, 0, '<h4>Welcome to Polemios!</h4>A land of adventure, treasure and chaos. <br/><br/>If you&apos;ve just landed, you should probably find a store to equip yourself. <br/><br/>To find out more about Polemios check out the wiki. ');
 
 -- Add entrance data
-INSERT INTO entrance (mapId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame) VALUES (1, 2, 4, 2, 1, 6, null, null); -- Docks -> Wilderness
-INSERT INTO entrance (mapId, locationX, locationY, map2Id, location2X, location2Y, factionId, fame) VALUES (2, 1, 6, 1, 2, 4, null, null); -- Wilderness -> Docks
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 1, 1, 6, 2, 4, null, null); -- Wilderness -> Docks
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (1, 2, 2, 4, 1, 6, null, null); -- Docks -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 3, 7, 8, 1, 0, null, null); -- Wilderness -> Haarish
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (3, 2, 1, 0, 7, 8, null, null); -- Haarish -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 4, 0, 0, 4, 4, null, null); -- Wilderness -> Bright Empire Capital
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (4, 2, 4, 4, 0, 0, null, null); -- BEC -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 5, 6, 4, 1, 1, null, null); -- Wilderness -> Ethereal Palace City
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (5, 2, 1, 1, 6, 4, null, null); -- EPC -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 6, 8, 1, 3, 0, null, null); -- Wilderness -> Scaled Caves
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (6, 2, 3, 0, 8, 1, null, null); -- Scaled Caves -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 7, 3, 8, 5, 0, null, null); -- Wilderness -> Bladewood Forest
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (7, 2, 5, 0, 3, 8, null, null); -- Bladewood -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 8, 8, 6, 0, 0, 2, 125); -- Wilderness -> Sears' Caves
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (8, 2, 0, 0, 8, 6, null, null); -- Sears' Caves -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 9, 2, 6, 2, 4, 2, 150); -- Wilderness -> Ethereal Labs
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (9, 2, 2, 4, 2, 6, null, null); -- Labs -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 10, 0, 3, 2, 0, 3, 125); -- Wilderness -> Forward Operating Base
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (10, 2, 2, 0, 0, 3, null, null); -- FOB -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 11, 5, 5, 0, 2, 1, 125); -- Wilderness -> Railroads
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (11, 2, 0, 2, 5, 5, null, null); -- Railroads -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 12, 5, 4, 4, 2, 3, 150); -- Wilderness -> Lake Azure
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (12, 2, 4, 2, 5, 4, null, null); -- Azure Lake -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 13, 0, 2, 1, 5, 1, 150); -- Wilderness -> Crystal Mines
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (13, 2, 1, 5, 0, 2, null, null); -- Crystal Mines -> Wilderness
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 14, 4, 3, 0, 0, null, null); -- Wilderness -> The Academy
+INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (14, 2, 0, 0, 4, 3, null, null); -- Academy -> Wilderness
+
 
 -- Add weapon data
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
