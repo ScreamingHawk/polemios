@@ -11,3 +11,14 @@ getLocationSansQuery = function(){
 	}
 	return url;
 };
+
+/* Ads */
+function adBlockDetected() {
+	$('#adBlockPlea').removeClass('hidden');
+}
+
+if (typeof blockAdBlock === 'undefined') {
+	adBlockDetected();
+} else {
+	blockAdBlock.onDetected(adBlockDetected);
+}

@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var log = require('winston');
+var log = require('./log');
 var fs = require('fs');
 var async = require('async');
 
@@ -25,14 +25,31 @@ module.exports.pool = mysql.createPool(dbConfig);
 
 sqlFromFile = function(filename, callback){
 	log.debug('Executing sql file: '+filename);
-	var execsql = require('execsql');
-	execsql.config(dbConfig).execFile(filename, function(err, results){
+	
+	var fs = require('fs');
+	fs.readFile(filename, 'utf8', function(err, data){
 		if (err){
-			log.error("Error in batch sql: " + err);
+			log.error('Error reading database file: '+err);
+			callback(err);
+		} else {
+			var fileDbConfig = {
+				host: process.env.POLEMIOS_DB_HOST,
+				user: process.env.POLEMIOS_DB_USER,
+				password: process.env.POLEMIOS_DB_SECRET,
+				multipleStatements: true
+			};
+			
+			var connection = mysql.createConnection(fileDbConfig);
+			connection.connect();
+			connection.query(data, function(err, results){
+				if (err){
+					log.error("Error in batch sql: " + err);
+				}
+				connection.end();
+				callback(err);
+			});
 		}
-		execsql.end();
-		callback();
-	})
+	});
 };
 
 // Return a single result from a query
@@ -84,7 +101,9 @@ getDatabaseVersion = function(next){
 	module.exports.runSqlSingleResult('SELECT MAX(version) as version FROM database_version;', null, function(result){
 		var version = result.version;
 		log.info("Database is at version: "+version);
-		next(version);
+		if (next != null){
+			next(version);
+		}
 	});
 }
 
@@ -108,7 +127,9 @@ module.exports.updateDatabase = function(next){
 					}
 				}
 			}, function(){
-				getDatabaseVersion(next);
+				getDatabaseVersion(function(version){
+					next();
+				});
 			});
 		}
 	});

@@ -83,6 +83,10 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('fightEnemy', 'fightEnemy');
 	});
+	$('#attackPlayerButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('attackPlayer', $('#attackPlayer').val());
+	});
 	// Set up entrance buttons
 	$('#enterEntranceButton').click(function(e){
 		e.preventDefault();

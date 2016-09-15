@@ -42,18 +42,6 @@ require('../main')(function(app){
 	server.on('listening', onListening);
 
 	/**
-	 * Database connections
-	 */
-	var pool = mysql.createPool({
-		host: process.env.POLEMIOS_DB_HOST,
-		user: process.env.POLEMIOS_DB_USER,
-		password: process.env.POLEMIOS_DB_SECRET,
-		database: process.env.POLEMIOS_DB_SCHEMA,
-		connectionLimit: process.env.POLEMIOS_DB_MAX_CONNECTIONS,
-		debug: false
-	});
-
-	/**
 	 * Normalize a port into a number, string, or false.
 	 */
 

@@ -3,17 +3,11 @@ module.exports = function (appCallback){
 	var express = require('express');
 	var path = require('path');
 	var favicon = require('serve-favicon');
-	var morgan = require('morgan');
 	var cookieParser = require('cookie-parser');
 	var bodyParser = require('body-parser');
 	var session = require('express-session');
 	var async = require('async');
-
-	// configure logging
-	var log = require('winston');
-
-	log.remove(log.transports.Console);
-	log.add(log.transports.Console, {'timestamp':true, level: process.env.POLEMIOS_LOG_LEVEL});
+	var log = require('./log');
 
 	var app = express();
 
@@ -21,12 +15,12 @@ module.exports = function (appCallback){
 
 	async.series([
 		function(callback){
-			if (app.get('env') === 'development') {
-				log.info('Creating database from scratch. ');
+			if (process.env.POLEMIOS_DB_RESET === 'true') {
+				log.warn('Creating database from scratch. ');
 				db.createDatabaseFromScratch(callback);
 			} else {
-				log.info('Updaing database. ');
-				db.updateDatabase();
+				log.warn('Updaing database. ');
+				db.updateDatabase(callback);
 			}
 		}], function(){
 
@@ -37,10 +31,22 @@ module.exports = function (appCallback){
 			// view engine setup
 			app.set('views', path.join(__dirname, 'views'));
 			app.set('view engine', 'ejs');
+			
+			// Force https in production
+			if (app.get('env') === 'production'){
+				app.use(function(req, res, next) {
+					if(!req.secure && req.get('X-Forwarded-Proto') !== 'https') {
+						res.redirect('https://' + req.get('Host') + req.url);
+					} else {
+						next();
+					}
+				});
+			}
 
 			// set up static and configure app
 			app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 			if (app.get('env') === 'development') {
+				var morgan = require('morgan');
 				app.use(morgan('dev'));
 			}
 			app.use(bodyParser.json());

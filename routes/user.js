@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var log = require('winston');
+var log = require('../log');
 var validator = require('validator');
 var commonRoute = require('./common');
 
@@ -50,13 +50,13 @@ router.post('/signup', function(req, res, next) {
 						if (dbUser == null){
 							// Failed. No user
 							pageData.errorMsg += "Error creating user. Please contact Polemios Support. ";
+							res.render('user/signup', pageData);
 						} else {
 							// Success
 							req.session.user = dbUser;
-							pageData.user = dbUser;
-							pageData.successMsg += postUser.username + " created successfully! ";
+							req.session.successMsg = postUser.username + " created successfully! ";
+							res.redirect('/game/create');
 						}
-						res.render('user/signup', pageData);
 					});
 				});
 			}
@@ -124,12 +124,11 @@ router.post('/signin', function(req, res, next) {
 						//FIXME Prevent password enumeration
 						res.render('user/signin', pageData);
 					} else {
-						req.session.user = dbUser;
-						pageData.user = dbUser;
-						pageData.successMsg += "Welcome "+dbUser.username+"!";
 						// Load the users player
+						req.session.user = dbUser;
 						//TODO Use redirect_loc
-						res.render('user/signin', pageData);
+						req.session.successMsg = "Welcome "+dbUser.username+"! ";
+						res.redirect('/game/play');
 					}
 				});
 			}

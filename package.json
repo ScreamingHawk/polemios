@@ -1,6 +1,6 @@
 {
   "name": "polemios",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Multi User Dungeon game",
   "author": "Michael Standen <standen.michael@gmail.com> (http://michael.standen.link/)",
   "contributors": [
@@ -21,7 +21,8 @@
   },
   "keywords": [
     "game",
-    "multiplater",
+    "multiplayer",
+    "dungeon",
     "website"
   ],
   "license": "MIT",
@@ -31,7 +32,6 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
-    "execsql": "0.0.3",
     "express": "~4.13.4",
     "express-session": "^1.14.0",
     "express-socket.io-session": "^1.3.1",
@@ -39,6 +39,7 @@
     "mysql": "^2.11.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "readline": "^1.3.0",
     "sanitize-html": "^1.13.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.8",
