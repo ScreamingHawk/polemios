@@ -52,34 +52,34 @@ INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 3, 100); -
 
 -- Add enemy data
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bilge Rats', null, 10, 100, 10, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck Squabbler', null, 20, 200, 20, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 50, 500, 50, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 100, 1000, 100, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 1000, 10000, 1000, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck Squabbler', null, 50, 200, 50, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 100, 500, 100, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 200, 1000, 200, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 400, 5000, 400, 1);
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Wolf', null, 500, 5000, 500, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Lepper', null, 1000, 10000, 1000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Poacher', null, 2000, 20000, 2000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Caravan Guard', null, 5000, 20000, 3000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Dire Wolf', null, 2000, 50000, 3000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Orc Wanderer', null, 5000, 50000, 5000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Highwayman', null, 7500, 75000, 7500, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Disserter', null, 10000, 100000, 10000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bounty Hunter', null, 50000, 100000, 100000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sparring Trainer', null, 5000, 50000, 5000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Grunt', 1, 10000, 100000, 10000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Saboteur', null, 25000, 100000, 25000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Lieutenant', 1, 50000, 500000, 50000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Captain', 1, 100000, 900000, 100000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Vandal', null, 5000, 50000, 5000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Spy', 2, 10000, 100000, 10000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Turncoat', null, 25000, 100000, 25000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Terrorist', 2, 50000, 500000, 50000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bright Assassin', 3, 100000, 900000, 100000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Scamp', null, 5000, 50000, 0, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Prospector', 1, 10000, 100000, 10000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Slime Hunter', 1, 25000, 100000, 25000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Fire Ant', null, 50000, 500000, 50000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Corrupted Slime', 1, 100000, 900000, 100000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Lepper', null, 750, 7500, 750, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Poacher', null, 1000, 10000, 1000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Caravan Guard', null, 1250, 12500, 1250, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Dire Wolf', null, 1500, 50000, 1500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Orc Wanderer', null, 2000, 20000, 2000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Highwayman', null, 2500, 25000, 2500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Disserter', null, 3000, 30000, 3000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bounty Hunter', null, 3500, 35000, 3500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sparring Trainer', null, 500, 5000, 5000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Grunt', 1, 3500, 35000, 3500, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Saboteur', null, 4000, 40000, 4000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Lieutenant', 1, 5000, 50000, 5000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Captain', 1, 7500, 75000, 7500, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Vagrant Boxer', null, 500, 50000, 5000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Spy', 2, 3500, 35000, 3500, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Turncoat', null, 4000, 40000, 4000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Terrorist', 2, 5000, 50000, 5000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bright Assassin', 3, 7500, 75000, 7500, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Brood Tutor', null, 500, 50000, 5000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Prospector', 1, 3500, 35000, 3500, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Slime Hunter', 1, 4000, 40000, 4000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Fire Ant', null, 5000, 50000, 5000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Corrupted Slime', 1, 7500, 75000, 7500, 8);
 
 
 -- Add store data
@@ -137,24 +137,30 @@ INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Knife', 2, 100, 100);
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Pistol', 3, 100, 100);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Staff', 1, 500, 500);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Broadsword', 2, 500, 500);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Musket', 3, 500, 500);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Tome', 1, 2500, 2500);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Longsword', 2, 2500, 2500);
-INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Rifle', 3, 2500, 2500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Staff', 1, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Broadsword', 2, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Musket', 3, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Tome', 1, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Khopesh', 2, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Blunderbuss', 3, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Runescrawler', 1, 2500, 12500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Longsword', 2, 2500, 12500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Rifle', 3, 2500, 12500);
 
 
 -- Add armour data
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Cotton Robe', 1, 100, 100);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Bronze Curiass', 2, 100, 100);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Leather Gambeson', 3, 100, 100);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Wool Robe', 1, 500, 500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Iron Curiass', 2, 500, 500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Chainmail Gambeson', 3, 500, 500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Linen Robe', 1, 2500, 2500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Steel Curiass', 2, 2500, 2500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Scalemail Gambeson', 3, 2500, 2500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Wool Robe', 1, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Iron Curiass', 2, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Chainmail Gambeson', 3, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Linen Robe', 1, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Steel Curiass', 2, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Scalemail Gambeson', 3, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Mesh Robe', 1, 2500, 12500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Crucible Steel Curiass', 2, 2500, 12500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Banded Mail Gambeson', 3, 2500, 12500);
 
 
 -- Update complete
