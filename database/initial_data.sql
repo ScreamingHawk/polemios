@@ -99,10 +99,10 @@ INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, s
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Armour', 1, 1, 0, null, false, true, 1000);
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Haarish Weapons', 3, 1, 1, 2, true, false, 12500);
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Haarish Armour', 3, 1, 2, 2, false, true, 12500);
-INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Weapons', 4, 1, 1, true, false, 12500);
-INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Armour', 4, 1, 2, false, true, 12500);
-INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Weapons', 5, 1, 1, true, false, 12500);
-INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Armour', 5, 1, 2, false, true, 12500);
+-- INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Weapons', 4, 1, 1, true, false, 12500);
+-- INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Armour', 4, 1, 2, false, true, 12500);
+-- INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Weapons', 5, 1, 1, true, false, 12500);
+-- INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Armour', 5, 1, 2, false, true, 12500);
 
 
 -- Add shrine data
@@ -183,9 +183,9 @@ INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Linen Robe',
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Steel Curiass', 2, 1000, 5000);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Scalemail Gambeson', 3, 1000, 5000);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Mesh Robe', 1, 2500, 12500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Crucible Steel Curiass', 2, 2500, 12500);
+-- INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Crucible Steel Curiass', 2, 2500, 12500);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Banded Mail Gambeson', 3, 2500, 12500);
-INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Incorporeal Robe' 1, 4000, 20000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Incorporeal Robe', 1, 4000, 20000);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Alloy Curiass', 2, 4000, 20000);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Lamellar Gambeson', 3, 4000, 20000);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Second Shadow', 1, 6000, 30000);
