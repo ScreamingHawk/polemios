@@ -16,13 +16,15 @@ INSERT INTO map (mapId, name, width, height, pvp, description) VALUES (12, 'Lake
 INSERT INTO map (mapId, name, width, height, pvp, description) VALUES (13, 'Crystal Mines', 3, 5, true, 'Rich with veins of ore and large crystal geodes, these mines provide the Bright Empire with near endless resources. Deep in its bowels lies a cavern of Soul Stones and the ancient guardians that protect them. ' );
 INSERT INTO map (mapId, name, width, height, pvp, description) VALUES (14, 'The Academy', 3, 3, false, 'Separate from any empire, The Academy serves to train elite soldiers in the art of combat and war. Few are worthy of entry and less survive to graduation. ');
 
+
 -- Add race data
 INSERT INTO race (raceId, name, description) VALUES (1, 'Human', 'Intelligent but frail beings. Humans washed up on the shores of Polemios after a calamaty destroyed their homeland. They excell in innovation and the development of sophisticated tools and weapons. ');
-INSERT INTO race (raceId, name, description) VALUES (2, 'Kobold', 'Stout reptilian creatures. Masters of masonry and defensive warfare, kobolds are the original inhabitants of Polemios and over thousands of years dug out many mountain fortresses in search of a sacred crystal known as the Soul Stones. ');
+INSERT INTO race (raceId, name, description) VALUES (2, 'Kobold', 'Stout reptilian creatures. Masters of masonry and defensive warfare, kobolds are the original inhabitants of Polemios and over thousands of years dug out many mountain fortresses in search of sacred crystals known as the Soul Stones. ');
 INSERT INTO race (raceId, name, description) VALUES (3, 'Ethereal', 'Winged humanoid beings whose body is more energy than flesh. These beings of light descended unto the early feudal human kingdoms and usurped power, uniting the continent into a single empire. They rule through a meritocracy with magical prowess being the sole indicator of a citizen''s standing. ');
 INSERT INTO race (raceId, name, description) VALUES (4, 'Orc', 'Large, muscular, and savage creatures of the wild forests. Although sentient, orcs rarely care for anything outside of violence and live solely for war. They roam the continent as mercenaries and tribal warriors with little regard to laws. ');
 INSERT INTO race (raceId, name, description) VALUES (5, 'Slime', 'Pure energy held together in a translucent, gelatenous form whose upper half resembles that of a human. Created by ethereal and human scientists, Slimes were a failed attempt at synthesising Soul Stones and hold a great aptitude towards magic. Seen as a threat by the Glow Emperor, some slimes have been corrupted to hunt their own kind. ');
 INSERT INTO race (raceId, name, description) VALUES (6, 'Golem', 'Modular mechanical frames given life by harnessing the power of the Soul Stones. Originally built to aid construction, the Soul Stones have gifted these beings with sentience and lead to their adoption by the Bright Empire. Some serve as soldiers, being retooled to harness weaponry however most prefer to serve as logisticians. ');
+
 
 -- Add faction data
 INSERT INTO faction (factionId, name, description) VALUES (1, 'Glow', 'The united empire founded and ruled by the Ethereals.');
@@ -38,7 +40,6 @@ INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (3, 1, 1
 INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (3, 2, 80); -- Bright > Flicker
 
 -- Add race faction default data
--- TODO Fix fame scale
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (1, 1, 50); -- Human Glow
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (1, 2, 25); -- Human Flicker
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (1, 3, 75); -- Human Bright
@@ -58,46 +59,62 @@ INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 1, 25); --
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 2, 25); -- Golem Flicker
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (6, 3, 100); -- Golem Bright
 
+
 -- Add enemy data
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bilge Rats', null, 10, 100, 10, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck Squabbler', null, 20, 200, 20, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 50, 500, 50, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 100, 1000, 100, 1);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 1000, 10000, 1000, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Deck Squabbler', null, 50, 200, 50, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Stowaway', null, 100, 500, 100, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Drunken Sailor', null, 200, 1000, 200, 1);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sea Hag', null, 400, 5000, 400, 1);
 INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Wolf', null, 500, 5000, 500, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Lepper', null, 1000, 10000, 1000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Poacher', null, 2000, 20000, 2000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Caravan Guard', null, 5000, 20000, 3000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Dire Wolf', null, 2000, 50000, 3000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Orc Wanderer', null, 5000, 50000, 5000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Highwayman', null, 7500, 75000, 7500, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Disserter', null, 10000, 100000, 10000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bounty Hunter', null, 50000, 100000, 100000, 2);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sparring Trainer', null, 5000, 50000, 5000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Grunt', 1, 10000, 100000, 10000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Saboteur', null, 25000, 100000, 25000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Lieutenant', 1, 50000, 500000, 50000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Captain', 1, 100000, 900000, 100000, 10);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Vandal', null, 5000, 50000, 5000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Spy', 2, 10000, 100000, 10000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Turncoat', null, 25000, 100000, 25000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Terrorist', 2, 50000, 500000, 50000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bright Assassin', 3, 100000, 900000, 100000, 11);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Scamp', null, 5000, 50000, 0, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Prospector', 1, 10000, 100000, 10000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Slime Hunter', 1, 25000, 100000, 25000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Fire Ant', null, 50000, 500000, 50000, 8);
-INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Corrupted Slime', 1, 100000, 900000, 100000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Lepper', null, 750, 7500, 750, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Poacher', null, 1000, 10000, 1000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Caravan Guard', null, 1250, 12500, 1250, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Dire Wolf', null, 1500, 50000, 1500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Orc Wanderer', null, 2000, 20000, 2000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Highwayman', null, 2500, 25000, 2500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Disserter', null, 3000, 30000, 3000, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bounty Hunter', null, 3500, 35000, 3500, 2);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Sparring Trainer', null, 500, 5000, 5000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Grunt', 1, 3500, 35000, 3500, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Saboteur', null, 4000, 40000, 4000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Lieutenant', 1, 5000, 50000, 5000, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Captain', 1, 7500, 75000, 7500, 10);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Vagrant Boxer', null, 500, 50000, 5000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Spy', 2, 3500, 35000, 3500, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Turncoat', null, 4000, 40000, 4000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Flicker Terrorist', 2, 5000, 50000, 5000, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Bright Assassin', 3, 7500, 75000, 7500, 11);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Brood Tutor', null, 500, 50000, 5000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Glow Prospector', 1, 3500, 35000, 3500, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Slime Hunter', 1, 4000, 40000, 4000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Fire Ant', null, 5000, 50000, 5000, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Corrupted Slime', 1, 7500, 75000, 7500, 8);
+INSERT INTO enemy (name, factionId, damage, health, mint, mapId) VALUES ('Coding Gremlin', null, 99999, 999999, 99999, 13);
+
+
 
 -- Add store data
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Weapons', 1, 0, 1, null, true, false, 1000);
 INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Dock Armour', 1, 1, 0, null, false, true, 1000);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Haarish Weapons', 3, 1, 1, 2, true, false, 12500);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Haarish Armour', 3, 1, 2, 2, false, true, 12500);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Weapons', 4, 1, 1, true, false, 12500);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Bright Capital Armour', 4, 1, 2, false, true, 12500);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Weapons', 5, 1, 1, true, false, 12500);
+INSERT INTO store (name, mapId, locationX, locationY, factionId, sellsWeapons, sellsArmour, maxMint) VALUES ('Ethereal Palace Armour', 5, 1, 2, false, true, 12500);
+
 
 -- Add shrine data
 INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Dock Shrine', 1, 1, 1, null);
+INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Haarish Shrine', 3, 1, 3, 2);
+INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Bright Empire Capital Shrine', 4, 1, 3, 3);
+INSERT INTO shrine (name, mapId, locationX, locationY, factionId) VALUES ('Ethereal Palace Shrine', 5, 1, 3, 1);
+
 
 -- Add signpost data
 INSERT INTO signpost (mapId, locationX, locationY, description) VALUES (1, 0, 0, '<h4>Welcome to Polemios!</h4>A land of adventure, treasure and chaos. <br/><br/>If you&apos;ve just landed, you should probably find a store to equip yourself. <br/><br/>To find out more about Polemios check out the wiki. ');
+
 
 -- Add entrance data
 INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2Y, factionId, fame) VALUES (2, 1, 1, 6, 2, 4, null, null); -- Wilderness -> Docks
@@ -132,13 +149,54 @@ INSERT INTO entrance (mapId, map2Id, locationX, locationY, location2X, location2
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Wand', 1, 100, 100);
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Knife', 2, 100, 100);
 INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Pistol', 3, 100, 100);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Staff', 1, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Broadsword', 2, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Musket', 3, 500, 1000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Tome', 1, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Khopesh', 2, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Blunderbuss', 3, 1000, 5000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Runescrawler', 1, 2500, 12500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Scimitar', 2, 2500, 12500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Rifle', 3, 2500, 12500);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Glowing Ashen Bone', 1, 4000, 20000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Flickering Longsword', 2, 4000, 20000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Bright Repeater', 3, 4000, 20000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Lich''s Finger', 1, 6000, 30000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Resonating Crystal Blade', 2, 6000, 30000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Sunderer Cannon', 3, 6000, 30000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('God''s Wrath', 1, 8000, 50000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('The World Carver', 2, 8000, 50000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Dragon''s Fury', 3, 8000, 50000);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Quantum Break', 1, 10000, 99999);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Ragnarok', 2, 10000, 99999);
+INSERT INTO weapon (name, factionId, damage, mint) VALUES ('Soulshatter Railgun', 2, 10000, 99999);
+
 
 -- Add armour data
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Cotton Robe', 1, 100, 100);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Bronze Curiass', 2, 100, 100);
 INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Leather Gambeson', 3, 100, 100);
-
-
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Wool Robe', 1, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Iron Curiass', 2, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Chainmail Gambeson', 3, 500, 1000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Linen Robe', 1, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Steel Curiass', 2, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Scalemail Gambeson', 3, 1000, 5000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Mesh Robe', 1, 2500, 12500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Crucible Steel Curiass', 2, 2500, 12500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Banded Mail Gambeson', 3, 2500, 12500);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Glowing Incorporeal Robe' 1, 4000, 20000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Flickering Alloy Curiass', 2, 4000, 20000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bright Lamellar Gambeson', 3, 4000, 20000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Second Shadow', 1, 6000, 30000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Full Plate', 2, 6000, 30000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Bulletproof Vest', 3, 6000, 30000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Leviathan''s Second Skin', 1, 8000, 50000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Crystaline Armour', 2, 8000, 50000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Obsidian Fibre Suit', 3, 8000, 50000);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('The Left Hand of God', 1, 10000, 99999);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Sears'' Living Armour', 2, 10000, 99999);
+INSERT INTO armour (name, factionId, blocks, mint) VALUES ('Soulstone Powered Exoskeleton', 3, 10000, 99999);
 
 
 -- Update complete

@@ -87,6 +87,18 @@ setUpGameForm = function(){
 		e.preventDefault();
 		return ajaxGameFormAction('attackPlayer', $('#attackPlayer').val());
 	});
+	$('#attackHeadButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('attackHead', $('#attackHead').val());
+	});
+	$('#attackBodyButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('attackBody', $('#attackBody').val());
+	});
+	$('#attackBalanceButton').click(function(e){
+		e.preventDefault();
+		return ajaxGameFormAction('attackBalance', $('#attackBalance').val());
+	});
 	// Set up entrance buttons
 	$('#enterEntranceButton').click(function(e){
 		e.preventDefault();
