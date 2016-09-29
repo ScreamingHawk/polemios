@@ -29,6 +29,14 @@ INSERT INTO faction (factionId, name, description) VALUES (1, 'Glow', 'The unite
 INSERT INTO faction (factionId, name, description) VALUES (2, 'Flicker', 'A rebellion lead by Kobold priests to as part of their ancient prophecy surrounding the Soul Stones.');
 INSERT INTO faction (factionId, name, description) VALUES (3, 'Bright', 'An empire founded in the flames of a revolution against the tyrannous Glow Empire.');
 
+-- Add faction bonus
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (1, 2, 120); -- Glow > Flicker
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (1, 3, 80); -- Glow > Bright
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (2, 1, 80); -- Flicker > Glow
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (2, 3, 120); -- Flicker > Bright
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (3, 1, 120); -- Bright > Glow
+INSERT INTO faction_faction_bonus (factionId, faction2Id, bonus) VALUES (3, 2, 80); -- Bright > Flicker
+
 -- Add race faction default data
 -- TODO Fix fame scale
 INSERT INTO race_faction_default (raceId, factionId, fame) VALUES (1, 1, 50); -- Human Glow

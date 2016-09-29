@@ -26,6 +26,17 @@ module.exports.updateFactions = function(next){
 };
 module.exports.updateFactions();
 
+module.exports.updateFactionBonuses = function(next){
+	db.runSql('SELECT factionId, faction2Id, bonus FROM faction_faction_bonus', [], function(dbFactionBonuses){
+		module.exports.factionBonuses = dbFactionBonuses;
+		log.info("Faction Bonuses: " + JSON.stringify(dbFactionBonuses, null, 2));
+		if (next){
+			next(dbFactionBonuses);
+		}
+	});
+};
+module.exports.updateFactionBonuses();
+
 module.exports.updateMaps = function(next){
 	db.runSql('SELECT mapId, name, description, height, width, pvp FROM map', [], function(dbMaps){
 		module.exports.maps = dbMaps;

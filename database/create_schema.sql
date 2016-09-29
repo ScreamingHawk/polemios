@@ -39,6 +39,17 @@ CREATE TABLE IF NOT EXISTS faction (
 	PRIMARY KEY (factionId)
 )engine=innodb;
 
+-- Create faction to faction bonus table
+CREATE TABLE IF NOT EXISTS faction_faction_bonus (
+	factionFactionBonusId INTEGER AUTO_INCREMENT, 
+	factionId INTEGER NOT NULL, 
+	faction2Id INTEGER NOT NULL, 
+	bonus INTEGER NOT NULL,
+	PRIMARY KEY (factionFactionBonusId), 
+	FOREIGN KEY (factionId) REFERENCES faction (factionId), 
+	FOREIGN KEY (faction2Id) REFERENCES faction (factionId)
+)engine=innodb;
+
 -- Create race faction default fame table
 CREATE TABLE IF NOT EXISTS race_faction_default (
 	raceFactionDefaultId INTEGER AUTO_INCREMENT, 
